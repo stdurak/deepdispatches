@@ -15,7 +15,7 @@ const DISPATCHES = [
     views: 24500,
     summary: "Decades of groundbreaking research in neuroscience and marine biology are dismantling our assumptions about mind and social complexity. Explore how learned cultural traditions in orcas drive biological evolution.",
     excerpt: "In the coastal waters of the Pacific Northwest, distinct orca communities share overlapping ranges yet live in complete cultural isolation—separated by diet, vocal dialects, and multi-generational traditions.",
-    content: `What does it truly mean to be intelligent? For centuries, human philosophy and science have harbored a deep-seated desire to view our species as fundamentally unique...`
+    content: "What does it truly mean to be intelligent? For centuries, human philosophy and science have harbored a deep-seated desire to view our species as fundamentally unique..."
   },
   {
     id: "dossier-002",
@@ -99,7 +99,7 @@ export default function App() {
 
       {/* VIEW 1: FULL ARTICLE READER */}
       {selectedArticle ? (
-        <main className="max-w-3xl mx-auto px-6 py-16 animate-fadeIn space-y-8">
+        <main className="max-w-3xl mx-auto px-6 py-16 space-y-8">
           <div className="space-y-4">
             <div className="flex items-center gap-3 text-xs font-mono text-[#CCFF00]">
               <span>{selectedArticle.number}</span>
@@ -135,12 +135,12 @@ export default function App() {
       ) : (
 
       /* VIEW 2: HOME FEED */
-      <main className="max-w-4xl mx-auto px-6 py-16 space-y-24">
+      <main className="max-w-4xl mx-auto px-6 py-12 space-y-20">
         
-        {/* HERO SECTION WITH AMBIENT VIDEO BACKGROUND CONTAINER */}
-        <section className="relative rounded-3xl overflow-hidden p-8 md:p-14 border border-slate-800/80 bg-[#081225]/60 backdrop-blur-sm shadow-2xl">
+        {/* CINEMATIC FULL HERO CONTAINER WITH VIDEO */}
+        <section className="relative rounded-3xl overflow-hidden border border-slate-800/80 min-h-[480px] flex items-center justify-center p-8 md:p-16 shadow-2xl bg-[#081225]">
           
-          {/* VIDEO BACKGROUND LAYER */}
+          {/* FULL SCREEN COVER VIDEO LAYER */}
           <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
             <video 
               autoPlay 
@@ -148,31 +148,32 @@ export default function App() {
               muted 
               playsInline 
               ref={(el) => { if (el) el.muted = true; }}
-              className="w-full h-full object-cover opacity-60"
+              className="w-full h-full object-cover opacity-50 scale-105"
             >
               <source src="/bubble.mp4" type="video/mp4" />
             </video>
-            <div className="absolute inset-0 bg-gradient-to-b from-[#030914]/70 via-[#030914]/30 to-[#030914]/90"></div>
+            {/* Cinematic Gradient Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#030914] via-[#030914]/40 to-[#030914]/70"></div>
           </div>
 
           {/* HERO CONTENT LAYER */}
-          <div className="relative z-10 text-center space-y-6">
-            <div className="inline-block px-3 py-1 bg-slate-900/90 border border-slate-800 rounded-full text-xs text-[#CCFF00] font-mono tracking-wider uppercase mb-2">
+          <div className="relative z-10 text-center space-y-6 max-w-2xl mx-auto">
+            <div className="inline-block px-3.5 py-1 bg-slate-900/90 border border-slate-700/80 rounded-full text-xs text-[#CCFF00] font-mono tracking-wider uppercase mb-2 shadow-lg">
               Dispatch #000 · Platform Launch
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-lg">
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-2xl">
               Far Below The <span className="text-[#CCFF00]">Surface Noise.</span>
             </h1>
             
-            <p className="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto font-light leading-relaxed drop-shadow-md">
+            <p className="text-base md:text-lg text-slate-200 font-light leading-relaxed drop-shadow-md">
               No social algorithms. Timeless, interactive, and deeply researched ecological investigations delivered directly to your inbox.
             </p>
 
             {/* BEEHIIV FORM */}
-            <div className="pt-4 max-w-md mx-auto">
+            <div className="pt-2 max-w-md mx-auto">
               {submitted ? (
-                <div className="p-4 bg-[#081225]/90 border border-[#CCFF00]/40 rounded-lg text-[#CCFF00] text-sm font-mono">
+                <div className="p-4 bg-[#081225]/90 border border-[#CCFF00]/40 rounded-lg text-[#CCFF00] text-sm font-mono backdrop-blur-md">
                   ✓ Subscription request received. Welcome to Deep Dispatches.
                 </div>
               ) : (
@@ -190,11 +191,11 @@ export default function App() {
                       name="email"
                       required
                       placeholder="Enter your email..."
-                      className="flex-1 px-4 py-3 bg-[#030914]/90 border border-slate-700/80 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#CCFF00] transition-colors"
+                      className="flex-1 px-4 py-3 bg-[#030914]/90 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#CCFF00] transition-colors"
                     />
                     <button
                       type="submit"
-                      className="px-6 py-3 bg-[#CCFF00] hover:bg-[#b8e600] text-black font-semibold rounded-lg transition-colors cursor-pointer whitespace-nowrap shadow-lg"
+                      className="px-6 py-3 bg-[#CCFF00] hover:bg-[#b8e600] text-black font-semibold rounded-lg transition-colors cursor-pointer whitespace-nowrap shadow-xl"
                     >
                       Subscribe
                     </button>
@@ -295,4 +296,35 @@ export default function App() {
         </section>
 
         {/* MANIFESTO SECTION */}
-        <section className="border-t border-slate-800/80 pt-16 space-y-10
+        <section className="border-t border-slate-800/80 pt-16 space-y-10">
+          <div className="max-w-3xl">
+            <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase mb-4">
+              // THE MANIFESTO
+            </h3>
+            <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
+              Welcome to <strong className="text-white font-semibold">Deep Dispatches</strong>, a platform created far below the surface noise. Here, I bridge the gap between Deep Ecology, Marine Mysteries, and the critical worlds of Ecological Finance and Geo-Political Journeys.
+            </p>
+            <p className="text-base text-slate-400 font-light leading-relaxed mt-4">
+              Moving beyond static reporting, I craft visually immersive scrollytelling experiences. Through interactive mapping, dynamic data, and cinematic narratives, I don't just tell these stories—I give you the depth to explore them. Don't miss the horizon.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 pt-4 border-t border-slate-800/40">
+            <div>
+              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">01. Independent</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">Pure journalism uninfluenced by advertisers, algorithms, or clickbait metrics.</p>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">02. Immersive</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">Interactive scrollytelling, dynamic maps, and data visualizations instead of quick news bites.</p>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">03. Timeless</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">Deep investigative dossiers built to hold lasting intellectual and ecological value for years.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* THE INVESTIGATOR SECTION WITH PROFILE PHOTO */}
+        <section className="border-t border-slate-800/80 pt-16 space-y-6">
+          <h3 className="text-xs font-mono
