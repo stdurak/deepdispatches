@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 export default function App() {
   return (
     <div className="min-h-screen bg-[#030914] text-slate-100 font-sans selection:bg-[#CCFF00] selection:text-black">
