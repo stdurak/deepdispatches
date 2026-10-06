@@ -68,7 +68,7 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen bg-[#030914] text-slate-100 font-sans selection:bg-[#CCFF00] selection:text-black relative">
+    <div className="min-h-screen bg-[#030914] text-slate-100 font-sans selection:bg-[#CCFF00] selection:text-black">
       
       {/* FIXED NAVBAR */}
       <header className="sticky top-0 z-50 bg-[#030914]/90 backdrop-blur-md border-b border-slate-800/80 px-6 py-4">
@@ -135,70 +135,75 @@ export default function App() {
       ) : (
 
       /* VIEW 2: HOME FEED */
-      <main className="max-w-4xl mx-auto px-6 py-16 space-y-24 relative z-10">
+      <main className="max-w-4xl mx-auto px-6 py-16 space-y-24">
         
-        {/* HERO SECTION WITH AMBIENT VIDEO BACKGROUND */}
-        <section className="text-center space-y-6 pt-10 pb-20 relative -mt-16 -mx-6 px-6">
+        {/* HERO SECTION WITH AMBIENT VIDEO BACKGROUND CONTAINER */}
+        <section className="relative rounded-3xl overflow-hidden p-8 md:p-14 border border-slate-800/80 bg-[#081225]/60 backdrop-blur-sm shadow-2xl">
           
-          {/* VIDEO BACKGROUND */}
-          <div className="absolute inset-0 w-full h-full overflow-hidden -z-10">
+          {/* VIDEO BACKGROUND LAYER */}
+          <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
             <video 
               autoPlay 
               loop 
               muted 
               playsInline 
-              className="w-full h-full object-cover opacity-30 mix-blend-screen"
+              ref={(el) => { if (el) el.muted = true; }}
+              className="w-full h-full object-cover opacity-60"
             >
               <source src="/bubble.mp4" type="video/mp4" />
             </video>
-            {/* Gradient Overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#030914]/40 via-[#030914]/80 to-[#030914]"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#030914]/70 via-[#030914]/30 to-[#030914]/90"></div>
           </div>
 
-          <div className="inline-block px-3 py-1 bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-full text-xs text-[#CCFF00] font-mono tracking-wider uppercase mb-2">
-            Dispatch #000 · Platform Launch
-          </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-xl">
-            Far Below The <span className="text-[#CCFF00]">Surface Noise.</span>
-          </h1>
-          <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed drop-shadow-md">
-            No social algorithms. Timeless, interactive, and deeply researched ecological investigations delivered directly to your inbox.
-          </p>
+          {/* HERO CONTENT LAYER */}
+          <div className="relative z-10 text-center space-y-6">
+            <div className="inline-block px-3 py-1 bg-slate-900/90 border border-slate-800 rounded-full text-xs text-[#CCFF00] font-mono tracking-wider uppercase mb-2">
+              Dispatch #000 · Platform Launch
+            </div>
+            
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-lg">
+              Far Below The <span className="text-[#CCFF00]">Surface Noise.</span>
+            </h1>
+            
+            <p className="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto font-light leading-relaxed drop-shadow-md">
+              No social algorithms. Timeless, interactive, and deeply researched ecological investigations delivered directly to your inbox.
+            </p>
 
-          {/* BEEHIIV FORM */}
-          <div className="pt-4 max-w-md mx-auto">
-            {submitted ? (
-              <div className="p-4 bg-[#081225]/80 backdrop-blur-sm border border-[#CCFF00]/40 rounded-lg text-[#CCFF00] text-sm font-mono">
-                ✓ Subscription request received. Welcome to Deep Dispatches.
-              </div>
-            ) : (
-              <>
-                <form 
-                  action="https://app.beehiiv.com/subscribe" 
-                  method="POST" 
-                  target="beehiiv-target"
-                  onSubmit={() => setSubmitted(true)}
-                  className="flex flex-col sm:flex-row gap-3"
-                >
-                  <input type="hidden" name="publication_id" value="pub_2383c5ca-1813-4b13-b35f-6b498cd01829" />
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="Enter your email..."
-                    className="flex-1 px-4 py-3 bg-[#081225]/80 backdrop-blur-sm border border-slate-700/80 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#CCFF00] transition-colors"
-                  />
-                  <button
-                    type="submit"
-                    className="px-6 py-3 bg-[#CCFF00] hover:bg-[#b8e600] text-black font-semibold rounded-lg transition-colors cursor-pointer whitespace-nowrap"
+            {/* BEEHIIV FORM */}
+            <div className="pt-4 max-w-md mx-auto">
+              {submitted ? (
+                <div className="p-4 bg-[#081225]/90 border border-[#CCFF00]/40 rounded-lg text-[#CCFF00] text-sm font-mono">
+                  ✓ Subscription request received. Welcome to Deep Dispatches.
+                </div>
+              ) : (
+                <>
+                  <form 
+                    action="https://app.beehiiv.com/subscribe" 
+                    method="POST" 
+                    target="beehiiv-target"
+                    onSubmit={() => setSubmitted(true)}
+                    className="flex flex-col sm:flex-row gap-3"
                   >
-                    Subscribe
-                  </button>
-                </form>
-                <iframe name="beehiiv-target" className="hidden" title="beehiiv-form-target" />
-              </>
-            )}
-            <p className="text-xs text-slate-500 mt-3 font-medium">No spam. Unsubscribe anytime in one click.</p>
+                    <input type="hidden" name="publication_id" value="pub_2383c5ca-1813-4b13-b35f-6b498cd01829" />
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="Enter your email..."
+                      className="flex-1 px-4 py-3 bg-[#030914]/90 border border-slate-700/80 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#CCFF00] transition-colors"
+                    />
+                    <button
+                      type="submit"
+                      className="px-6 py-3 bg-[#CCFF00] hover:bg-[#b8e600] text-black font-semibold rounded-lg transition-colors cursor-pointer whitespace-nowrap shadow-lg"
+                    >
+                      Subscribe
+                    </button>
+                  </form>
+                  <iframe name="beehiiv-target" className="hidden" title="beehiiv-form-target" />
+                </>
+              )}
+              <p className="text-xs text-slate-400 mt-3 font-medium">No spam. Unsubscribe anytime in one click.</p>
+            </div>
           </div>
         </section>
 
@@ -290,86 +295,4 @@ export default function App() {
         </section>
 
         {/* MANIFESTO SECTION */}
-        <section className="border-t border-slate-800/80 pt-16 space-y-10">
-          <div className="max-w-3xl">
-            <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase mb-4">
-              // THE MANIFESTO
-            </h3>
-            <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
-              Welcome to <strong className="text-white font-semibold">Deep Dispatches</strong>, a platform created far below the surface noise. Here, I bridge the gap between Deep Ecology, Marine Mysteries, and the critical worlds of Ecological Finance and Geo-Political Journeys.
-            </p>
-            <p className="text-base text-slate-400 font-light leading-relaxed mt-4">
-              Moving beyond static reporting, I craft visually immersive scrollytelling experiences. Through interactive mapping, dynamic data, and cinematic narratives, I don't just tell these stories—I give you the depth to explore them. Don't miss the horizon.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 pt-4 border-t border-slate-800/40">
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">01. Independent</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Pure journalism uninfluenced by advertisers, algorithms, or clickbait metrics.</p>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">02. Immersive</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Interactive scrollytelling, dynamic maps, and data visualizations instead of quick news bites.</p>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">03. Timeless</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Deep investigative dossiers built to hold lasting intellectual and ecological value for years.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* THE INVESTIGATOR (ABOUT) SECTION WITH PROFILE PHOTO */}
-        <section className="border-t border-slate-800/80 pt-16 space-y-6">
-          <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
-            // THE INVESTIGATOR
-          </h3>
-          
-          <div className="bg-[#081225]/60 border border-slate-800/80 rounded-2xl p-8 md:p-10 relative overflow-hidden flex flex-col md:flex-row gap-8 items-start">
-            
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#CCFF00]/5 rounded-full blur-3xl pointer-events-none"></div>
-
-            {/* PROFILE PHOTO */}
-            <div className="w-32 h-32 md:w-48 md:h-48 shrink-0 relative rounded-xl overflow-hidden border border-slate-700/50 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500">
-              <img 
-                src="/profile.jpg" 
-                alt="The Investigator" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#081225] via-transparent to-transparent"></div>
-            </div>
-
-            {/* BIO TEXT */}
-            <div className="space-y-6 flex-1">
-              <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed">
-                When people ask what I do for a living, the answer has changed many times over the years: camera operator, field correspondent, Editor-in-Chief, logistics manager, diving instructor... But deep down, I have always been one thing: <span className="text-[#CCFF00] font-normal">a journalist.</span>
-              </p>
-
-              <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                I spent decades inside major media networks—including <strong className="text-slate-200">CNN International, NTV, ATV, and Sky News</strong>—navigating the high-pressure world of traditional newsrooms. But chasing social media algorithms and being a 'content creator' left me exhausted. I didn't want to add to the surface noise anymore; I wanted to explore the depths.
-              </p>
-
-              <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                As a journalist, master diver, and proud father—with dive logs spanning from the <span className="text-slate-300">Red Sea</span> and <span className="text-slate-300">Thailand</span> to <span className="text-slate-300">Malta, Cyprus, the Black Sea, and the Mediterranean</span>—I built <strong className="text-white">Deep Dispatches</strong> to mind my own business. Here, I focus entirely on marine mysteries, climate crises, and deep ecology. No daily clickbait, no corporate agendas. Just high-impact, deeply researched dossiers delivered directly to you.
-              </p>
-
-              <div className="pt-4 flex flex-wrap gap-3 text-xs font-mono text-slate-500">
-                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Journalism & Broadcast</span>
-                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Scuba Diving Instructor</span>
-                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Deep Ecology</span>
-              </div>
-            </div>
-            
-          </div>
-        </section>
-
-      </main>
-      )}
-
-      {/* FOOTER */}
-      <footer className="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500 relative z-10 bg-[#030914]">
-        <p>© {new Date().getFullYear()} DEEP DISPATCHES. All rights reserved.</p>
-      </footer>
-    </div>
-  );
-}
+        <section className="border-t border-slate-800/80 pt-16 space-y-10
