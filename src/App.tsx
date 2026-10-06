@@ -29,31 +29,19 @@ export default function App() {
             No social algorithms. Timeless, interactive, and deeply researched ecological investigations delivered directly to your inbox.
           </p>
 
-          {/* BEEHIIV FORM */}
-          <div className="pt-4">
-            <form 
-              action="https://app.beehiiv.com/subscribe" 
-              method="POST" 
-              target="_blank"
-              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-            >
-              <input type="hidden" name="publication_id" value="pub_2383c5ca-1813-4b13-b35f-6b498cd01829" />
-              
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="E-posta adresinizi yazın..."
-                className="flex-1 px-4 py-3 bg-[#081225] border border-slate-700/80 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#CCFF00] transition-colors"
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 bg-[#CCFF00] hover:bg-[#b8e600] text-black font-semibold rounded-lg transition-colors cursor-pointer whitespace-nowrap"
-              >
-                Abone Ol
-              </button>
-            </form>
-            <p className="text-xs text-slate-500 mt-3">Spam yok. İstediğiniz zaman tek tıkla ayrılabilirsiniz.</p>
+          {/* BEEHIIV EMBED FORM */}
+          <div className="pt-6 max-w-md mx-auto w-full">
+            <iframe 
+              src="https://embeds.beehiiv.com/95e99d49-c678-493b-8bd6-bdcc10c32896?s=true" 
+              data-test-id="beehiiv-embed" 
+              height="52" 
+              frameBorder="0" 
+              scrolling="no" 
+              style={{ margin: '0', borderRadius: '0px', backgroundColor: 'transparent', width: '100%' }}
+            ></iframe>
+            <p className="text-xs text-slate-500 mt-4 text-center">
+              Spam yok. İstediğiniz zaman tek tıkla ayrılabilirsiniz.
+            </p>
           </div>
         </section>
 
