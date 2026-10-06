@@ -68,10 +68,28 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen bg-[#030914] text-slate-100 font-sans selection:bg-[#CCFF00] selection:text-black">
+    <div className="min-h-screen bg-[#030914] text-slate-100 font-sans selection:bg-[#CCFF00] selection:text-black relative overflow-x-hidden">
       
+      {/* FULL-BLEED SCREEN BACKGROUND VIDEO */}
+      {!selectedArticle && (
+        <div className="absolute top-0 left-0 w-full h-[650px] overflow-hidden pointer-events-none z-0">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            ref={(el) => { if (el) el.muted = true; }}
+            className="w-full h-full object-cover opacity-45 scale-105"
+          >
+            <source src="/bubble.mp4" type="video/mp4" />
+          </video>
+          {/* Smooth Fade Overlay into Page Background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#030914]/40 via-[#030914]/60 to-[#030914]"></div>
+        </div>
+      )}
+
       {/* FIXED NAVBAR */}
-      <header className="sticky top-0 z-50 bg-[#030914]/90 backdrop-blur-md border-b border-slate-800/80 px-6 py-4">
+      <header className="sticky top-0 z-50 bg-[#030914]/80 backdrop-blur-md border-b border-slate-800/80 px-6 py-4">
         <div className="flex items-center justify-between max-w-6xl mx-auto">
           <div 
             className="flex items-center gap-2 cursor-pointer"
@@ -99,7 +117,7 @@ export default function App() {
 
       {/* VIEW 1: FULL ARTICLE READER */}
       {selectedArticle ? (
-        <main className="max-w-3xl mx-auto px-6 py-16 space-y-8">
+        <main className="max-w-3xl mx-auto px-6 py-16 space-y-8 relative z-10">
           <div className="space-y-4">
             <div className="flex items-center gap-3 text-xs font-mono text-[#CCFF00]">
               <span>{selectedArticle.number}</span>
@@ -135,196 +153,50 @@ export default function App() {
       ) : (
 
       /* VIEW 2: HOME FEED */
-      <main className="max-w-4xl mx-auto px-6 py-12 space-y-20">
+      <main className="max-w-4xl mx-auto px-6 py-12 space-y-24 relative z-10">
         
-        {/* CINEMATIC FULL HERO CONTAINER WITH VIDEO */}
-        <section className="relative rounded-3xl overflow-hidden border border-slate-800/80 min-h-[480px] flex items-center justify-center p-8 md:p-16 shadow-2xl bg-[#081225]">
+        {/* HERO SECTION */}
+        <section className="text-center space-y-6 pt-12 pb-8 max-w-3xl mx-auto">
+          <div className="inline-block px-3.5 py-1 bg-slate-900/80 backdrop-blur-md border border-slate-700/80 rounded-full text-xs text-[#CCFF00] font-mono tracking-wider uppercase mb-2 shadow-xl">
+            Dispatch #000 · Platform Launch
+          </div>
           
-          {/* FULL SCREEN COVER VIDEO LAYER */}
-          <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none z-0">
-            <video 
-              autoPlay 
-              loop 
-              muted 
-              playsInline 
-              ref={(el) => { if (el) el.muted = true; }}
-              className="w-full h-full object-cover opacity-50 scale-105"
-            >
-              <source src="/bubble.mp4" type="video/mp4" />
-            </video>
-            {/* Cinematic Gradient Overlays */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#030914] via-[#030914]/40 to-[#030914]/70"></div>
-          </div>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-2xl">
+            Far Below The <span className="text-[#CCFF00]">Surface Noise.</span>
+          </h1>
+          
+          <p className="text-lg md:text-xl text-slate-200 font-light leading-relaxed drop-shadow-md max-w-2xl mx-auto">
+            No social algorithms. Timeless, interactive, and deeply researched ecological investigations delivered directly to your inbox.
+          </p>
 
-          {/* HERO CONTENT LAYER */}
-          <div className="relative z-10 text-center space-y-6 max-w-2xl mx-auto">
-            <div className="inline-block px-3.5 py-1 bg-slate-900/90 border border-slate-700/80 rounded-full text-xs text-[#CCFF00] font-mono tracking-wider uppercase mb-2 shadow-lg">
-              Dispatch #000 · Platform Launch
-            </div>
-            
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-2xl">
-              Far Below The <span className="text-[#CCFF00]">Surface Noise.</span>
-            </h1>
-            
-            <p className="text-base md:text-lg text-slate-200 font-light leading-relaxed drop-shadow-md">
-              No social algorithms. Timeless, interactive, and deeply researched ecological investigations delivered directly to your inbox.
-            </p>
-
-            {/* BEEHIIV FORM */}
-            <div className="pt-2 max-w-md mx-auto">
-              {submitted ? (
-                <div className="p-4 bg-[#081225]/90 border border-[#CCFF00]/40 rounded-lg text-[#CCFF00] text-sm font-mono backdrop-blur-md">
-                  ✓ Subscription request received. Welcome to Deep Dispatches.
-                </div>
-              ) : (
-                <>
-                  <form 
-                    action="https://app.beehiiv.com/subscribe" 
-                    method="POST" 
-                    target="beehiiv-target"
-                    onSubmit={() => setSubmitted(true)}
-                    className="flex flex-col sm:flex-row gap-3"
+          {/* BEEHIIV FORM */}
+          <div className="pt-4 max-w-md mx-auto">
+            {submitted ? (
+              <div className="p-4 bg-[#081225]/90 border border-[#CCFF00]/40 rounded-lg text-[#CCFF00] text-sm font-mono backdrop-blur-md">
+                ✓ Subscription request received. Welcome to Deep Dispatches.
+              </div>
+            ) : (
+              <>
+                <form 
+                  action="https://app.beehiiv.com/subscribe" 
+                  method="POST" 
+                  target="beehiiv-target"
+                  onSubmit={() => setSubmitted(true)}
+                  className="flex flex-col sm:flex-row gap-3"
+                >
+                  <input type="hidden" name="publication_id" value="pub_2383c5ca-1813-4b13-b35f-6b498cd01829" />
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="Enter your email..."
+                    className="flex-1 px-4 py-3 bg-[#030914]/90 backdrop-blur-md border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#CCFF00] transition-colors shadow-inner"
+                  />
+                  <button
+                    type="submit"
+                    className="px-6 py-3 bg-[#CCFF00] hover:bg-[#b8e600] text-black font-semibold rounded-lg transition-colors cursor-pointer whitespace-nowrap shadow-xl"
                   >
-                    <input type="hidden" name="publication_id" value="pub_2383c5ca-1813-4b13-b35f-6b498cd01829" />
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      placeholder="Enter your email..."
-                      className="flex-1 px-4 py-3 bg-[#030914]/90 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#CCFF00] transition-colors"
-                    />
-                    <button
-                      type="submit"
-                      className="px-6 py-3 bg-[#CCFF00] hover:bg-[#b8e600] text-black font-semibold rounded-lg transition-colors cursor-pointer whitespace-nowrap shadow-xl"
-                    >
-                      Subscribe
-                    </button>
-                  </form>
-                  <iframe name="beehiiv-target" className="hidden" title="beehiiv-form-target" />
-                </>
-              )}
-              <p className="text-xs text-slate-400 mt-3 font-medium">No spam. Unsubscribe anytime in one click.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* SCROLLABLE & SORTABLE DISPATCHES STREAM */}
-        <section className="space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
-            <h2 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
-              // INVESTIGATION STREAM
-            </h2>
-            
-            <div className="flex items-center gap-2 text-xs font-mono">
-              <span className="text-slate-500 mr-1">Sort by:</span>
-              <button
-                onClick={() => setSortBy('latest')}
-                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                  sortBy === 'latest'
-                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                    : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
-                }`}
-              >
-                Latest
-              </button>
-              <button
-                onClick={() => setSortBy('popular')}
-                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                  sortBy === 'popular'
-                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                    : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
-                }`}
-              >
-                Most Read
-              </button>
-              <button
-                onClick={() => setSortBy('oldest')}
-                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                  sortBy === 'oldest'
-                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                    : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
-                }`}
-              >
-                Oldest
-              </button>
-            </div>
-          </div>
-
-          <div className="space-y-8">
-            {sortedDispatches.map((dispatch) => (
-              <article 
-                key={dispatch.id}
-                onClick={() => setActiveArticleId(dispatch.id)}
-                className="group bg-[#081225]/50 hover:bg-[#081225] border border-slate-800/80 hover:border-[#CCFF00]/40 rounded-2xl p-8 md:p-10 transition-all duration-300 cursor-pointer relative overflow-hidden shadow-lg"
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[#CCFF00]/5 rounded-full blur-2xl group-hover:bg-[#CCFF00]/10 transition-colors pointer-events-none"></div>
-
-                <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-[#CCFF00] mb-4">
-                  <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00]"></span>
-                    <span>{dispatch.number}</span>
-                    <span className="text-slate-600">·</span>
-                    <span className="text-slate-400">{dispatch.category}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-slate-500">
-                    <span>{dispatch.readTime}</span>
-                    {sortBy === 'popular' && (
-                      <span className="text-[#CCFF00]/80 bg-[#CCFF00]/10 px-2 py-0.5 rounded text-[10px]">
-                        {dispatch.views.toLocaleString()} reads
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-[#CCFF00] transition-colors leading-tight">
-                  {dispatch.title}
-                </h3>
-
-                <p className="text-slate-300 text-sm md:text-base font-light leading-relaxed mb-6">
-                  {dispatch.summary}
-                </p>
-
-                <div className="flex items-center justify-between pt-4 border-t border-slate-800/50">
-                  <span className="text-xs text-slate-500 font-mono">{dispatch.status}</span>
-                  <span className="text-xs font-semibold text-[#CCFF00] group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                    Read Investigation →
-                  </span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* MANIFESTO SECTION */}
-        <section className="border-t border-slate-800/80 pt-16 space-y-10">
-          <div className="max-w-3xl">
-            <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase mb-4">
-              // THE MANIFESTO
-            </h3>
-            <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
-              Welcome to <strong className="text-white font-semibold">Deep Dispatches</strong>, a platform created far below the surface noise. Here, I bridge the gap between Deep Ecology, Marine Mysteries, and the critical worlds of Ecological Finance and Geo-Political Journeys.
-            </p>
-            <p className="text-base text-slate-400 font-light leading-relaxed mt-4">
-              Moving beyond static reporting, I craft visually immersive scrollytelling experiences. Through interactive mapping, dynamic data, and cinematic narratives, I don't just tell these stories—I give you the depth to explore them. Don't miss the horizon.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 pt-4 border-t border-slate-800/40">
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">01. Independent</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Pure journalism uninfluenced by advertisers, algorithms, or clickbait metrics.</p>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">02. Immersive</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Interactive scrollytelling, dynamic maps, and data visualizations instead of quick news bites.</p>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">03. Timeless</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Deep investigative dossiers built to hold lasting intellectual and ecological value for years.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* THE INVESTIGATOR SECTION WITH PROFILE PHOTO */}
-        <section className="border-t border-slate-800/80 pt-16 space-y-6">
-          <h3 className="text-xs font-mono
+                    Subscribe
+                  </button>
+                </form>
+                <iframe name="beehiiv-target" className="hidden" title="beehiiv-form-target" />
