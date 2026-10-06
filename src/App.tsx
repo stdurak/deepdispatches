@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 type SortOption = 'latest' | 'popular' | 'oldest';
 
@@ -51,6 +51,8 @@ export default function App() {
   const [submitted, setSubmitted] = useState(false);
   const [activeArticleId, setActiveArticleId] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>('latest');
+  const [selectedEcotype, setSelectedEcotype] = useState<'resident' | 'transient'>('resident');
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   const selectedArticle = DISPATCHES.find(d => d.id === activeArticleId);
 
@@ -59,7 +61,7 @@ export default function App() {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     }
     if (sortBy === 'oldest') {
-      return new Date(a.date).getTime() - new Date(b.date).getTime();
+      return new Date(a.date).getTime() - new Date(a.date).getTime();
     }
     if (sortBy === 'popular') {
       return b.views - a.views;
@@ -114,10 +116,12 @@ export default function App() {
         </div>
       </header>
 
-      {/* ARTICLE READER OR HOME FEED */}
+      {/* ARTICLE READER VIEW */}
       {selectedArticle ? (
-        <main className="max-w-3xl mx-auto px-6 py-16 space-y-8 relative z-10">
-          <div className="space-y-4">
+        <main className="max-w-4xl mx-auto px-6 py-16 space-y-12 relative z-10">
+          
+          {/* ARTICLE HEADER */}
+          <div className="space-y-4 max-w-3xl">
             <div className="flex items-center gap-3 text-xs font-mono text-[#CCFF00]">
               <span>{selectedArticle.number}</span>
               <span>·</span>
@@ -136,235 +140,366 @@ export default function App() {
             </div>
           </div>
 
-          <div className="prose prose-invert max-w-none text-slate-300 font-light leading-relaxed space-y-6 pt-4 text-base md:text-lg">
+          {/* INTRO TEXT */}
+          <div className="prose prose-invert max-w-3xl text-slate-300 font-light leading-relaxed space-y-6 text-base md:text-lg">
             <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-[#CCFF00] first-letter:mr-3 first-letter:float-left">
               {selectedArticle.summary}
             </p>
             <p>{selectedArticle.excerpt}</p>
-            <div className="p-6 bg-[#081225] border-l-2 border-[#CCFF00] rounded-r-lg text-slate-200 font-serif italic my-8">
-              "Life on this planet resembles a branching tree – not an arrow."
+          </div>
+
+          {/* SCROLLYTELLING INTERACTIVE MAP COMPONENT */}
+          <section className="my-12 bg-[#081225]/80 border border-slate-800 rounded-3xl p-6 md:p-8 space-y-6 shadow-2xl backdrop-blur-md">
+            
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+              <div>
+                <span className="text-[10px] font-mono text-[#CCFF00] tracking-widest uppercase block mb-1">
+                  // INTERACTIVE SCROLLYTELLING ASSET
+                </span>
+                <h3 className="text-xl font-bold text-white">
+                  Acoustic-Spatial Ecotype Mapping
+                </h3>
+              </div>
+
+              {/* ECOTYPE SELECTOR TOGGLE */}
+              <div className="flex items-center gap-2 bg-[#030914] p-1.5 rounded-xl border border-slate-800 text-xs font-mono">
+                <button
+                  onClick={() => setSelectedEcotype('resident')}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    selectedEcotype === 'resident'
+                      ? 'bg-[#CCFF00] text-black font-semibold'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Resident (Inland)
+                </button>
+                <button
+                  onClick={() => setSelectedEcotype('transient')}
+                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                    selectedEcotype === 'transient'
+                      ? 'bg-[#CCFF00] text-black font-semibold'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Transient (Offshore)
+                </button>
+              </div>
             </div>
-            <p className="text-slate-500 text-sm italic font-mono">
-              [Full dossier content is currently being formatted with interactive scrollytelling components...]
+
+            {/* MAP CONTAINER WITH HOTSPOTS */}
+            <div className="relative rounded-2xl overflow-hidden border border-slate-800/80 bg-[#030914] group">
+              <img 
+                src="/orca-map.svg" 
+                alt="Pacific Northwest Orca Migration Map" 
+                className="w-full h-auto object-cover min-h-[300px]"
+              />
+
+              {/* HOTSPOT 1: PUGET SOUND / RESIDENT ORCAS */}
+              <button 
+                onClick={() => {
+                  setSelectedEcotype('resident');
+                  setIsPlayingAudio(!isPlayingAudio);
+                }}
+                className={`absolute top-[48%] right-[22%] sm:right-[24%] p-3 rounded-full transition-all cursor-pointer group/pin ${
+                  selectedEcotype === 'resident' ? 'scale-125 z-20' : 'opacity-75 hover:opacity-100'
+                }`}
+              >
+                <span className="absolute inset-0 rounded-full bg-[#CCFF00]/30 animate-ping"></span>
+                <span className="relative flex items-center justify-center w-5 h-5 bg-[#CCFF00] text-black rounded-full text-[10px] font-bold shadow-lg">
+                  1
+                </span>
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/pin:block bg-black/90 text-[#CCFF00] text-[10px] font-mono px-2 py-1 rounded whitespace-nowrap border border-[#CCFF00]/40">
+                  Salish Sea Pods (Chirps & Dialects)
+                </span>
+              </button>
+
+              {/* HOTSPOT 2: OUTER PACIFIC / TRANSIENT ORCAS */}
+              <button 
+                onClick={() => {
+                  setSelectedEcotype('transient');
+                  setIsPlayingAudio(!isPlayingAudio);
+                }}
+                className={`absolute top-[42%] left-[32%] sm:left-[35%] p-3 rounded-full transition-all cursor-pointer group/pin ${
+                  selectedEcotype === 'transient' ? 'scale-125 z-20' : 'opacity-75 hover:opacity-100'
+                }`}
+              >
+                <span className="absolute inset-0 rounded-full bg-slate-400/30 animate-ping"></span>
+                <span className="relative flex items-center justify-center w-5 h-5 bg-slate-200 text-black rounded-full text-[10px] font-bold shadow-lg">
+                  2
+                </span>
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/pin:block bg-black/90 text-white text-[10px] font-mono px-2 py-1 rounded whitespace-nowrap border border-slate-700">
+                  Outer Coast Hunters (Stealth Mode)
+                </span>
+              </button>
+            </div>
+
+            {/* ACOUSTIC DATA PANEL */}
+            <div className="bg-[#030914]/90 border border-slate-800 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse"></span>
+                  <span className="text-xs font-mono text-[#CCFF00] uppercase tracking-wider">
+                    {selectedEcotype === 'resident' ? 'Southern Resident Ecotype (SRKW)' : 'Bigg\'s Transient Ecotype'}
+                  </span>
+                </div>
+                <p className="text-sm text-slate-300 font-light leading-relaxed">
+                  {selectedEcotype === 'resident' 
+                    ? 'Resident pods rely heavily on highly complex, vocal dialects to coordinate salmon hunts in murky coastal waters. Salmon are deaf to high-frequency orca calls.' 
+                    : 'Transient pods hunt marine mammals (seals, porpoises) with acute underwater hearing. They maintain near-total acoustic silence to execute stealth strikes.'}
+                </p>
+              </div>
+
+              {/* AUDIO SAMPLE TRIGGER SIMULATOR */}
+              <button
+                onClick={() => setIsPlayingAudio(!isPlayingAudio)}
+                className={`shrink-0 px-6 py-3 rounded-xl border text-xs font-mono flex items-center gap-3 transition-all cursor-pointer ${
+                  isPlayingAudio
+                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-bold shadow-lg shadow-[#CCFF00]/20'
+                    : 'bg-[#081225] text-[#CCFF00] border-[#CCFF00]/40 hover:border-[#CCFF00]'
+                }`}
+              >
+                <span>{isPlayingAudio ? '▌▌ PAUSE ACOUSTICS' : '▶ PLAY HYDROPHONE SAMPLE'}</span>
+                {isPlayingAudio && (
+                  <span className="flex gap-1 items-end h-3">
+                    <span className="w-0.5 h-full bg-black animate-bounce"></span>
+                    <span className="w-0.5 h-2/3 bg-black animate-bounce [animation-delay:0.2s]"></span>
+                    <span className="w-0.5 h-1/2 bg-black animate-bounce [animation-delay:0.4s]"></span>
+                  </span>
+                )}
+              </button>
+            </div>
+
+          </section>
+
+          {/* MAIN ARTICLE BODY CONTINUATION */}
+          <div className="prose prose-invert max-w-3xl text-slate-300 font-light leading-relaxed space-y-6 text-base md:text-lg pt-4">
+            <div className="p-6 bg-[#081225] border-l-2 border-[#CCFF00] rounded-r-lg text-slate-200 font-serif italic my-8">
+              "Life on this planet resembles a branching tree – not an arrow. Culture drives biological evolution in marine apex predators."
+            </div>
+            <p>
+              As observed in the telemetry data above, two genetically similar groups living in the exact same water bodies choose radically different lifestyle blueprints, vocal dialects, and hunting techniques passed down through matriarchal lines for thousands of years.
             </p>
           </div>
+
         </main>
       ) : (
-        <main className="max-w-4xl mx-auto px-6 py-12 space-y-24 relative z-10">
+
+      /* HOME FEED VIEW */
+      <main className="max-w-4xl mx-auto px-6 py-12 space-y-24 relative z-10">
+        
+        {/* HERO SECTION */}
+        <section className="text-center space-y-6 pt-12 pb-8 max-w-3xl mx-auto">
+          <div className="inline-block px-3.5 py-1 bg-slate-900/80 backdrop-blur-md border border-slate-700/80 rounded-full text-xs text-[#CCFF00] font-mono tracking-wider uppercase mb-2 shadow-xl">
+            Dispatch #000 · Platform Launch
+          </div>
           
-          {/* HERO SECTION */}
-          <section className="text-center space-y-6 pt-12 pb-8 max-w-3xl mx-auto">
-            <div className="inline-block px-3.5 py-1 bg-slate-900/80 backdrop-blur-md border border-slate-700/80 rounded-full text-xs text-[#CCFF00] font-mono tracking-wider uppercase mb-2 shadow-xl">
-              Dispatch #000 · Platform Launch
-            </div>
-            
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-2xl">
-              Far Below The <span className="text-[#CCFF00]">Surface Noise.</span>
-            </h1>
-            
-            <p className="text-lg md:text-xl text-slate-200 font-light leading-relaxed drop-shadow-md max-w-2xl mx-auto">
-              No social algorithms. Timeless, interactive, and deeply researched ecological investigations delivered directly to your inbox.
-            </p>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-2xl">
+            Far Below The <span className="text-[#CCFF00]">Surface Noise.</span>
+          </h1>
+          
+          <p className="text-lg md:text-xl text-slate-200 font-light leading-relaxed drop-shadow-md max-w-2xl mx-auto">
+            No social algorithms. Timeless, interactive, and deeply researched ecological investigations delivered directly to your inbox.
+          </p>
 
-            {/* BEEHIIV FORM */}
-            <div className="pt-4 max-w-md mx-auto">
-              {submitted ? (
-                <div className="p-4 bg-[#081225]/90 border border-[#CCFF00]/40 rounded-lg text-[#CCFF00] text-sm font-mono backdrop-blur-md">
-                  ✓ Subscription request received. Welcome to Deep Dispatches.
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  <form 
-                    action="https://app.beehiiv.com/subscribe" 
-                    method="POST" 
-                    target="beehiiv-target"
-                    onSubmit={() => setSubmitted(true)}
-                    className="flex flex-col sm:flex-row gap-3"
+          {/* BEEHIIV FORM */}
+          <div className="pt-4 max-w-md mx-auto">
+            {submitted ? (
+              <div className="p-4 bg-[#081225]/90 border border-[#CCFF00]/40 rounded-lg text-[#CCFF00] text-sm font-mono backdrop-blur-md">
+                ✓ Subscription request received. Welcome to Deep Dispatches.
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <form 
+                  action="https://app.beehiiv.com/subscribe" 
+                  method="POST" 
+                  target="beehiiv-target"
+                  onSubmit={() => setSubmitted(true)}
+                  className="flex flex-col sm:flex-row gap-3"
+                >
+                  <input type="hidden" name="publication_id" value="pub_2383c5ca-1813-4b13-b35f-6b498cd01829" />
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="Enter your email..."
+                    className="flex-1 px-4 py-3 bg-[#030914]/90 backdrop-blur-md border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#CCFF00] transition-colors shadow-inner"
+                  />
+                  <button
+                    type="submit"
+                    className="px-6 py-3 bg-[#CCFF00] hover:bg-[#b8e600] text-black font-semibold rounded-lg transition-colors cursor-pointer whitespace-nowrap shadow-xl"
                   >
-                    <input type="hidden" name="publication_id" value="pub_2383c5ca-1813-4b13-b35f-6b498cd01829" />
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      placeholder="Enter your email..."
-                      className="flex-1 px-4 py-3 bg-[#030914]/90 backdrop-blur-md border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#CCFF00] transition-colors shadow-inner"
-                    />
-                    <button
-                      type="submit"
-                      className="px-6 py-3 bg-[#CCFF00] hover:bg-[#b8e600] text-black font-semibold rounded-lg transition-colors cursor-pointer whitespace-nowrap shadow-xl"
-                    >
-                      Subscribe
-                    </button>
-                  </form>
-                  <iframe name="beehiiv-target" className="hidden" title="beehiiv-form-target"></iframe>
-                </div>
-              )}
-              <p className="text-xs text-slate-400 mt-3 font-medium">No spam. Unsubscribe anytime in one click.</p>
-            </div>
-          </section>
-
-          {/* INVESTIGATION STREAM */}
-          <section className="space-y-8">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
-              <h2 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
-                // INVESTIGATION STREAM
-              </h2>
-              
-              <div className="flex items-center gap-2 text-xs font-mono">
-                <span className="text-slate-500 mr-1">Sort by:</span>
-                <button
-                  onClick={() => setSortBy('latest')}
-                  className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                    sortBy === 'latest'
-                      ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                      : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
-                  }`}
-                >
-                  Latest
-                </button>
-                <button
-                  onClick={() => setSortBy('popular')}
-                  className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                    sortBy === 'popular'
-                      ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                      : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
-                  }`}
-                >
-                  Most Read
-                </button>
-                <button
-                  onClick={() => setSortBy('oldest')}
-                  className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                    sortBy === 'oldest'
-                      ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                      : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
-                  }`}
-                >
-                  Oldest
-                </button>
+                    Subscribe
+                  </button>
+                </form>
+                <iframe name="beehiiv-target" className="hidden" title="beehiiv-form-target"></iframe>
               </div>
-            </div>
+            )}
+            <p className="text-xs text-slate-400 mt-3 font-medium">No spam. Unsubscribe anytime in one click.</p>
+          </div>
+        </section>
 
-            <div className="space-y-8">
-              {sortedDispatches.map((dispatch) => (
-                <article 
-                  key={dispatch.id}
-                  onClick={() => setActiveArticleId(dispatch.id)}
-                  className="group bg-[#081225]/50 hover:bg-[#081225] border border-slate-800/80 hover:border-[#CCFF00]/40 rounded-2xl p-8 md:p-10 transition-all duration-300 cursor-pointer relative overflow-hidden shadow-lg backdrop-blur-sm"
-                >
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#CCFF00]/5 rounded-full blur-2xl group-hover:bg-[#CCFF00]/10 transition-colors pointer-events-none"></div>
-
-                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-[#CCFF00] mb-4">
-                    <div className="flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00]"></span>
-                      <span>{dispatch.number}</span>
-                      <span className="text-slate-600">·</span>
-                      <span className="text-slate-400">{dispatch.category}</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-slate-500">
-                      <span>{dispatch.readTime}</span>
-                      {sortBy === 'popular' && (
-                        <span className="text-[#CCFF00]/80 bg-[#CCFF00]/10 px-2 py-0.5 rounded text-[10px]">
-                          {dispatch.views.toLocaleString()} reads
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-[#CCFF00] transition-colors leading-tight">
-                    {dispatch.title}
-                  </h3>
-
-                  <p className="text-slate-300 text-sm md:text-base font-light leading-relaxed mb-6">
-                    {dispatch.summary}
-                  </p>
-
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-800/50">
-                    <span className="text-xs text-slate-500 font-mono">{dispatch.status}</span>
-                    <span className="text-xs font-semibold text-[#CCFF00] group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                      Read Investigation →
-                    </span>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          {/* MANIFESTO SECTION */}
-          <section className="border-t border-slate-800/80 pt-16 space-y-10">
-            <div className="max-w-3xl">
-              <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase mb-4">
-                // THE MANIFESTO
-              </h3>
-              <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
-                Welcome to <strong className="text-white font-semibold">Deep Dispatches</strong>, a platform created far below the surface noise. Here, I bridge the gap between Deep Ecology, Marine Mysteries, and the critical worlds of Ecological Finance and Geo-Political Journeys.
-              </p>
-              <p className="text-base text-slate-400 font-light leading-relaxed mt-4">
-                Moving beyond static reporting, I craft visually immersive scrollytelling experiences. Through interactive mapping, dynamic data, and cinematic narratives, I don't just tell these stories—I give you the depth to explore them. Don't miss the horizon.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8 pt-4 border-t border-slate-800/40">
-              <div>
-                <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">01. Independent</h4>
-                <p className="text-xs text-slate-400 leading-relaxed">Pure journalism uninfluenced by advertisers, algorithms, or clickbait metrics.</p>
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">02. Immersive</h4>
-                <p className="text-xs text-slate-400 leading-relaxed">Interactive scrollytelling, dynamic maps, and data visualizations instead of quick news bites.</p>
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">03. Timeless</h4>
-                <p className="text-xs text-slate-400 leading-relaxed">Deep investigative dossiers built to hold lasting intellectual and ecological value for years.</p>
-              </div>
-            </div>
-          </section>
-
-          {/* THE INVESTIGATOR SECTION WITH PROFILE PHOTO */}
-          <section className="border-t border-slate-800/80 pt-16 space-y-6">
-            <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
-              // THE INVESTIGATOR
-            </h3>
+        {/* INVESTIGATION STREAM */}
+        <section className="space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+            <h2 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
+              // INVESTIGATION STREAM
+            </h2>
             
-            <div className="bg-[#081225]/60 border border-slate-800/80 rounded-2xl p-8 md:p-10 relative overflow-hidden flex flex-col md:flex-row gap-8 items-start backdrop-blur-sm">
-              
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#CCFF00]/5 rounded-full blur-3xl pointer-events-none"></div>
-
-              {/* PROFILE PHOTO */}
-              <div className="w-32 h-32 md:w-48 md:h-48 shrink-0 relative rounded-xl overflow-hidden border border-slate-700/50 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 bg-slate-900">
-                <img 
-                  src="/profile.jpg" 
-                  alt="The Investigator" 
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#081225] via-transparent to-transparent"></div>
-              </div>
-
-              {/* BIO TEXT */}
-              <div className="space-y-6 flex-1">
-                <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed">
-                  When people ask what I do for a living, the answer has changed many times over the years: camera operator, field correspondent, Editor-in-Chief, logistics manager, diving instructor... But deep down, I have always been one thing: <span className="text-[#CCFF00] font-normal">a journalist.</span>
-                </p>
-
-                <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                  I spent decades inside major media networks—including <strong className="text-slate-200">CNN International, NTV, ATV, and Sky News</strong>—navigating the high-pressure world of traditional newsrooms. But chasing social media algorithms and being a 'content creator' left me exhausted. I didn't want to add to the surface noise anymore; I wanted to explore the depths.
-                </p>
-
-                <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                  As a journalist, master diver, and proud father—with dive logs spanning from the <span className="text-slate-300">Red Sea</span> and <span className="text-slate-300">Thailand</span> to <span className="text-slate-300">Malta, Cyprus, the Black Sea, and the Mediterranean</span>—I built <strong className="text-white">Deep Dispatches</strong> to mind my own business. Here, I focus entirely on marine mysteries, climate crises, and deep ecology. No daily clickbait, no corporate agendas. Just high-impact, deeply researched dossiers delivered directly to you.
-                </p>
-
-                <div className="pt-4 flex flex-wrap gap-3 text-xs font-mono text-slate-500">
-                  <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Journalism & Broadcast</span>
-                  <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Scuba Diving Instructor</span>
-                  <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Deep Ecology</span>
-                </div>
-              </div>
-              
+            <div className="flex items-center gap-2 text-xs font-mono">
+              <span className="text-slate-500 mr-1">Sort by:</span>
+              <button
+                onClick={() => setSortBy('latest')}
+                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                  sortBy === 'latest'
+                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
+                    : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
+                }`}
+              >
+                Latest
+              </button>
+              <button
+                onClick={() => setSortBy('popular')}
+                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                  sortBy === 'popular'
+                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
+                    : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
+                }`}
+              >
+                Most Read
+              </button>
+              <button
+                onClick={() => setSortBy('oldest')}
+                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                  sortBy === 'oldest'
+                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
+                    : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
+                }`}
+              >
+                Oldest
+              </button>
             </div>
-          </section>
+          </div>
 
-        </main>
+          <div className="space-y-8">
+            {sortedDispatches.map((dispatch) => (
+              <article 
+                key={dispatch.id}
+                onClick={() => setActiveArticleId(dispatch.id)}
+                className="group bg-[#081225]/50 hover:bg-[#081225] border border-slate-800/80 hover:border-[#CCFF00]/40 rounded-2xl p-8 md:p-10 transition-all duration-300 cursor-pointer relative overflow-hidden shadow-lg backdrop-blur-sm"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#CCFF00]/5 rounded-full blur-2xl group-hover:bg-[#CCFF00]/10 transition-colors pointer-events-none"></div>
+
+                <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-[#CCFF00] mb-4">
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00]"></span>
+                    <span>{dispatch.number}</span>
+                    <span className="text-slate-600">·</span>
+                    <span className="text-slate-400">{dispatch.category}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-slate-500">
+                    <span>{dispatch.readTime}</span>
+                    {sortBy === 'popular' && (
+                      <span className="text-[#CCFF00]/80 bg-[#CCFF00]/10 px-2 py-0.5 rounded text-[10px]">
+                        {dispatch.views.toLocaleString()} reads
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-[#CCFF00] transition-colors leading-tight">
+                  {dispatch.title}
+                </h3>
+
+                <p className="text-slate-300 text-sm md:text-base font-light leading-relaxed mb-6">
+                  {dispatch.summary}
+                </p>
+
+                <div className="flex items-center justify-between pt-4 border-t border-slate-800/50">
+                  <span className="text-xs text-slate-500 font-mono">{dispatch.status}</span>
+                  <span className="text-xs font-semibold text-[#CCFF00] group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                    Read Investigation →
+                  </span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* MANIFESTO SECTION */}
+        <section className="border-t border-slate-800/80 pt-16 space-y-10">
+          <div className="max-w-3xl">
+            <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase mb-4">
+              // THE MANIFESTO
+            </h3>
+            <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
+              Welcome to <strong className="text-white font-semibold">Deep Dispatches</strong>, a platform created far below the surface noise. Here, I bridge the gap between Deep Ecology, Marine Mysteries, and the critical worlds of Ecological Finance and Geo-Political Journeys.
+            </p>
+            <p className="text-base text-slate-400 font-light leading-relaxed mt-4">
+              Moving beyond static reporting, I craft visually immersive scrollytelling experiences. Through interactive mapping, dynamic data, and cinematic narratives, I don't just tell these stories—I give you the depth to explore them. Don't miss the horizon.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 pt-4 border-t border-slate-800/40">
+            <div>
+              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">01. Independent</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">Pure journalism uninfluenced by advertisers, algorithms, or clickbait metrics.</p>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">02. Immersive</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">Interactive scrollytelling, dynamic maps, and data visualizations instead of quick news bites.</p>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">03. Timeless</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">Deep investigative dossiers built to hold lasting intellectual and ecological value for years.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* THE INVESTIGATOR SECTION WITH PROFILE PHOTO */}
+        <section className="border-t border-slate-800/80 pt-16 space-y-6">
+          <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
+            // THE INVESTIGATOR
+          </h3>
+          
+          <div className="bg-[#081225]/60 border border-slate-800/80 rounded-2xl p-8 md:p-10 relative overflow-hidden flex flex-col md:flex-row gap-8 items-start backdrop-blur-sm">
+            
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#CCFF00]/5 rounded-full blur-3xl pointer-events-none"></div>
+
+            {/* PROFILE PHOTO */}
+            <div className="w-32 h-32 md:w-48 md:h-48 shrink-0 relative rounded-xl overflow-hidden border border-slate-700/50 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 bg-slate-900">
+              <img 
+                src="/profile.jpg" 
+                alt="The Investigator" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#081225] via-transparent to-transparent"></div>
+            </div>
+
+            {/* BIO TEXT */}
+            <div className="space-y-6 flex-1">
+              <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed">
+                When people ask what I do for a living, the answer has changed many times over the years: camera operator, field correspondent, Editor-in-Chief, logistics manager, diving instructor... But deep down, I have always been one thing: <span className="text-[#CCFF00] font-normal">a journalist.</span>
+              </p>
+
+              <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
+                I spent decades inside major media networks—including <strong className="text-slate-200">CNN International, NTV, ATV, and Sky News</strong>—navigating the high-pressure world of traditional newsrooms. But chasing social media algorithms and being a 'content creator' left me exhausted. I didn't want to add to the surface noise anymore; I wanted to explore the depths.
+              </p>
+
+              <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
+                As a journalist, master diver, and proud father—with dive logs spanning from the <span className="text-slate-300">Red Sea</span> and <span className="text-slate-300">Thailand</span> to <span className="text-slate-300">Malta, Cyprus, the Black Sea, and the Mediterranean</span>—I built <strong className="text-white">Deep Dispatches</strong> to mind my own business. Here, I focus entirely on marine mysteries, climate crises, and deep ecology. No daily clickbait, no corporate agendas. Just high-impact, deeply researched dossiers delivered directly to you.
+              </p>
+
+              <div className="pt-4 flex flex-wrap gap-3 text-xs font-mono text-slate-500">
+                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Journalism & Broadcast</span>
+                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Scuba Diving Instructor</span>
+                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Deep Ecology</span>
+              </div>
+            </div>
+            
+          </div>
+        </section>
+
+      </main>
       )}
 
       {/* FOOTER */}
