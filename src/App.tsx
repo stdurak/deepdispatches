@@ -96,18 +96,32 @@ export default function App() {
         </section>
 
         {/* MANIFESTO */}
-        <section className="border-t border-slate-800/80 pt-16 grid md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">01. Bağımsız</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">Reklam verenlerin veya tıklama kaygılarının yönlendirmediği, saf odaklı gazetecilik.</p>
+        <section className="border-t border-slate-800/80 pt-16 space-y-10">
+          <div className="max-w-3xl">
+            <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase mb-4">
+              // THE MANIFESTO
+            </h3>
+            <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
+              Welcome to <strong className="text-white font-semibold">Deep Dispatches</strong>, a platform created far below the surface noise. Here, I bridge the gap between Deep Ecology, Marine Mysteries, and the critical worlds of Ecological Finance and Geo-Political Journeys.
+            </p>
+            <p className="text-base text-slate-400 font-light leading-relaxed mt-4">
+              Moving beyond static reporting, I craft visually immersive scrollytelling experiences. Through interactive mapping, dynamic data, and cinematic narratives, I don't just tell these stories—I give you the depth to explore them. Don't miss the horizon.
+            </p>
           </div>
-          <div>
-            <h3 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">02. Derinlikli</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">Yüzeysel haber akışı yerine veri odaklı, görsel ve derinlemesine araştırma dosyaları.</p>
-          </div>
-          <div>
-            <h3 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">03. Zamansız</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">24 saatlik gündem tüketiciliği değil; yıllar sonra da değerini koruyan kalıcı içerik.</p>
+
+          <div className="grid md:grid-cols-3 gap-8 pt-4 border-t border-slate-800/40">
+            <div>
+              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">01. Independent</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">Pure journalism uninfluenced by advertisers, algorithms, or clickbait metrics.</p>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">02. Immersive</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">Interactive scrollytelling, dynamic maps, and data visualizations instead of quick news bites.</p>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">03. Timeless</h4>
+              <p className="text-xs text-slate-400 leading-relaxed">Deep investigative dossiers built to hold lasting intellectual and ecological value for years.</p>
+            </div>
           </div>
         </section>
 
