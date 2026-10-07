@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 type SortOption = 'latest' | 'popular' | 'oldest';
 
@@ -44,6 +44,7 @@ const DISPATCHES = [
   }
 ];
 
+// CONTINUOUS MIND TIMELINE DATA
 const TIMELINE_STAGES = [
   {
     id: "epoch-01",
@@ -102,12 +103,29 @@ export default function App() {
   const [activeArticleId, setActiveArticleId] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>('latest');
   const [selectedEcotype, setSelectedEcotype] = useState<'resident' | 'transient'>('resident');
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const [activeAudioSrc, setActiveAudioSrc] = useState<string | null>(null);
   const [activeStageIndex, setActiveStageIndex] = useState(0);
   const [paradigmMode, setParadigmMode] = useState<'myth' | 'reality'>('reality');
+  
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const selectedArticle = DISPATCHES.find(d => d.id === activeArticleId);
   const currentStage = TIMELINE_STAGES[activeStageIndex];
+
+  const togglePlayAudio = (src: string) => {
+    if (activeAudioSrc === src) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      setActiveAudioSrc(null);
+    } else {
+      setActiveAudioSrc(src);
+      if (audioRef.current) {
+        audioRef.current.src = src;
+        audioRef.current.play().catch(err => console.log('Audio playback prevented:', err));
+      }
+    }
+  };
 
   const sortedDispatches = [...DISPATCHES].sort((a, b) => {
     if (sortBy === 'latest') {
@@ -123,8 +141,12 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen bg-[#030914] text-slate-100 font-sans selection:bg-[#CCFF00] selection:text-black relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#051124] text-slate-100 font-sans selection:bg-[#CCFF00] selection:text-black relative overflow-x-hidden">
       
+      {/* HIDDEN AUDIO ENGINE */}
+      <audio ref={audioRef} onEnded={() => setActiveAudioSrc(null)} className="hidden" />
+
+      {/* FULL-BLEED BACKGROUND VIDEO FOR HOME FEED */}
       {!selectedArticle && (
         <div className="absolute top-0 left-0 w-full h-[650px] overflow-hidden pointer-events-none z-0">
           <video 
@@ -133,15 +155,16 @@ export default function App() {
             muted 
             playsInline 
             ref={(el) => { if (el) el.muted = true; }}
-            className="w-full h-full object-cover opacity-45 scale-105"
+            className="w-full h-full object-cover opacity-35 scale-105"
           >
             <source src="/bubble.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-[#030914]/40 via-[#030914]/60 to-[#030914]"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#051124]/40 via-[#051124]/60 to-[#051124]"></div>
         </div>
       )}
 
-      <header className="sticky top-0 z-50 bg-[#030914]/80 backdrop-blur-md border-b border-slate-800/80 px-6 py-4">
+      {/* FIXED NAVBAR */}
+      <header className="sticky top-0 z-50 bg-[#051124]/85 backdrop-blur-md border-b border-slate-800/80 px-6 py-4">
         <div className="flex items-center justify-between max-w-6xl mx-auto">
           <div 
             className="flex items-center gap-2 cursor-pointer"
@@ -167,9 +190,11 @@ export default function App() {
         </div>
       </header>
 
+      {/* ARTICLE READER VIEW */}
       {selectedArticle ? (
         <main className="py-16 space-y-16 relative z-10">
           
+          {/* ARTICLE HEADER */}
           <div className="max-w-3xl mx-auto px-6 space-y-4">
             <div className="flex items-center gap-3 text-xs font-mono text-[#CCFF00]">
               <span>{selectedArticle.number}</span>
@@ -189,6 +214,26 @@ export default function App() {
             </div>
           </div>
 
+          {/* HERO COVER PHOTO WITH UN SPLASH ATTRIBUTION */}
+          <div className="max-w-5xl mx-auto px-4 md:px-6">
+            <div className="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
+              <img 
+                src="/orca-cover.jpg" 
+                alt="Orca surfacing in calm ocean waters" 
+                className="w-full h-[420px] md:h-[520px] object-cover"
+              />
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#051124] via-[#051124]/40 to-transparent p-4 flex justify-between items-end">
+                <span className="text-[11px] font-mono text-slate-300">
+                  Southern Resident Orca surfacing in Salish Sea waters.
+                </span>
+                <span className="text-[10px] font-mono text-slate-400 bg-black/60 px-2 py-1 rounded border border-slate-700">
+                  Photo by <a href="https://unsplash.com/@tomasmalik" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:underline">Tomas Malik</a> / Unsplash
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* INTRO TEXT */}
           <div className="max-w-3xl mx-auto px-6 prose prose-invert text-slate-300 font-light leading-relaxed space-y-6 text-base md:text-lg">
             <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-[#CCFF00] first-letter:mr-3 first-letter:float-left">
               For centuries, human philosophy and Western science rested on a comfortable dogma: that culture, language, and abstract thought were exclusive domains of <em>Homo sapiens</em>. Animals had instincts; humans had intellect.
@@ -198,8 +243,9 @@ export default function App() {
             </p>
           </div>
 
+          {/* SCROLLYTELLING COMPONENT 1: ACOUSTIC MAPPING & ORCASOUND LIVE TELEMETRY */}
           <section className="max-w-6xl mx-auto px-4 md:px-6 my-12">
-            <div className="bg-[#081225]/80 border border-slate-800 rounded-3xl p-6 md:p-10 space-y-6 shadow-2xl backdrop-blur-md">
+            <div className="bg-[#081630]/90 border border-slate-800 rounded-3xl p-6 md:p-10 space-y-6 shadow-2xl backdrop-blur-md">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
                 <div>
                   <span className="text-[10px] font-mono text-[#CCFF00] tracking-widest uppercase block mb-1">
@@ -210,9 +256,13 @@ export default function App() {
                   </h3>
                 </div>
 
-                <div className="flex items-center gap-2 bg-[#030914] p-1.5 rounded-xl border border-slate-800 text-xs font-mono">
+                {/* ECOTYPE SELECTOR TOGGLE */}
+                <div className="flex items-center gap-2 bg-[#051124] p-1.5 rounded-xl border border-slate-800 text-xs font-mono">
                   <button
-                    onClick={() => setSelectedEcotype('resident')}
+                    onClick={() => {
+                      setSelectedEcotype('resident');
+                      togglePlayAudio('/resident-chirp.mp3');
+                    }}
                     className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                       selectedEcotype === 'resident'
                         ? 'bg-[#CCFF00] text-black font-semibold'
@@ -222,7 +272,10 @@ export default function App() {
                     Resident (Inland)
                   </button>
                   <button
-                    onClick={() => setSelectedEcotype('transient')}
+                    onClick={() => {
+                      setSelectedEcotype('transient');
+                      togglePlayAudio('/transient-click.mp3');
+                    }}
                     className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
                       selectedEcotype === 'transient'
                         ? 'bg-[#CCFF00] text-black font-semibold'
@@ -234,17 +287,19 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="relative rounded-2xl overflow-hidden border border-slate-800/80 bg-[#030914] group">
+              {/* MAP CONTAINER WITH HOTSPOTS */}
+              <div className="relative rounded-2xl overflow-hidden border border-slate-800/80 bg-[#051124] group">
                 <img 
                   src="/orca-map.svg" 
                   alt="Pacific Northwest Orca Migration Map" 
                   className="w-full h-auto object-cover min-h-[350px]"
                 />
 
+                {/* HOTSPOT 1: RESIDENT ORCAS */}
                 <button 
                   onClick={() => {
                     setSelectedEcotype('resident');
-                    setIsPlayingAudio(!isPlayingAudio);
+                    togglePlayAudio('/resident-chirp.mp3');
                   }}
                   className={`absolute top-[48%] right-[22%] sm:right-[24%] p-3 rounded-full transition-all cursor-pointer group/pin ${
                     selectedEcotype === 'resident' ? 'scale-125 z-20' : 'opacity-75 hover:opacity-100'
@@ -255,14 +310,15 @@ export default function App() {
                     1
                   </span>
                   <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/pin:block bg-black/90 text-[#CCFF00] text-[10px] font-mono px-2 py-1 rounded whitespace-nowrap border border-[#CCFF00]/40">
-                    Salish Sea Pods (Chirps & Dialects)
+                    Salish Sea Pods (Listen Chirps &amp; Dialects)
                   </span>
                 </button>
 
+                {/* HOTSPOT 2: TRANSIENT ORCAS */}
                 <button 
                   onClick={() => {
                     setSelectedEcotype('transient');
-                    setIsPlayingAudio(!isPlayingAudio);
+                    togglePlayAudio('/transient-click.mp3');
                   }}
                   className={`absolute top-[42%] left-[32%] sm:left-[35%] p-3 rounded-full transition-all cursor-pointer group/pin ${
                     selectedEcotype === 'transient' ? 'scale-125 z-20' : 'opacity-75 hover:opacity-100'
@@ -273,12 +329,13 @@ export default function App() {
                     2
                   </span>
                   <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/pin:block bg-black/90 text-white text-[10px] font-mono px-2 py-1 rounded whitespace-nowrap border border-slate-700">
-                    Outer Coast Hunters (Stealth Mode)
+                    Outer Coast Hunters (Listen Sonar Clicks)
                   </span>
                 </button>
               </div>
 
-              <div className="bg-[#030914]/90 border border-slate-800 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+              {/* ACOUSTIC DATA PANEL */}
+              <div className="bg-[#051124]/90 border border-slate-800 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse"></span>
@@ -293,16 +350,17 @@ export default function App() {
                   </p>
                 </div>
 
+                {/* AUDIO SAMPLE TRIGGER BUTTON */}
                 <button
-                  onClick={() => setIsPlayingAudio(!isPlayingAudio)}
+                  onClick={() => togglePlayAudio(selectedEcotype === 'resident' ? '/resident-chirp.mp3' : '/transient-click.mp3')}
                   className={`shrink-0 px-6 py-3 rounded-xl border text-xs font-mono flex items-center gap-3 transition-all cursor-pointer ${
-                    isPlayingAudio
+                    activeAudioSrc
                       ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-bold shadow-lg shadow-[#CCFF00]/20'
-                      : 'bg-[#081225] text-[#CCFF00] border-[#CCFF00]/40 hover:border-[#CCFF00]'
+                      : 'bg-[#081630] text-[#CCFF00] border-[#CCFF00]/40 hover:border-[#CCFF00]'
                   }`}
                 >
-                  <span>{isPlayingAudio ? '▌▌ PAUSE ACOUSTICS' : '▶ PLAY HYDROPHONE SAMPLE'}</span>
-                  {isPlayingAudio && (
+                  <span>{activeAudioSrc ? '▌▌ PAUSE HYDROPHONE' : '▶ PLAY HYDROPHONE SAMPLE'}</span>
+                  {activeAudioSrc && (
                     <span className="flex gap-1 items-end h-3">
                       <span className="w-0.5 h-full bg-black animate-bounce"></span>
                       <span className="w-0.5 h-2/3 bg-black animate-bounce [animation-delay:0.2s]"></span>
@@ -311,11 +369,40 @@ export default function App() {
                   )}
                 </button>
               </div>
+
+              {/* ORCASOUND LIVE TELEMETRY BANNER */}
+              <div className="bg-[#051124] border border-[#CCFF00]/30 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-3 w-3 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                  </span>
+                  <div>
+                    <span className="text-xs font-mono text-red-400 font-bold block uppercase tracking-wider">
+                      ● LIVE FROM SALISH SEA · ORCASOUND TELEMETRY
+                    </span>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Listen live to open hydrophones deployed across Haro Strait and Port Townsend.
+                    </p>
+                  </div>
+                </div>
+
+                <a 
+                  href="https://www.orcasound.net/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="shrink-0 px-4 py-2 bg-red-500/10 border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-white rounded-xl text-xs font-mono font-semibold transition-all flex items-center gap-2"
+                >
+                  <span>CONNECT TO LIVE STREAM ↗</span>
+                </a>
+              </div>
+
             </div>
           </section>
 
+          {/* SCROLLYTELLING COMPONENT 2: THE CONTINUOUS MIND DEEP-TIME CARTOGRAPHY */}
           <section className="max-w-6xl mx-auto px-4 md:px-6 my-16">
-            <div className="bg-[#081225]/90 border border-slate-800 rounded-3xl p-6 md:p-10 space-y-8 shadow-2xl backdrop-blur-md relative overflow-hidden">
+            <div className="bg-[#081630]/90 border border-slate-800 rounded-3xl p-6 md:p-10 space-y-8 shadow-2xl backdrop-blur-md relative overflow-hidden">
               <div className="absolute top-0 right-0 w-80 h-80 bg-[#CCFF00]/5 rounded-full blur-3xl pointer-events-none"></div>
 
               <div className="space-y-4 border-b border-slate-800 pb-6">
@@ -323,7 +410,7 @@ export default function App() {
                   <span className="text-[10px] font-mono text-[#CCFF00] tracking-widest uppercase">
                     // SCROLLYTELLING MODULE 02 · THE CONTINUOUS MIND
                   </span>
-                  <div className="flex items-center gap-2 bg-[#030914] px-3 py-1 rounded-full border border-slate-800 text-[11px] font-mono">
+                  <div className="flex items-center gap-2 bg-[#051124] px-3 py-1 rounded-full border border-slate-800 text-[11px] font-mono">
                     <span className="text-slate-500">Paradigm:</span>
                     <button 
                       onClick={() => setParadigmMode('reality')}
@@ -351,7 +438,8 @@ export default function App() {
                 </p>
               </div>
 
-              <div className="bg-[#030914] border border-slate-800/80 rounded-2xl p-6 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 min-h-[220px]">
+              {/* VISUAL MIND MAP DIAGRAM */}
+              <div className="bg-[#051124] border border-slate-800/80 rounded-2xl p-6 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 min-h-[220px]">
                 {paradigmMode === 'reality' ? (
                   <div className="w-full flex flex-col md:flex-row items-center justify-around gap-6">
                     <div className="shrink-0 relative w-48 h-48 flex items-center justify-center">
@@ -366,7 +454,7 @@ export default function App() {
                         <circle cx="50" cy="50" r="4" className="fill-[#CCFF00]" />
                         <circle cx="100" cy="100" r="6" className="fill-white" />
                       </svg>
-                      <span className="absolute text-[10px] font-mono text-[#CCFF00] bg-[#030914] px-2 py-0.5 rounded border border-[#CCFF00]/40">
+                      <span className="absolute text-[10px] font-mono text-[#CCFF00] bg-[#051124] px-2 py-0.5 rounded border border-[#CCFF00]/40">
                         Radial Tree Of Life
                       </span>
                     </div>
@@ -377,15 +465,15 @@ export default function App() {
                         <span>THE REALITY: DARWINIAN BIOLOGICAL CONTINUUM</span>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono text-slate-300">
-                        <div className="p-3 bg-[#081225] border border-slate-800 rounded-xl">
+                        <div className="p-3 bg-[#081630] border border-slate-800 rounded-xl">
                           <strong className="text-white block mb-1">Geometry:</strong>
                           <span>Radial &amp; Branching multidimensional network</span>
                         </div>
-                        <div className="p-3 bg-[#081225] border border-slate-800 rounded-xl">
+                        <div className="p-3 bg-[#081630] border border-slate-800 rounded-xl">
                           <strong className="text-white block mb-1">Teleology:</strong>
                           <span>No end goal, purely adaptive survival mechanisms</span>
                         </div>
-                        <div className="p-3 bg-[#081225] border border-slate-800 rounded-xl sm:col-span-2">
+                        <div className="p-3 bg-[#081630] border border-slate-800 rounded-xl sm:col-span-2">
                           <strong className="text-white block mb-1">Human Status:</strong>
                           <span>Embedded within a shared, deeply conserved biological continuum</span>
                         </div>
@@ -406,7 +494,7 @@ export default function App() {
                         <line x1="15" y1="20" x2="85" y2="180" className="stroke-red-500" strokeWidth="3" />
                         <line x1="85" y1="20" x2="15" y2="180" className="stroke-red-500" strokeWidth="3" />
                       </svg>
-                      <span className="absolute text-[10px] font-mono text-amber-400 bg-[#030914] px-2 py-0.5 rounded border border-amber-500/40">
+                      <span className="absolute text-[10px] font-mono text-amber-400 bg-[#051124] px-2 py-0.5 rounded border border-amber-500/40">
                         DISMANTLED MYTH
                       </span>
                     </div>
@@ -417,15 +505,15 @@ export default function App() {
                         <span>THE MYTH: SCALA NATURA (LINEAR LADDER)</span>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono text-slate-300">
-                        <div className="p-3 bg-[#081225] border border-slate-800 rounded-xl">
+                        <div className="p-3 bg-[#081630] border border-slate-800 rounded-xl">
                           <strong className="text-amber-400 block mb-1">Geometry:</strong>
                           <span>Linear &amp; Vertical hierarchy (Climbing ladder)</span>
                         </div>
-                        <div className="p-3 bg-[#081225] border border-slate-800 rounded-xl">
+                        <div className="p-3 bg-[#081630] border border-slate-800 rounded-xl">
                           <strong className="text-amber-400 block mb-1">Teleology:</strong>
                           <span>Goal-directed towards human perfection</span>
                         </div>
-                        <div className="p-3 bg-[#081225] border border-slate-800 rounded-xl sm:col-span-2">
+                        <div className="p-3 bg-[#081630] border border-slate-800 rounded-xl sm:col-span-2">
                           <strong className="text-amber-400 block mb-1">Human Status:</strong>
                           <span>Flawed assumption of separate superiority (Sui generis)</span>
                         </div>
@@ -435,6 +523,7 @@ export default function App() {
                 )}
               </div>
 
+              {/* TIMELINE NAVIGATOR STEPS */}
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-2">
                 {TIMELINE_STAGES.map((stage, idx) => (
                   <button
@@ -443,7 +532,7 @@ export default function App() {
                     className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                       activeStageIndex === idx
                         ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-bold shadow-lg shadow-[#CCFF00]/10 scale-102'
-                        : 'bg-[#030914]/80 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-white'
+                        : 'bg-[#051124]/80 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-white'
                     }`}
                   >
                     <span className="text-[9px] font-mono block opacity-75 mb-1">STEP 0{idx + 1}</span>
@@ -452,7 +541,8 @@ export default function App() {
                 ))}
               </div>
 
-              <div className="bg-[#030914] border border-slate-800/90 rounded-2xl p-6 md:p-8 space-y-6 relative">
+              {/* ACTIVE STAGE DISPLAY PANEL */}
+              <div className="bg-[#051124] border border-slate-800/90 rounded-2xl p-6 md:p-8 space-y-6 relative">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/60 pb-4">
                   <div>
                     <span className="text-xs font-mono text-[#CCFF00] uppercase tracking-wider block">
@@ -473,24 +563,24 @@ export default function App() {
                 </p>
 
                 {activeStageIndex === 0 && (
-                  <div className="p-4 bg-[#081225] border border-slate-800 rounded-xl space-y-3">
+                  <div className="p-4 bg-[#081630] border border-slate-800 rounded-xl space-y-3">
                     <span className="text-[10px] font-mono text-[#CCFF00] tracking-widest uppercase block">
                       // INFORMATION PROCESSING LOOP
                     </span>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-xs font-mono">
-                      <div className="p-2 bg-[#030914] rounded border border-[#CCFF00]/30 text-[#CCFF00]">
+                      <div className="p-2 bg-[#051124] rounded border border-[#CCFF00]/30 text-[#CCFF00]">
                         1. Acquire
                         <span className="block text-[9px] text-slate-400 mt-0.5">Detect Inputs</span>
                       </div>
-                      <div className="p-2 bg-[#030914] rounded border border-[#CCFF00]/30 text-[#CCFF00]">
+                      <div className="p-2 bg-[#051124] rounded border border-[#CCFF00]/30 text-[#CCFF00]">
                         2. Process &amp; Store
                         <span className="block text-[9px] text-slate-400 mt-0.5">Integrate Signals</span>
                       </div>
-                      <div className="p-2 bg-[#030914] rounded border border-[#CCFF00]/30 text-[#CCFF00]">
+                      <div className="p-2 bg-[#051124] rounded border border-[#CCFF00]/30 text-[#CCFF00]">
                         3. Analyze
                         <span className="block text-[9px] text-slate-400 mt-0.5">Reach Threshold</span>
                       </div>
-                      <div className="p-2 bg-[#030914] rounded border border-[#CCFF00]/30 text-[#CCFF00]">
+                      <div className="p-2 bg-[#051124] rounded border border-[#CCFF00]/30 text-[#CCFF00]">
                         4. Act
                         <span className="block text-[9px] text-slate-400 mt-0.5">Adaptive Behavior</span>
                       </div>
@@ -498,7 +588,7 @@ export default function App() {
                   </div>
                 )}
 
-                <div className="p-4 bg-[#081225] border-l-2 border-[#CCFF00] rounded-r-xl text-xs font-mono text-slate-200">
+                <div className="p-4 bg-[#081630] border-l-2 border-[#CCFF00] rounded-r-xl text-xs font-mono text-slate-200">
                   <span className="text-[#CCFF00] font-bold mr-2">// KEY ARCHITECTURAL TAKEAWAY:</span>
                   {currentStage.highlight}
                 </div>
@@ -529,8 +619,27 @@ export default function App() {
             </div>
           </section>
 
-          <div className="max-w-3xl mx-auto px-6 prose prose-invert text-slate-300 font-light leading-relaxed space-y-10 text-base md:text-lg">
+          {/* FIGMA INFOGRAPHIC: HUMAN VS ORCA NEUROANATOMY */}
+          <section className="max-w-5xl mx-auto px-4 md:px-6 my-16 space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <span className="text-[10px] font-mono text-[#CCFF00] tracking-widest uppercase">
+                // INFOGRAPHIC · NEUROANATOMICAL COMPARISON
+              </span>
+              <span className="text-xs font-mono text-slate-500">Figma Vector Render</span>
+            </div>
+            <div className="bg-[#081630] border border-slate-800 rounded-2xl p-4 overflow-hidden shadow-2xl">
+              <img 
+                src="/human-orca.svg" 
+                alt="Human vs Orca Brain Structure Comparison" 
+                className="w-full h-auto object-contain rounded-xl"
+              />
+            </div>
+          </section>
+
+          {/* ESSAY DETAILED INSIGHTS */}
+          <div className="max-w-3xl mx-auto px-6 prose prose-invert text-slate-300 font-light leading-relaxed space-y-12 text-base md:text-lg">
             
+            {/* INSIGHT 1 */}
             <div className="space-y-4">
               <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
                 <span className="text-[#CCFF00] font-mono text-sm">01.</span> Culture Drives Biological Evolution
@@ -543,6 +652,7 @@ export default function App() {
               </p>
             </div>
 
+            {/* INSIGHT 2 */}
             <div className="space-y-4 border-t border-slate-800/80 pt-8">
               <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
                 <span className="text-[#CCFF00] font-mono text-sm">02.</span> Dialects as Non-Physical Borders
@@ -550,23 +660,38 @@ export default function App() {
               <p>
                 Every matriarchal family pod possesses its own distinct acoustic signature. A mother passes down vocal dialects to her offspring, creating acoustic sub-cultures within pods that allow orcas to identify family members across miles of dark ocean.
               </p>
-              <div className="p-6 bg-[#081225] border-l-2 border-[#CCFF00] rounded-r-lg text-slate-200 font-serif italic my-6">
+              <div className="p-6 bg-[#081630] border-l-2 border-[#CCFF00] rounded-r-lg text-slate-200 font-serif italic my-6">
                 &quot;An orca pod doesn&apos;t just navigate using echolocation; they navigate using shared ancestral soundscapes.&quot;
               </div>
             </div>
 
-            <div className="space-y-4 border-t border-slate-800/80 pt-8">
+            {/* INSIGHT 3 WITH POD FAMILY PHOTO */}
+            <div className="space-y-6 border-t border-slate-800/80 pt-8">
               <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
                 <span className="text-[#CCFF00] font-mono text-sm">03.</span> The Matriarchal Hard-Drive
               </h2>
               <p>
                 Orcas are one of only six species on Earth—alongside humans—where females undergo menopause. Post-reproductive female orcas live for decades beyond their fertile years. 
               </p>
+              
+              <div className="my-6 relative rounded-2xl overflow-hidden border border-slate-800 shadow-xl">
+                <img 
+                  src="/orca-pod-family.jpg" 
+                  alt="Orca family pod swimming together in Salish Sea" 
+                  className="w-full h-80 object-cover"
+                />
+                <div className="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm p-3 flex justify-between items-center text-[10px] font-mono text-slate-300">
+                  <span>Matriarchal pod navigating coastal fjord waters together.</span>
+                  <span>Photo by <a href="https://unsplash.com/@gabrieltovar" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:underline">Gabriel Tovar</a> / Unsplash</span>
+                </div>
+              </div>
+
               <p>
                 Why? Because they serve as the living, walking historical archives of the pod. During severe salmon scarcity, pods led by elderly grandmothers have significantly higher survival rates. They remember migration routes and environmental cycles from half a century prior.
               </p>
             </div>
 
+            {/* INSIGHT 4 */}
             <div className="space-y-4 border-t border-slate-800/80 pt-8">
               <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
                 <span className="text-[#CCFF00] font-mono text-sm">04.</span> Neurological Architecture of Deep Empathy
@@ -579,18 +704,33 @@ export default function App() {
               </p>
             </div>
 
-            <div className="space-y-4 border-t border-slate-800/80 pt-8">
+            {/* INSIGHT 5 WITH CINEMATIC DUSK PHOTO */}
+            <div className="space-y-6 border-t border-slate-800/80 pt-8">
               <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
                 <span className="text-[#CCFF00] font-mono text-sm">05.</span> Dismantling Human Exceptionalism
               </h2>
               <p>
                 Recognizing orca culture forces us to redefine what we mean by mind. Intelligence is not an evolutionary ladder with <em>Homo sapiens</em> sitting proudly at the top. It is a vast, multidimensional tree. 
               </p>
+
+              <div className="my-6 relative rounded-2xl overflow-hidden border border-slate-800 shadow-xl">
+                <img 
+                  src="/orca-cinematic-dusk.jpg" 
+                  alt="Orcas swimming under dramatic sunset clouds" 
+                  className="w-full h-80 object-cover"
+                />
+                <div className="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm p-3 flex justify-between items-center text-[10px] font-mono text-slate-300">
+                  <span>Pacific Orca pod surfacing under twilight crepuscular rays.</span>
+                  <span>Photo by <a href="https://unsplash.com/@gabrieltovar" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:underline">Gabriel Tovar</a> / Unsplash</span>
+                </div>
+              </div>
+
               <p className="text-slate-200 font-normal">
                 By honoring marine minds on their own terms—far below our surface noise—we take the first step toward true ecological empathy.
               </p>
             </div>
 
+            {/* ACADEMIC REFERENCES & FOOTNOTES */}
             <div className="border-t border-slate-800 pt-10 mt-12 space-y-4 text-xs font-mono text-slate-400">
               <h4 className="text-[#CCFF00] uppercase tracking-widest text-[11px] font-bold">
                 // ACADEMIC REFERENCES &amp; METHODOLOGY
@@ -637,8 +777,10 @@ export default function App() {
         </main>
       ) : (
 
+      /* HOME FEED VIEW */
       <main className="max-w-4xl mx-auto px-6 py-12 space-y-24 relative z-10">
         
+        {/* HERO SECTION */}
         <section className="text-center space-y-6 pt-12 pb-8 max-w-3xl mx-auto">
           <div className="inline-block px-3.5 py-1 bg-slate-900/80 backdrop-blur-md border border-slate-700/80 rounded-full text-xs text-[#CCFF00] font-mono tracking-wider uppercase mb-2 shadow-xl">
             Dispatch #000 · Platform Launch
@@ -652,9 +794,10 @@ export default function App() {
             No social algorithms. Timeless, interactive, and deeply researched ecological investigations delivered directly to your inbox.
           </p>
 
+          {/* BEEHIIV FORM */}
           <div className="pt-4 max-w-md mx-auto">
             {submitted ? (
-              <div className="p-4 bg-[#081225]/90 border border-[#CCFF00]/40 rounded-lg text-[#CCFF00] text-sm font-mono backdrop-blur-md">
+              <div className="p-4 bg-[#081630]/90 border border-[#CCFF00]/40 rounded-lg text-[#CCFF00] text-sm font-mono backdrop-blur-md">
                 ✓ Subscription request received. Welcome to Deep Dispatches.
               </div>
             ) : (
@@ -672,7 +815,7 @@ export default function App() {
                     name="email"
                     required
                     placeholder="Enter your email..."
-                    className="flex-1 px-4 py-3 bg-[#030914]/90 backdrop-blur-md border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#CCFF00] transition-colors shadow-inner"
+                    className="flex-1 px-4 py-3 bg-[#051124]/90 backdrop-blur-md border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#CCFF00] transition-colors shadow-inner"
                   />
                   <button
                     type="submit"
@@ -688,6 +831,7 @@ export default function App() {
           </div>
         </section>
 
+        {/* INVESTIGATION STREAM */}
         <section className="space-y-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
             <h2 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
@@ -701,7 +845,7 @@ export default function App() {
                 className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
                   sortBy === 'latest'
                     ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                    : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
+                    : 'bg-[#081630] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
                 }`}
               >
                 Latest
@@ -711,7 +855,7 @@ export default function App() {
                 className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
                   sortBy === 'popular'
                     ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                    : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
+                    : 'bg-[#081630] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
                 }`}
               >
                 Most Read
@@ -721,7 +865,7 @@ export default function App() {
                 className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
                   sortBy === 'oldest'
                     ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                    : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
+                    : 'bg-[#081630] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
                 }`}
               >
                 Oldest
@@ -734,7 +878,7 @@ export default function App() {
               <article 
                 key={dispatch.id}
                 onClick={() => setActiveArticleId(dispatch.id)}
-                className="group bg-[#081225]/50 hover:bg-[#081225] border border-slate-800/80 hover:border-[#CCFF00]/40 rounded-2xl p-8 md:p-10 transition-all duration-300 cursor-pointer relative overflow-hidden shadow-lg backdrop-blur-sm"
+                className="group bg-[#081630]/50 hover:bg-[#081630] border border-slate-800/80 hover:border-[#CCFF00]/40 rounded-2xl p-8 md:p-10 transition-all duration-300 cursor-pointer relative overflow-hidden shadow-lg backdrop-blur-sm"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#CCFF00]/5 rounded-full blur-2xl group-hover:bg-[#CCFF00]/10 transition-colors pointer-events-none"></div>
 
@@ -774,6 +918,7 @@ export default function App() {
           </div>
         </section>
 
+        {/* MANIFESTO SECTION */}
         <section className="border-t border-slate-800/80 pt-16 space-y-10">
           <div className="max-w-3xl">
             <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase mb-4">
@@ -803,24 +948,27 @@ export default function App() {
           </div>
         </section>
 
+        {/* THE INVESTIGATOR SECTION WITH PROFILE PHOTO */}
         <section className="border-t border-slate-800/80 pt-16 space-y-6">
           <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
             // THE INVESTIGATOR
           </h3>
           
-          <div className="bg-[#081225]/60 border border-slate-800/80 rounded-2xl p-8 md:p-10 relative overflow-hidden flex flex-col md:flex-row gap-8 items-start backdrop-blur-sm">
+          <div className="bg-[#081630]/60 border border-slate-800/80 rounded-2xl p-8 md:p-10 relative overflow-hidden flex flex-col md:flex-row gap-8 items-start backdrop-blur-sm">
             
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#CCFF00]/5 rounded-full blur-3xl pointer-events-none"></div>
 
+            {/* PROFILE PHOTO */}
             <div className="w-32 h-32 md:w-48 md:h-48 shrink-0 relative rounded-xl overflow-hidden border border-slate-700/50 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 bg-slate-900">
               <img 
                 src="/profile.jpg" 
                 alt="The Investigator" 
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#081225] via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#081630] via-transparent to-transparent"></div>
             </div>
 
+            {/* BIO TEXT */}
             <div className="space-y-6 flex-1">
               <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed">
                 When people ask what I do for a living, the answer has changed many times over the years: camera operator, field correspondent, Editor-in-Chief, logistics manager, diving instructor... But deep down, I have always been one thing: <span className="text-[#CCFF00] font-normal">a journalist.</span>
@@ -847,7 +995,8 @@ export default function App() {
       </main>
       )}
 
-      <footer className="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500 relative z-10 bg-[#030914]">
+      {/* FOOTER */}
+      <footer className="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500 relative z-10 bg-[#051124]">
         <p>© {new Date().getFullYear()} DEEP DISPATCHES. All rights reserved.</p>
       </footer>
     </div>
