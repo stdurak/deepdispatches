@@ -327,7 +327,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* SCROLLYTELLING COMPONENT 2: THE CONTINUOUS MIND DEEP-TIME CARTOGRAPHY (WIDE SCREEN BREAKOUT) */}
+          {/* SCROLLYTELLING COMPONENT 2: THE CONTINUOUS MIND DEEP-TIME CARTOGRAPHY WITH VISUAL MIND MAP */}
           <section className="max-w-6xl mx-auto px-4 md:px-6 my-16">
             <div className="bg-[#081225]/90 border border-slate-800 rounded-3xl p-6 md:p-10 space-y-8 shadow-2xl backdrop-blur-md relative overflow-hidden">
               <div className="absolute top-0 right-0 w-80 h-80 bg-[#CCFF00]/5 rounded-full blur-3xl pointer-events-none"></div>
@@ -363,6 +363,93 @@ export default function App() {
                     ? 'Intelligence is not a binary human trait or a ladder. It is a biological mechanism for survival—a continuous evolutionary tree spanning from single cells to ocean giants.'
                     : 'The ancient myth of "Scala Natura" viewed life as a linear ladder climbing toward human perfection. Modern neurobiology dismantles this hierarchy.'}
                 </p>
+              </div>
+
+              {/* VISUAL MIND MAP / DIAGRAM CONTAINER */}
+              <div className="bg-[#030914] border border-slate-800/80 rounded-2xl p-6 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 min-h-[220px]">
+                {paradigmMode === 'reality' ? (
+                  /* DARWINIAN TREE SVG GRAPHIC */
+                  <div className="w-full flex flex-col md:flex-row items-center justify-around gap-6">
+                    <div className="shrink-0 relative w-48 h-48 flex items-center justify-center">
+                      <svg viewBox="0 0 200 200" className="w-full h-full stroke-[#CCFF00] fill-none stroke-[1.5] opacity-90 animate-pulse">
+                        <circle cx="100" cy="100" r="90" className="stroke-slate-800 stroke-[1] stroke-dasharray-[4_4]" />
+                        <circle cx="100" cy="100" r="60" className="stroke-slate-800 stroke-[1] stroke-dasharray-[4_4]" />
+                        <path d="M100 100 L100 20 M100 100 L170 100 M100 100 L100 180 M100 100 L30 100 M100 100 L150 150 M100 100 L50 50 M100 100 L150 50 M100 100 L50 150" />
+                        <circle cx="100" cy="20" r="4" className="fill-[#CCFF00]" />
+                        <circle cx="170" cy="100" r="4" className="fill-[#CCFF00]" />
+                        <circle cx="30" cy="100" r="4" className="fill-[#CCFF00]" />
+                        <circle cx="150" cy="150" r="4" className="fill-[#CCFF00]" />
+                        <circle cx="50" cy="50" r="4" className="fill-[#CCFF00]" />
+                        <circle cx="100" cy="100" r="6" className="fill-white" />
+                      </svg>
+                      <span className="absolute text-[10px] font-mono text-[#CCFF00] bg-[#030914] px-2 py-0.5 rounded border border-[#CCFF00]/40">
+                        Radial Tree Of Life
+                      </span>
+                    </div>
+
+                    <div className="space-y-3 flex-1">
+                      <div className="flex items-center gap-2 text-xs font-mono text-[#CCFF00]">
+                        <span className="w-2 h-2 rounded-full bg-[#CCFF00]"></span>
+                        <span>THE REALITY: DARWINIAN BIOLOGICAL CONTINUUM</span>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono text-slate-300">
+                        <div className="p-3 bg-[#081225] border border-slate-800 rounded-xl">
+                          <strong className="text-white block mb-1">Geometry:</strong>
+                          <span>Radial & Branching multidimensional network</span>
+                        </div>
+                        <div className="p-3 bg-[#081225] border border-slate-800 rounded-xl">
+                          <strong className="text-white block mb-1">Teleology:</strong>
+                          <span>No end goal, purely adaptive survival mechanisms</span>
+                        </div>
+                        <div className="p-3 bg-[#081225] border border-slate-800 rounded-xl sm:col-span-2">
+                          <strong className="text-white block mb-1">Human Status:</strong>
+                          <span>Embedded within a shared, deeply conserved biological continuum</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* SCALA NATURA LADDER MYTH SVG GRAPHIC */
+                  <div className="w-full flex flex-col md:flex-row items-center justify-around gap-6">
+                    <div className="shrink-0 relative w-48 h-48 flex items-center justify-center">
+                      <svg viewBox="0 0 100 200" className="w-24 h-full stroke-amber-500 fill-none stroke-[2]">
+                        <line x1="30" y1="20" x2="30" y2="180" />
+                        <line x1="70" y1="20" x2="70" y2="180" />
+                        <line x1="30" y1="40" x2="70" y2="40" />
+                        <line x1="30" y1="70" x2="70" y2="70" />
+                        <line x1="30" y1="100" x2="70" y2="100" />
+                        <line x1="30" y1="130" x2="70" y2="130" />
+                        <line x1="30" y1="160" x2="70" y2="160" />
+                        <line x1="15" y1="20" x2="85" y2="180" className="stroke-red-500 stroke-[3]" />
+                        <line x1="85" y1="20" x2="15" y2="180" className="stroke-red-500 stroke-[3]" />
+                      </svg>
+                      <span className="absolute text-[10px] font-mono text-amber-400 bg-[#030914] px-2 py-0.5 rounded border border-amber-500/40">
+                        DISMANTLED MYTH
+                      </span>
+                    </div>
+
+                    <div className="space-y-3 flex-1">
+                      <div className="flex items-center gap-2 text-xs font-mono text-amber-400">
+                        <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                        <span>THE MYTH: SCALA NATURA (LINEAR LADDER)</span>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono text-slate-300">
+                        <div className="p-3 bg-[#081225] border border-slate-800 rounded-xl">
+                          <strong className="text-amber-400 block mb-1">Geometry:</strong>
+                          <span>Linear & Vertical hierarchy (Climbing ladder)</span>
+                        </div>
+                        <div className="p-3 bg-[#081225] border border-slate-800 rounded-xl">
+                          <strong className="text-amber-400 block mb-1">Teleology:</strong>
+                          <span>Goal-directed towards human perfection</span>
+                        </div>
+                        <div className="p-3 bg-[#081225] border border-slate-800 rounded-xl sm:col-span-2">
+                          <strong className="text-amber-400 block mb-1">Human Status:</strong>
+                          <span>Flawed assumption of separate superiority (Sui generis)</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* TIMELINE NAVIGATOR STEPS */}
@@ -403,6 +490,33 @@ export default function App() {
                 <p className="text-base text-slate-300 font-light leading-relaxed">
                   {currentStage.description}
                 </p>
+
+                {/* INFORMATION PROCESSING LOOP VISUAL FOR EPOCH 1 */}
+                {activeStageIndex === 0 && (
+                  <div className="p-4 bg-[#081225] border border-slate-800 rounded-xl space-y-3">
+                    <span className="text-[10px] font-mono text-[#CCFF00] tracking-widest uppercase block">
+                      // INFORMATION PROCESSING LOOP
+                    </span>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-xs font-mono">
+                      <div className="p-2 bg-[#030914] rounded border border-[#CCFF00]/30 text-[#CCFF00]">
+                        1. Acquire
+                        <span className="block text-[9px] text-slate-400 mt-0.5">Detect Inputs</span>
+                      </div>
+                      <div className="p-2 bg-[#030914] rounded border border-[#CCFF00]/30 text-[#CCFF00]">
+                        2. Process & Store
+                        <span className="block text-[9px] text-slate-400 mt-0.5">Integrate Signals</span>
+                      </div>
+                      <div className="p-2 bg-[#030914] rounded border border-[#CCFF00]/30 text-[#CCFF00]">
+                        3. Analyze
+                        <span className="block text-[9px] text-slate-400 mt-0.5">Reach Threshold</span>
+                      </div>
+                      <div className="p-2 bg-[#030914] rounded border border-[#CCFF00]/30 text-[#CCFF00]">
+                        4. Act
+                        <span className="block text-[9px] text-slate-400 mt-0.5">Adaptive Behavior</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="p-4 bg-[#081225] border-l-2 border-[#CCFF00] rounded-r-xl text-xs font-mono text-slate-200">
                   <span className="text-[#CCFF00] font-bold mr-2">// KEY ARCHITECTURAL TAKEAWAY:</span>
@@ -683,96 +797,4 @@ export default function App() {
 
                 <div className="flex items-center justify-between pt-4 border-t border-slate-800/50">
                   <span className="text-xs text-slate-500 font-mono">{dispatch.status}</span>
-                  <span className="text-xs font-semibold text-[#CCFF00] group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                    Read Investigation →
-                  </span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* MANIFESTO SECTION */}
-        <section className="border-t border-slate-800/80 pt-16 space-y-10">
-          <div className="max-w-3xl">
-            <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase mb-4">
-              // THE MANIFESTO
-            </h3>
-            <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
-              Welcome to <strong className="text-white font-semibold">Deep Dispatches</strong>, a platform created far below the surface noise. Here, I bridge the gap between Deep Ecology, Marine Mysteries, and the critical worlds of Ecological Finance and Geo-Political Journeys.
-            </p>
-            <p className="text-base text-slate-400 font-light leading-relaxed mt-4">
-              Moving beyond static reporting, I craft visually immersive scrollytelling experiences. Through interactive mapping, dynamic data, and cinematic narratives, I don't just tell these stories—I give you the depth to explore them. Don't miss the horizon.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 pt-4 border-t border-slate-800/40">
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">01. Independent</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Pure journalism uninfluenced by advertisers, algorithms, or clickbait metrics.</p>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">02. Immersive</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Interactive scrollytelling, dynamic maps, and data visualizations instead of quick news bites.</p>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">03. Timeless</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Deep investigative dossiers built to hold lasting intellectual and ecological value for years.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* THE INVESTIGATOR SECTION WITH PROFILE PHOTO */}
-        <section className="border-t border-slate-800/80 pt-16 space-y-6">
-          <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
-            // THE INVESTIGATOR
-          </h3>
-          
-          <div className="bg-[#081225]/60 border border-slate-800/80 rounded-2xl p-8 md:p-10 relative overflow-hidden flex flex-col md:flex-row gap-8 items-start backdrop-blur-sm">
-            
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#CCFF00]/5 rounded-full blur-3xl pointer-events-none"></div>
-
-            {/* PROFILE PHOTO */}
-            <div className="w-32 h-32 md:w-48 md:h-48 shrink-0 relative rounded-xl overflow-hidden border border-slate-700/50 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 bg-slate-900">
-              <img 
-                src="/profile.jpg" 
-                alt="The Investigator" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#081225] via-transparent to-transparent"></div>
-            </div>
-
-            {/* BIO TEXT */}
-            <div className="space-y-6 flex-1">
-              <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed">
-                When people ask what I do for a living, the answer has changed many times over the years: camera operator, field correspondent, Editor-in-Chief, logistics manager, diving instructor... But deep down, I have always been one thing: <span className="text-[#CCFF00] font-normal">a journalist.</span>
-              </p>
-
-              <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                I spent decades inside major media networks and independent platforms—including <strong className="text-slate-200">CNN, NTV, ATV, Medyascope, and Reportare</strong>—navigating the high-pressure world of newsrooms. But chasing social media algorithms and being a 'content creator' left me exhausted. I didn't want to add to the surface noise anymore; I wanted to explore the depths.
-              </p>
-
-              <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                As a journalist, master diver, and proud father—with dive logs spanning from the <span className="text-slate-300">Red Sea</span> and <span className="text-slate-300">Thailand</span> to <span className="text-slate-300">Malta, Cyprus, the Black Sea, and the Mediterranean</span>—I built <strong className="text-white">Deep Dispatches</strong> to mind my own business. Here, I focus entirely on marine mysteries, climate crises, and deep ecology. No daily clickbait, no corporate agendas. Just high-impact, deeply researched dossiers delivered directly to you.
-              </p>
-
-              <div className="pt-4 flex flex-wrap gap-3 text-xs font-mono text-slate-500">
-                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Journalism & Broadcast</span>
-                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Scuba Diving Instructor</span>
-                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Deep Ecology</span>
-              </div>
-            </div>
-            
-          </div>
-        </section>
-
-      </main>
-      )}
-
-      {/* FOOTER */}
-      <footer className="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500 relative z-10 bg-[#030914]">
-        <p>© {new Date().getFullYear()} DEEP DISPATCHES. All rights reserved.</p>
-      </footer>
-    </div>
-  );
-}
+                  <span className="text-xs font-semibold text-[#CCFF00] group-hover:translate-x-1 transition-transform flex items-center gap
