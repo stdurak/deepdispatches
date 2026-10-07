@@ -44,14 +44,71 @@ const DISPATCHES = [
   }
 ];
 
+// CONTINUOUS MIND TIMELINE DATA
+const TIMELINE_STAGES = [
+  {
+    id: "epoch-01",
+    tag: "1 BILLION YEARS AGO",
+    title: "The Molecular Mind & Universal Currency",
+    subtitle: "Single-celled decision making without a central brain",
+    description: "Brain-like decision making operates at a molecular level in E. coli bacteria. The exact same electrochemical principles—voltage-gated ion movement across membranes—power both single cells and modern human neurons.",
+    highlight: "Information Loop: Acquire (Detect Toxins/Sugars) → Process & Analyze → Act (Swim Toward/Away)",
+    statLabel: "Shared Biology",
+    statValue: "100% Conserved Ion Channels"
+  },
+  {
+    id: "epoch-02",
+    tag: "600-550 MILLION YEARS AGO",
+    title: "Nerve Nets & The Cephalization Blueprint",
+    subtitle: "From decentralized radial nets to centralized anterior brains",
+    description: "In organisms like jellyfish, decentralized nerve nets evolved the 'action potential'—a digital electrical pulse. Later bilaterians centralized these nerves into anterior ganglia, creating the anatomical blueprint for every central nervous system on Earth today.",
+    highlight: "Cephalization: Structural reorganization of nerve cords into an anterior brain.",
+    statLabel: "Neural Impulse",
+    statValue: "Digital Spike Transmission"
+  },
+  {
+    id: "epoch-03",
+    tag: "DEEP-TIME PARALLEL PEAKS",
+    title: "Cephalization Scaling: Human vs. Orca Neuroanatomy",
+    subtitle: "Scaling changes processing capacity, not fundamental biology",
+    description: "Decades of neurobiology reveal no qualitatively unique brain property in humans. The Orca brain (~5,000g, EQ 4-5) possesses the most convoluted cortical gyrification on Earth, with massive elaboration in insular and limbic regions.",
+    highlight: "Cortical Folding: Orca brains feature higher surface wrinkling and limbic complexity than human brains.",
+    statLabel: "Orca Brain Mass",
+    statValue: "~5,000 Grams"
+  },
+  {
+    id: "epoch-04",
+    tag: "CULTURE AS EVOLUTIONARY FORCE",
+    title: "When Behavior Shapes Biology",
+    subtitle: "How non-human traditions create genetic divergence",
+    description: "When information processing scales, it generates culture. Orcas exhibit extreme dietary conservatism, distinct vocal dialects, and post-reproductive matriarchal leadership that store ancestral knowledge for generations.",
+    highlight: "The Grandmother Effect: Post-menopausal matriarchs guide pods through ecological crisis.",
+    statLabel: "Cultural Isolation",
+    statValue: "700,000+ Years"
+  },
+  {
+    id: "epoch-05",
+    tag: "THE BIG FIVE DOMAINS",
+    title: "Dismantling Human Exceptionalism",
+    subtitle: "Ubiquitous cognitive traits across the tree of life",
+    description: "The central question of astrobiology and philosophy has already been answered on Earth: Self-awareness, tool use, culture, numerical logic, and symbolic communication are deeply conserved properties across species.",
+    highlight: "We do not sit atop a ladder; we are simply one young leaf on an ancient, intelligent tree.",
+    statLabel: "Cognitive Domains",
+    statValue: "5 Shared Arenas"
+  }
+];
+
 export default function App() {
   const [submitted, setSubmitted] = useState(false);
   const [activeArticleId, setActiveArticleId] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>('latest');
   const [selectedEcotype, setSelectedEcotype] = useState<'resident' | 'transient'>('resident');
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const [activeStageIndex, setActiveStageIndex] = useState(0);
+  const [paradigmMode, setParadigmMode] = useState<'myth' | 'reality'>('reality');
 
   const selectedArticle = DISPATCHES.find(d => d.id === activeArticleId);
+  const currentStage = TIMELINE_STAGES[activeStageIndex];
 
   const sortedDispatches = [...DISPATCHES].sort((a, b) => {
     if (sortBy === 'latest') {
@@ -115,10 +172,10 @@ export default function App() {
 
       {/* ARTICLE READER VIEW */}
       {selectedArticle ? (
-        <main className="max-w-4xl mx-auto px-6 py-16 space-y-12 relative z-10">
+        <main className="py-16 space-y-16 relative z-10">
           
-          {/* ARTICLE HEADER */}
-          <div className="space-y-4 max-w-3xl">
+          {/* ARTICLE HEADER (OPTIMIZED NARROW READING COLUMN) */}
+          <div className="max-w-3xl mx-auto px-6 space-y-4">
             <div className="flex items-center gap-3 text-xs font-mono text-[#CCFF00]">
               <span>{selectedArticle.number}</span>
               <span>·</span>
@@ -137,8 +194,8 @@ export default function App() {
             </div>
           </div>
 
-          {/* INTRO TEXT */}
-          <div className="prose prose-invert max-w-3xl text-slate-300 font-light leading-relaxed space-y-6 text-base md:text-lg">
+          {/* INTRO TEXT (NARROW READING COLUMN) */}
+          <div className="max-w-3xl mx-auto px-6 prose prose-invert text-slate-300 font-light leading-relaxed space-y-6 text-base md:text-lg">
             <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-[#CCFF00] first-letter:mr-3 first-letter:float-left">
               For centuries, human philosophy and Western science rested on a comfortable dogma: that culture, language, and abstract thought were exclusive domains of <em>Homo sapiens</em>. Animals had instincts; humans had intellect.
             </p>
@@ -147,466 +204,48 @@ export default function App() {
             </p>
           </div>
 
-          {/* SCROLLYTELLING INTERACTIVE MAP COMPONENT */}
-          <section className="my-12 bg-[#081225]/80 border border-slate-800 rounded-3xl p-6 md:p-8 space-y-6 shadow-2xl backdrop-blur-md">
-            
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
-              <div>
-                <span className="text-[10px] font-mono text-[#CCFF00] tracking-widest uppercase block mb-1">
-                  // INTERACTIVE SCROLLYTELLING ASSET
-                </span>
-                <h3 className="text-xl font-bold text-white">
-                  Acoustic-Spatial Ecotype Mapping
-                </h3>
-              </div>
-
-              {/* ECOTYPE SELECTOR TOGGLE */}
-              <div className="flex items-center gap-2 bg-[#030914] p-1.5 rounded-xl border border-slate-800 text-xs font-mono">
-                <button
-                  onClick={() => setSelectedEcotype('resident')}
-                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                    selectedEcotype === 'resident'
-                      ? 'bg-[#CCFF00] text-black font-semibold'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  Resident (Inland)
-                </button>
-                <button
-                  onClick={() => setSelectedEcotype('transient')}
-                  className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                    selectedEcotype === 'transient'
-                      ? 'bg-[#CCFF00] text-black font-semibold'
-                      : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  Transient (Offshore)
-                </button>
-              </div>
-            </div>
-
-            {/* MAP CONTAINER WITH HOTSPOTS */}
-            <div className="relative rounded-2xl overflow-hidden border border-slate-800/80 bg-[#030914] group">
-              <img 
-                src="/orca-map.svg" 
-                alt="Pacific Northwest Orca Migration Map" 
-                className="w-full h-auto object-cover min-h-[300px]"
-              />
-
-              {/* HOTSPOT 1: PUGET SOUND / RESIDENT ORCAS */}
-              <button 
-                onClick={() => {
-                  setSelectedEcotype('resident');
-                  setIsPlayingAudio(!isPlayingAudio);
-                }}
-                className={`absolute top-[48%] right-[22%] sm:right-[24%] p-3 rounded-full transition-all cursor-pointer group/pin ${
-                  selectedEcotype === 'resident' ? 'scale-125 z-20' : 'opacity-75 hover:opacity-100'
-                }`}
-              >
-                <span className="absolute inset-0 rounded-full bg-[#CCFF00]/30 animate-ping"></span>
-                <span className="relative flex items-center justify-center w-5 h-5 bg-[#CCFF00] text-black rounded-full text-[10px] font-bold shadow-lg">
-                  1
-                </span>
-                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/pin:block bg-black/90 text-[#CCFF00] text-[10px] font-mono px-2 py-1 rounded whitespace-nowrap border border-[#CCFF00]/40">
-                  Salish Sea Pods (Chirps & Dialects)
-                </span>
-              </button>
-
-              {/* HOTSPOT 2: OUTER PACIFIC / TRANSIENT ORCAS */}
-              <button 
-                onClick={() => {
-                  setSelectedEcotype('transient');
-                  setIsPlayingAudio(!isPlayingAudio);
-                }}
-                className={`absolute top-[42%] left-[32%] sm:left-[35%] p-3 rounded-full transition-all cursor-pointer group/pin ${
-                  selectedEcotype === 'transient' ? 'scale-125 z-20' : 'opacity-75 hover:opacity-100'
-                }`}
-              >
-                <span className="absolute inset-0 rounded-full bg-slate-400/30 animate-ping"></span>
-                <span className="relative flex items-center justify-center w-5 h-5 bg-slate-200 text-black rounded-full text-[10px] font-bold shadow-lg">
-                  2
-                </span>
-                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/pin:block bg-black/90 text-white text-[10px] font-mono px-2 py-1 rounded whitespace-nowrap border border-slate-700">
-                  Outer Coast Hunters (Stealth Mode)
-                </span>
-              </button>
-            </div>
-
-            {/* ACOUSTIC DATA PANEL */}
-            <div className="bg-[#030914]/90 border border-slate-800 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse"></span>
-                  <span className="text-xs font-mono text-[#CCFF00] uppercase tracking-wider">
-                    {selectedEcotype === 'resident' ? 'Southern Resident Ecotype (SRKW)' : 'Bigg\'s Transient Ecotype'}
+          {/* SCROLLYTELLING COMPONENT 1: ACOUSTIC MAPPING (WIDE SCREEN BREAKOUT) */}
+          <section className="max-w-6xl mx-auto px-4 md:px-6 my-12">
+            <div className="bg-[#081225]/80 border border-slate-800 rounded-3xl p-6 md:p-10 space-y-6 shadow-2xl backdrop-blur-md">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                <div>
+                  <span className="text-[10px] font-mono text-[#CCFF00] tracking-widest uppercase block mb-1">
+                    // SCROLLYTELLING MODULE 01
                   </span>
+                  <h3 className="text-xl font-bold text-white">
+                    Acoustic-Spatial Ecotype Mapping
+                  </h3>
                 </div>
-                <p className="text-sm text-slate-300 font-light leading-relaxed">
-                  {selectedEcotype === 'resident' 
-                    ? 'Resident pods rely heavily on highly complex, vocal dialects to coordinate salmon hunts in murky coastal waters. Salmon are deaf to high-frequency orca calls.' 
-                    : 'Transient pods hunt marine mammals (seals, porpoises) with acute underwater hearing. They maintain near-total acoustic silence to execute stealth strikes.'}
-                </p>
-              </div>
 
-              {/* AUDIO SAMPLE TRIGGER SIMULATOR */}
-              <button
-                onClick={() => setIsPlayingAudio(!isPlayingAudio)}
-                className={`shrink-0 px-6 py-3 rounded-xl border text-xs font-mono flex items-center gap-3 transition-all cursor-pointer ${
-                  isPlayingAudio
-                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-bold shadow-lg shadow-[#CCFF00]/20'
-                    : 'bg-[#081225] text-[#CCFF00] border-[#CCFF00]/40 hover:border-[#CCFF00]'
-                }`}
-              >
-                <span>{isPlayingAudio ? '▌▌ PAUSE ACOUSTICS' : '▶ PLAY HYDROPHONE SAMPLE'}</span>
-                {isPlayingAudio && (
-                  <span className="flex gap-1 items-end h-3">
-                    <span className="w-0.5 h-full bg-black animate-bounce"></span>
-                    <span className="w-0.5 h-2/3 bg-black animate-bounce [animation-delay:0.2s]"></span>
-                    <span className="w-0.5 h-1/2 bg-black animate-bounce [animation-delay:0.4s]"></span>
-                  </span>
-                )}
-              </button>
-            </div>
-
-          </section>
-
-          {/* ESSAY DETAILED INSIGHTS */}
-          <div className="prose prose-invert max-w-3xl text-slate-300 font-light leading-relaxed space-y-10 text-base md:text-lg">
-            
-            {/* INSIGHT 1 */}
-            <div className="space-y-4">
-              <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
-                <span className="text-[#CCFF00] font-mono text-sm">01.</span> Culture Drives Biological Evolution
-              </h2>
-              <p>
-                In evolutionary biology, the standard model assumes genetic mutations dictate behavioral shifts. In orcas, this paradigm is flipped. <strong>Cultural traditions dictate genetics.</strong>
-              </p>
-              <p>
-                As mapped in the telemetry asset above, Resident and Transient communities share overlapping geographic zones in the Salish Sea, yet they have not interbred for over 700,000 years. They do not share a common language, nor do they eat the same prey. Residents hunt Chinook salmon; Transients hunt seals and porpoises. Their distinct culture created a biological wall stronger than any mountain range.
-              </p>
-            </div>
-
-            {/* INSIGHT 2 */}
-            <div className="space-y-4 border-t border-slate-800/80 pt-8">
-              <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
-                <span className="text-[#CCFF00] font-mono text-sm">02.</span> Dialects as Non-Physical Borders
-              </h2>
-              <p>
-                Every matriarchal family pod possesses its own distinct acoustic signature. A mother passes down vocal dialects to her offspring, creating acoustic sub-cultures within pods that allow orcas to identify family members across miles of dark ocean.
-              </p>
-              <div className="p-6 bg-[#081225] border-l-2 border-[#CCFF00] rounded-r-lg text-slate-200 font-serif italic my-6">
-                "An orca pod doesn't just navigate using echolocation; they navigate using shared ancestral soundscapes."
-              </div>
-            </div>
-
-            {/* INSIGHT 3 */}
-            <div className="space-y-4 border-t border-slate-800/80 pt-8">
-              <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
-                <span className="text-[#CCFF00] font-mono text-sm">03.</span> The Matriarchal Hard-Drive
-              </h2>
-              <p>
-                Orcas are one of only six species on Earth—alongside humans—where females undergo menopause. Post-reproductive female orcas live for decades beyond their fertile years. 
-              </p>
-              <p>
-                Why? Because they serve as the living, walking historical archives of the pod. During severe salmon scarcity, pods led by elderly grandmothers have significantly higher survival rates. They remember migration routes and environmental cycles from half a century prior.
-              </p>
-            </div>
-
-            {/* INSIGHT 4 */}
-            <div className="space-y-4 border-t border-slate-800/80 pt-8">
-              <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
-                <span className="text-[#CCFF00] font-mono text-sm">04.</span> Neurological Architecture of Deep Empathy
-              </h2>
-              <p>
-                Neuroanatomical studies reveal that the paralimbic system in an orca's brain—the region responsible for processing emotions, self-awareness, and social bonding—is significantly more elaborate and interconnected than that of humans.
-              </p>
-              <p>
-                An individual orca does not experience identity in isolation; its sense of self is fundamentally interwoven into the collective consciousness of the pod.
-              </p>
-            </div>
-
-            {/* INSIGHT 5 */}
-            <div className="space-y-4 border-t border-slate-800/80 pt-8">
-              <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
-                <span className="text-[#CCFF00] font-mono text-sm">05.</span> Dismantling Human Exceptionalism
-              </h2>
-              <p>
-                Recognizing orca culture forces us to redefine what we mean by mind. Intelligence is not an evolutionary ladder with <em>Homo sapiens</em> sitting proudly at the top. It is a vast, multidimensional tree. 
-              </p>
-              <p className="text-slate-200 font-normal">
-                By honoring marine minds on their own terms—far below our surface noise—we take the first step toward true ecological empathy.
-              </p>
-            </div>
-
-            {/* ACADEMIC REFERENCES & FOOTNOTES WITH CLICKABLE DOIs */}
-            <div className="border-t border-slate-800 pt-10 mt-12 space-y-4 text-xs font-mono text-slate-400">
-              <h4 className="text-[#CCFF00] uppercase tracking-widest text-[11px] font-bold">
-                // ACADEMIC REFERENCES & METHODOLOGY
-              </h4>
-              <ul className="space-y-3 list-disc list-inside leading-relaxed text-slate-400">
-                <li>
-                  <strong className="text-slate-300">Foote, A. D., et al. (2016).</strong> <em>"Genome-wide signatures of culture-driven divergence in killer whales."</em> Nature Communications, 7, 11693.{" "}
-                  <a 
-                    href="https://doi.org/10.1038/ncomms11693" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-[#CCFF00] hover:underline ml-1 inline-flex items-center gap-0.5"
-                  >
-                    [DOI ↗]
-                  </a>
-                </li>
-                <li>
-                  <strong className="text-slate-300">Brent, L. J., et al. (2015).</strong> <em>"Ecological knowledge runs deep in grandmother killer whales."</em> Current Biology, 25(6), 746-750.{" "}
-                  <a 
-                    href="https://doi.org/10.1016/j.cub.2015.01.030" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-[#CCFF00] hover:underline ml-1 inline-flex items-center gap-0.5"
-                  >
-                    [DOI ↗]
-                  </a>
-                </li>
-                <li>
-                  <strong className="text-slate-300">Rendell, L., & Whitehead, H. (2001).</strong> <em>"Culture in whales and dolphins."</em> Behavioral and Brain Sciences, 24(2), 309-324.{" "}
-                  <a 
-                    href="https://doi.org/10.1017/S0140525X0100396X" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-[#CCFF00] hover:underline ml-1 inline-flex items-center gap-0.5"
-                  >
-                    [DOI ↗]
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-
-        </main>
-      ) : (
-
-      /* HOME FEED VIEW */
-      <main className="max-w-4xl mx-auto px-6 py-12 space-y-24 relative z-10">
-        
-        {/* HERO SECTION */}
-        <section className="text-center space-y-6 pt-12 pb-8 max-w-3xl mx-auto">
-          <div className="inline-block px-3.5 py-1 bg-slate-900/80 backdrop-blur-md border border-slate-700/80 rounded-full text-xs text-[#CCFF00] font-mono tracking-wider uppercase mb-2 shadow-xl">
-            Dispatch #000 · Platform Launch
-          </div>
-          
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-2xl">
-            Far Below The <span className="text-[#CCFF00]">Surface Noise.</span>
-          </h1>
-          
-          <p className="text-lg md:text-xl text-slate-200 font-light leading-relaxed drop-shadow-md max-w-2xl mx-auto">
-            No social algorithms. Timeless, interactive, and deeply researched ecological investigations delivered directly to your inbox.
-          </p>
-
-          {/* BEEHIIV FORM */}
-          <div className="pt-4 max-w-md mx-auto">
-            {submitted ? (
-              <div className="p-4 bg-[#081225]/90 border border-[#CCFF00]/40 rounded-lg text-[#CCFF00] text-sm font-mono backdrop-blur-md">
-                ✓ Subscription request received. Welcome to Deep Dispatches.
-              </div>
-            ) : (
-              <div className="space-y-3">
-                <form 
-                  action="https://app.beehiiv.com/subscribe" 
-                  method="POST" 
-                  target="beehiiv-target"
-                  onSubmit={() => setSubmitted(true)}
-                  className="flex flex-col sm:flex-row gap-3"
-                >
-                  <input type="hidden" name="publication_id" value="pub_2383c5ca-1813-4b13-b35f-6b498cd01829" />
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="Enter your email..."
-                    className="flex-1 px-4 py-3 bg-[#030914]/90 backdrop-blur-md border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#CCFF00] transition-colors shadow-inner"
-                  />
+                {/* ECOTYPE SELECTOR TOGGLE */}
+                <div className="flex items-center gap-2 bg-[#030914] p-1.5 rounded-xl border border-slate-800 text-xs font-mono">
                   <button
-                    type="submit"
-                    className="px-6 py-3 bg-[#CCFF00] hover:bg-[#b8e600] text-black font-semibold rounded-lg transition-colors cursor-pointer whitespace-nowrap shadow-xl"
+                    onClick={() => setSelectedEcotype('resident')}
+                    className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                      selectedEcotype === 'resident'
+                        ? 'bg-[#CCFF00] text-black font-semibold'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
                   >
-                    Subscribe
+                    Resident (Inland)
                   </button>
-                </form>
-                <iframe name="beehiiv-target" className="hidden" title="beehiiv-form-target"></iframe>
-              </div>
-            )}
-            <p className="text-xs text-slate-400 mt-3 font-medium">No spam. Unsubscribe anytime in one click.</p>
-          </div>
-        </section>
-
-        {/* INVESTIGATION STREAM */}
-        <section className="space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
-            <h2 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
-              // INVESTIGATION STREAM
-            </h2>
-            
-            <div className="flex items-center gap-2 text-xs font-mono">
-              <span className="text-slate-500 mr-1">Sort by:</span>
-              <button
-                onClick={() => setSortBy('latest')}
-                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                  sortBy === 'latest'
-                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                    : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
-                }`}
-              >
-                Latest
-              </button>
-              <button
-                onClick={() => setSortBy('popular')}
-                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                  sortBy === 'popular'
-                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                    : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
-                }`}
-              >
-                Most Read
-              </button>
-              <button
-                onClick={() => setSortBy('oldest')}
-                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                  sortBy === 'oldest'
-                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                    : 'bg-[#081225] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
-                }`}
-              >
-                Oldest
-              </button>
-            </div>
-          </div>
-
-          <div className="space-y-8">
-            {sortedDispatches.map((dispatch) => (
-              <article 
-                key={dispatch.id}
-                onClick={() => setActiveArticleId(dispatch.id)}
-                className="group bg-[#081225]/50 hover:bg-[#081225] border border-slate-800/80 hover:border-[#CCFF00]/40 rounded-2xl p-8 md:p-10 transition-all duration-300 cursor-pointer relative overflow-hidden shadow-lg backdrop-blur-sm"
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[#CCFF00]/5 rounded-full blur-2xl group-hover:bg-[#CCFF00]/10 transition-colors pointer-events-none"></div>
-
-                <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-[#CCFF00] mb-4">
-                  <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00]"></span>
-                    <span>{dispatch.number}</span>
-                    <span className="text-slate-600">·</span>
-                    <span className="text-slate-400">{dispatch.category}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-slate-500">
-                    <span>{dispatch.readTime}</span>
-                    {sortBy === 'popular' && (
-                      <span className="text-[#CCFF00]/80 bg-[#CCFF00]/10 px-2 py-0.5 rounded text-[10px]">
-                        {dispatch.views.toLocaleString()} reads
-                      </span>
-                    )}
-                  </div>
+                  <button
+                    onClick={() => setSelectedEcotype('transient')}
+                    className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                      selectedEcotype === 'transient'
+                        ? 'bg-[#CCFF00] text-black font-semibold'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    Transient (Offshore)
+                  </button>
                 </div>
-
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-[#CCFF00] transition-colors leading-tight">
-                  {dispatch.title}
-                </h3>
-
-                <p className="text-slate-300 text-sm md:text-base font-light leading-relaxed mb-6">
-                  {dispatch.summary}
-                </p>
-
-                <div className="flex items-center justify-between pt-4 border-t border-slate-800/50">
-                  <span className="text-xs text-slate-500 font-mono">{dispatch.status}</span>
-                  <span className="text-xs font-semibold text-[#CCFF00] group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                    Read Investigation →
-                  </span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* MANIFESTO SECTION */}
-        <section className="border-t border-slate-800/80 pt-16 space-y-10">
-          <div className="max-w-3xl">
-            <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase mb-4">
-              // THE MANIFESTO
-            </h3>
-            <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
-              Welcome to <strong className="text-white font-semibold">Deep Dispatches</strong>, a platform created far below the surface noise. Here, I bridge the gap between Deep Ecology, Marine Mysteries, and the critical worlds of Ecological Finance and Geo-Political Journeys.
-            </p>
-            <p className="text-base text-slate-400 font-light leading-relaxed mt-4">
-              Moving beyond static reporting, I craft visually immersive scrollytelling experiences. Through interactive mapping, dynamic data, and cinematic narratives, I don't just tell these stories—I give you the depth to explore them. Don't miss the horizon.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 pt-4 border-t border-slate-800/40">
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">01. Independent</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Pure journalism uninfluenced by advertisers, algorithms, or clickbait metrics.</p>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">02. Immersive</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Interactive scrollytelling, dynamic maps, and data visualizations instead of quick news bites.</p>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">03. Timeless</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Deep investigative dossiers built to hold lasting intellectual and ecological value for years.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* THE INVESTIGATOR SECTION WITH PROFILE PHOTO */}
-        <section className="border-t border-slate-800/80 pt-16 space-y-6">
-          <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
-            // THE INVESTIGATOR
-          </h3>
-          
-          <div className="bg-[#081225]/60 border border-slate-800/80 rounded-2xl p-8 md:p-10 relative overflow-hidden flex flex-col md:flex-row gap-8 items-start backdrop-blur-sm">
-            
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#CCFF00]/5 rounded-full blur-3xl pointer-events-none"></div>
-
-            {/* PROFILE PHOTO */}
-            <div className="w-32 h-32 md:w-48 md:h-48 shrink-0 relative rounded-xl overflow-hidden border border-slate-700/50 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 bg-slate-900">
-              <img 
-                src="/profile.jpg" 
-                alt="The Investigator" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#081225] via-transparent to-transparent"></div>
-            </div>
-
-            {/* BIO TEXT */}
-            <div className="space-y-6 flex-1">
-              <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed">
-                When people ask what I do for a living, the answer has changed many times over the years: camera operator, field correspondent, Editor-in-Chief, logistics manager, diving instructor... But deep down, I have always been one thing: <span className="text-[#CCFF00] font-normal">a journalist.</span>
-              </p>
-
-              <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                I spent decades inside major media networks and independent platforms—including <strong className="text-slate-200">CNN, NTV, ATV, Medyascope, and Reportare</strong>—navigating the high-pressure world of newsrooms. But chasing social media algorithms and being a 'content creator' left me exhausted. I didn't want to add to the surface noise anymore; I wanted to explore the depths.
-              </p>
-
-              <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                As a journalist, master diver, and proud father—with dive logs spanning from the <span className="text-slate-300">Red Sea</span> and <span className="text-slate-300">Thailand</span> to <span className="text-slate-300">Malta, Cyprus, the Black Sea, and the Mediterranean</span>—I built <strong className="text-white">Deep Dispatches</strong> to mind my own business. Here, I focus entirely on marine mysteries, climate crises, and deep ecology. No daily clickbait, no corporate agendas. Just high-impact, deeply researched dossiers delivered directly to you.
-              </p>
-
-              <div className="pt-4 flex flex-wrap gap-3 text-xs font-mono text-slate-500">
-                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Journalism & Broadcast</span>
-                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Scuba Diving Instructor</span>
-                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Deep Ecology</span>
               </div>
-            </div>
-            
-          </div>
-        </section>
 
-      </main>
-      )}
-
-      {/* FOOTER */}
-      <footer className="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500 relative z-10 bg-[#030914]">
-        <p>© {new Date().getFullYear()} DEEP DISPATCHES. All rights reserved.</p>
-      </footer>
-    </div>
-  );
-}
+              {/* MAP CONTAINER WITH HOTSPOTS */}
+              <div className="relative rounded-2xl overflow-hidden border border-slate-800/80 bg-[#030914] group">
+                <img 
+                  src="/orca-map.svg" 
+                  alt="Pacific Northwest Orca Migration Map" 
+                  className="w-full h-auto object-cover min-h-[350px]"
+                />
