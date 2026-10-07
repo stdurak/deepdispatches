@@ -249,3 +249,181 @@ export default function App() {
                   alt="Pacific Northwest Orca Migration Map" 
                   className="w-full h-auto object-cover min-h-[350px]"
                 />
+
+                {/* HOTSPOT 1: PUGET SOUND / RESIDENT ORCAS */}
+                <button 
+                  onClick={() => {
+                    setSelectedEcotype('resident');
+                    setIsPlayingAudio(!isPlayingAudio);
+                  }}
+                  className={`absolute top-[48%] right-[22%] sm:right-[24%] p-3 rounded-full transition-all cursor-pointer group/pin ${
+                    selectedEcotype === 'resident' ? 'scale-125 z-20' : 'opacity-75 hover:opacity-100'
+                  }`}
+                >
+                  <span className="absolute inset-0 rounded-full bg-[#CCFF00]/30 animate-ping"></span>
+                  <span className="relative flex items-center justify-center w-5 h-5 bg-[#CCFF00] text-black rounded-full text-[10px] font-bold shadow-lg">
+                    1
+                  </span>
+                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/pin:block bg-black/90 text-[#CCFF00] text-[10px] font-mono px-2 py-1 rounded whitespace-nowrap border border-[#CCFF00]/40">
+                    Salish Sea Pods (Chirps & Dialects)
+                  </span>
+                </button>
+
+                {/* HOTSPOT 2: OUTER PACIFIC / TRANSIENT ORCAS */}
+                <button 
+                  onClick={() => {
+                    setSelectedEcotype('transient');
+                    setIsPlayingAudio(!isPlayingAudio);
+                  }}
+                  className={`absolute top-[42%] left-[32%] sm:left-[35%] p-3 rounded-full transition-all cursor-pointer group/pin ${
+                    selectedEcotype === 'transient' ? 'scale-125 z-20' : 'opacity-75 hover:opacity-100'
+                  }`}
+                >
+                  <span className="absolute inset-0 rounded-full bg-slate-400/30 animate-ping"></span>
+                  <span className="relative flex items-center justify-center w-5 h-5 bg-slate-200 text-black rounded-full text-[10px] font-bold shadow-lg">
+                    2
+                  </span>
+                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover/pin:block bg-black/90 text-white text-[10px] font-mono px-2 py-1 rounded whitespace-nowrap border border-slate-700">
+                    Outer Coast Hunters (Stealth Mode)
+                  </span>
+                </button>
+              </div>
+
+              {/* ACOUSTIC DATA PANEL */}
+              <div className="bg-[#030914]/90 border border-slate-800 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse"></span>
+                    <span className="text-xs font-mono text-[#CCFF00] uppercase tracking-wider">
+                      {selectedEcotype === 'resident' ? 'Southern Resident Ecotype (SRKW)' : 'Bigg\'s Transient Ecotype'}
+                    </span>
+                  </div>
+                  <p className="text-sm text-slate-300 font-light leading-relaxed">
+                    {selectedEcotype === 'resident' 
+                      ? 'Resident pods rely heavily on highly complex, vocal dialects to coordinate salmon hunts in murky coastal waters. Salmon are deaf to high-frequency orca calls.' 
+                      : 'Transient pods hunt marine mammals (seals, porpoises) with acute underwater hearing. They maintain near-total acoustic silence to execute stealth strikes.'}
+                  </p>
+                </div>
+
+                {/* AUDIO SAMPLE TRIGGER SIMULATOR */}
+                <button
+                  onClick={() => setIsPlayingAudio(!isPlayingAudio)}
+                  className={`shrink-0 px-6 py-3 rounded-xl border text-xs font-mono flex items-center gap-3 transition-all cursor-pointer ${
+                    isPlayingAudio
+                      ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-bold shadow-lg shadow-[#CCFF00]/20'
+                      : 'bg-[#081225] text-[#CCFF00] border-[#CCFF00]/40 hover:border-[#CCFF00]'
+                  }`}
+                >
+                  <span>{isPlayingAudio ? '▌▌ PAUSE ACOUSTICS' : '▶ PLAY HYDROPHONE SAMPLE'}</span>
+                  {isPlayingAudio && (
+                    <span className="flex gap-1 items-end h-3">
+                      <span className="w-0.5 h-full bg-black animate-bounce"></span>
+                      <span className="w-0.5 h-2/3 bg-black animate-bounce [animation-delay:0.2s]"></span>
+                      <span className="w-0.5 h-1/2 bg-black animate-bounce [animation-delay:0.4s]"></span>
+                    </span>
+                  )}
+                </button>
+              </div>
+            </div>
+          </section>
+
+          {/* SCROLLYTELLING COMPONENT 2: THE CONTINUOUS MIND DEEP-TIME CARTOGRAPHY (WIDE SCREEN BREAKOUT) */}
+          <section className="max-w-6xl mx-auto px-4 md:px-6 my-16">
+            <div className="bg-[#081225]/90 border border-slate-800 rounded-3xl p-6 md:p-10 space-y-8 shadow-2xl backdrop-blur-md relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-80 h-80 bg-[#CCFF00]/5 rounded-full blur-3xl pointer-events-none"></div>
+
+              <div className="space-y-4 border-b border-slate-800 pb-6">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <span className="text-[10px] font-mono text-[#CCFF00] tracking-widest uppercase">
+                    // SCROLLYTELLING MODULE 02 · THE CONTINUOUS MIND
+                  </span>
+                  <div className="flex items-center gap-2 bg-[#030914] px-3 py-1 rounded-full border border-slate-800 text-[11px] font-mono">
+                    <span className="text-slate-500">Paradigm:</span>
+                    <button 
+                      onClick={() => setParadigmMode('reality')}
+                      className={`cursor-pointer ${paradigmMode === 'reality' ? 'text-[#CCFF00] font-bold' : 'text-slate-400'}`}
+                    >
+                      Darwinian Tree
+                    </button>
+                    <span className="text-slate-700">|</span>
+                    <button 
+                      onClick={() => setParadigmMode('myth')}
+                      className={`cursor-pointer ${paradigmMode === 'myth' ? 'text-amber-400 font-bold' : 'text-slate-400'}`}
+                    >
+                      Scala Natura Myth
+                    </button>
+                  </div>
+                </div>
+
+                <h3 className="text-2xl md:text-3xl font-extrabold text-white">
+                  Deep-Time Cartography of Intelligence
+                </h3>
+                <p className="text-sm text-slate-300 font-light leading-relaxed max-w-2xl">
+                  {paradigmMode === 'reality'
+                    ? 'Intelligence is not a binary human trait or a ladder. It is a biological mechanism for survival—a continuous evolutionary tree spanning from single cells to ocean giants.'
+                    : 'The ancient myth of "Scala Natura" viewed life as a linear ladder climbing toward human perfection. Modern neurobiology dismantles this hierarchy.'}
+                </p>
+              </div>
+
+              {/* TIMELINE NAVIGATOR STEPS */}
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-2">
+                {TIMELINE_STAGES.map((stage, idx) => (
+                  <button
+                    key={stage.id}
+                    onClick={() => setActiveStageIndex(idx)}
+                    className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                      activeStageIndex === idx
+                        ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-bold shadow-lg shadow-[#CCFF00]/10 scale-102'
+                        : 'bg-[#030914]/80 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-white'
+                    }`}
+                  >
+                    <span className="text-[9px] font-mono block opacity-75 mb-1">STEP 0{idx + 1}</span>
+                    <span className="text-xs font-semibold leading-tight line-clamp-2">{stage.title}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* ACTIVE STAGE DISPLAY PANEL */}
+              <div className="bg-[#030914] border border-slate-800/90 rounded-2xl p-6 md:p-8 space-y-6 relative">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/60 pb-4">
+                  <div>
+                    <span className="text-xs font-mono text-[#CCFF00] uppercase tracking-wider block">
+                      {currentStage.tag}
+                    </span>
+                    <h4 className="text-xl md:text-2xl font-bold text-white mt-1">
+                      {currentStage.title}
+                    </h4>
+                  </div>
+                  <div className="text-left sm:text-right shrink-0">
+                    <span className="text-[10px] font-mono text-slate-500 uppercase block">{currentStage.statLabel}</span>
+                    <span className="text-sm font-mono text-[#CCFF00] font-bold">{currentStage.statValue}</span>
+                  </div>
+                </div>
+
+                <p className="text-base text-slate-300 font-light leading-relaxed">
+                  {currentStage.description}
+                </p>
+
+                <div className="p-4 bg-[#081225] border-l-2 border-[#CCFF00] rounded-r-xl text-xs font-mono text-slate-200">
+                  <span className="text-[#CCFF00] font-bold mr-2">// KEY ARCHITECTURAL TAKEAWAY:</span>
+                  {currentStage.highlight}
+                </div>
+
+                {/* INTERACTIVE STEP CONTROLS */}
+                <div className="flex items-center justify-between pt-4 border-t border-slate-800/60 text-xs font-mono">
+                  <button
+                    onClick={() => setActiveStageIndex(Math.max(0, activeStageIndex - 1))}
+                    disabled={activeStageIndex === 0}
+                    className="px-4 py-2 rounded-lg border border-slate-800 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                  >
+                    ← Previous Epoch
+                  </button>
+
+                  <span className="text-slate-500">
+                    Epoch {activeStageIndex + 1} of {TIMELINE_STAGES.length}
+                  </span>
+
+                  <button
+                    onClick={() => setActiveStageIndex(Math.min(TIMELINE_STAGES.length - 1, activeStageIndex + 1))}
+                    disabled={activeStageIndex === TIMELINE_STAGES.length - 1}
+                    className="px-4 py-2 rounded-lg border border-[#CCFF00]/
