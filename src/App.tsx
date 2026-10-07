@@ -140,10 +140,10 @@ export default function App() {
           {/* INTRO TEXT */}
           <div className="prose prose-invert max-w-3xl text-slate-300 font-light leading-relaxed space-y-6 text-base md:text-lg">
             <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-[#CCFF00] first-letter:mr-3 first-letter:float-left">
-              For centuries, human philosophy and Western science rested on a comfortable dogma: that culture, language, and abstract thought were exclusive domains of *Homo sapiens*. Animals had instincts; humans had intellect.
+              For centuries, human philosophy and Western science rested on a comfortable dogma: that culture, language, and abstract thought were exclusive domains of <em>Homo sapiens</em>. Animals had instincts; humans had intellect.
             </p>
             <p>
-              However, deep beneath the surface waters of the world's oceans, marine biologists and neuroscientists are encountering a reality that shatters our anthropocentric pedestal. Orcas (*Orcinus orca*) do not merely possess high intelligence—they live inside ancient, non-human cultures shaped by dialect, specialized diets, and multi-generational knowledge systems.
+              However, deep beneath the surface waters of the world's oceans, marine biologists and neuroscientists are encountering a reality that shatters our anthropocentric pedestal. Orcas (<em>Orcinus orca</em>) do not merely possess high intelligence—they live inside ancient, non-human cultures shaped by dialect, specialized diets, and multi-generational knowledge systems.
             </p>
           </div>
 
@@ -279,7 +279,7 @@ export default function App() {
                 <span className="text-[#CCFF00] font-mono text-sm">01.</span> Culture Drives Biological Evolution
               </h2>
               <p>
-                In evolutionary biology, the standard model assumes genetic mutations dictate behavioral shifts. In orcas, this paradigm is flipped. **Cultural traditions dictate genetics.**
+                In evolutionary biology, the standard model assumes genetic mutations dictate behavioral shifts. In orcas, this paradigm is flipped. <strong>Cultural traditions dictate genetics.</strong>
               </p>
               <p>
                 As mapped in the telemetry asset above, Resident and Transient communities share overlapping geographic zones in the Salish Sea, yet they have not interbred for over 700,000 years. They do not share a common language, nor do they eat the same prey. Residents hunt Chinook salmon; Transients hunt seals and porpoises. Their distinct culture created a biological wall stronger than any mountain range.
@@ -331,11 +331,53 @@ export default function App() {
                 <span className="text-[#CCFF00] font-mono text-sm">05.</span> Dismantling Human Exceptionalism
               </h2>
               <p>
-                Recognizing orca culture forces us to redefine what we mean by mind. Intelligence is not an evolutionary ladder with *Homo sapiens* sitting proudly at the top. It is a vast, multidimensional tree. 
+                Recognizing orca culture forces us to redefine what we mean by mind. Intelligence is not an evolutionary ladder with <em>Homo sapiens</em> sitting proudly at the top. It is a vast, multidimensional tree. 
               </p>
               <p className="text-slate-200 font-normal">
                 By honoring marine minds on their own terms—far below our surface noise—we take the first step toward true ecological empathy.
               </p>
+            </div>
+
+            {/* ACADEMIC REFERENCES & FOOTNOTES WITH CLICKABLE DOIs */}
+            <div className="border-t border-slate-800 pt-10 mt-12 space-y-4 text-xs font-mono text-slate-400">
+              <h4 className="text-[#CCFF00] uppercase tracking-widest text-[11px] font-bold">
+                // ACADEMIC REFERENCES & METHODOLOGY
+              </h4>
+              <ul className="space-y-3 list-disc list-inside leading-relaxed text-slate-400">
+                <li>
+                  <strong className="text-slate-300">Foote, A. D., et al. (2016).</strong> <em>"Genome-wide signatures of culture-driven divergence in killer whales."</em> Nature Communications, 7, 11693.{" "}
+                  <a 
+                    href="https://doi.org/10.1038/ncomms11693" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-[#CCFF00] hover:underline ml-1 inline-flex items-center gap-0.5"
+                  >
+                    [DOI ↗]
+                  </a>
+                </li>
+                <li>
+                  <strong className="text-slate-300">Brent, L. J., et al. (2015).</strong> <em>"Ecological knowledge runs deep in grandmother killer whales."</em> Current Biology, 25(6), 746-750.{" "}
+                  <a 
+                    href="https://doi.org/10.1016/j.cub.2015.01.030" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-[#CCFF00] hover:underline ml-1 inline-flex items-center gap-0.5"
+                  >
+                    [DOI ↗]
+                  </a>
+                </li>
+                <li>
+                  <strong className="text-slate-300">Rendell, L., & Whitehead, H. (2001).</strong> <em>"Culture in whales and dolphins."</em> Behavioral and Brain Sciences, 24(2), 309-324.{" "}
+                  <a 
+                    href="https://doi.org/10.1017/S0140525X0100396X" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-[#CCFF00] hover:underline ml-1 inline-flex items-center gap-0.5"
+                  >
+                    [DOI ↗]
+                  </a>
+                </li>
+              </ul>
             </div>
 
           </div>
@@ -541,7 +583,7 @@ export default function App() {
               </p>
 
               <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                I spent decades inside major media networks—including <strong className="text-slate-200">CNN International, NTV, ATV, and Sky News</strong>—navigating the high-pressure world of traditional newsrooms. But chasing social media algorithms and being a 'content creator' left me exhausted. I didn't want to add to the surface noise anymore; I wanted to explore the depths.
+                I spent decades inside major media networks and independent platforms—including <strong className="text-slate-200">CNN, NTV, ATV, Medyascope, and Reportare</strong>—navigating the high-pressure world of newsrooms. But chasing social media algorithms and being a 'content creator' left me exhausted. I didn't want to add to the surface noise anymore; I wanted to explore the depths.
               </p>
 
               <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
