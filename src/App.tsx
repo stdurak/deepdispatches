@@ -132,7 +132,7 @@ export default function App() {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     }
     if (sortBy === 'oldest') {
-      return new Date(a.date).getTime() - new Date(a.date).getTime();
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
     }
     if (sortBy === 'popular') {
       return b.views - a.views;
@@ -214,19 +214,19 @@ export default function App() {
             </div>
           </div>
 
-          {/* HERO COVER PHOTO WITH UN SPLASH ATTRIBUTION */}
-          <div className="max-w-5xl mx-auto px-4 md:px-6">
-            <div className="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
+          {/* HERO COVER PHOTO (STRICT 9:16 VERTICAL PORTRAIT FRAME) */}
+          <div className="max-w-md mx-auto px-4">
+            <div className="relative aspect-[9/16] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-[#081630]">
               <img 
                 src="/orca-cover.jpg" 
-                alt="Orca surfacing in calm ocean waters" 
-                className="w-full h-[420px] md:h-[520px] object-cover"
+                alt="Southern Resident Orca surfacing in Salish Sea waters" 
+                className="w-full h-full object-cover object-center"
               />
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#051124] via-[#051124]/40 to-transparent p-4 flex justify-between items-end">
-                <span className="text-[11px] font-mono text-slate-300">
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#051124] via-[#051124]/80 to-transparent p-5 flex flex-col gap-2">
+                <span className="text-xs font-mono text-slate-300">
                   Southern Resident Orca surfacing in Salish Sea waters.
                 </span>
-                <span className="text-[10px] font-mono text-slate-400 bg-black/60 px-2 py-1 rounded border border-slate-700">
+                <span className="text-[10px] font-mono text-slate-400 bg-black/80 px-2 py-1 rounded border border-slate-700 self-start">
                   Photo by <a href="https://unsplash.com/@tomasmalik" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:underline">Tomas Malik</a> / Unsplash
                 </span>
               </div>
@@ -674,15 +674,15 @@ export default function App() {
                 Orcas are one of only six species on Earth—alongside humans—where females undergo menopause. Post-reproductive female orcas live for decades beyond their fertile years. 
               </p>
               
-              <div className="my-6 relative rounded-2xl overflow-hidden border border-slate-800 shadow-xl">
+              <div className="my-6 relative rounded-2xl overflow-hidden border border-slate-800 shadow-xl bg-[#081630]">
                 <img 
                   src="/orca-pod-family.jpg" 
                   alt="Orca family pod swimming together in Salish Sea" 
                   className="w-full h-80 object-cover"
                 />
-                <div className="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm p-3 flex justify-between items-center text-[10px] font-mono text-slate-300">
+                <div className="absolute bottom-0 inset-x-0 bg-black/70 backdrop-blur-sm p-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-[10px] font-mono text-slate-300">
                   <span>Matriarchal pod navigating coastal fjord waters together.</span>
-                  <span>Photo by <a href="https://unsplash.com/@gabrieltovar" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:underline">Gabriel Tovar</a> / Unsplash</span>
+                  <span className="shrink-0">Photo by <a href="https://unsplash.com/@gabrieltovar" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:underline">Gabriel Tovar</a> / Unsplash</span>
                 </div>
               </div>
 
@@ -704,7 +704,7 @@ export default function App() {
               </p>
             </div>
 
-            {/* INSIGHT 5 WITH CINEMATIC DUSK PHOTO */}
+            {/* INSIGHT 5 WITH CINEMATIC DUSK PHOTO (STRICT 9:16 VERTICAL PORTRAIT FRAME) */}
             <div className="space-y-6 border-t border-slate-800/80 pt-8">
               <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
                 <span className="text-[#CCFF00] font-mono text-sm">05.</span> Dismantling Human Exceptionalism
@@ -713,15 +713,17 @@ export default function App() {
                 Recognizing orca culture forces us to redefine what we mean by mind. Intelligence is not an evolutionary ladder with <em>Homo sapiens</em> sitting proudly at the top. It is a vast, multidimensional tree. 
               </p>
 
-              <div className="my-6 relative rounded-2xl overflow-hidden border border-slate-800 shadow-xl">
-                <img 
-                  src="/orca-cinematic-dusk.jpg" 
-                  alt="Orcas swimming under dramatic sunset clouds" 
-                  className="w-full h-80 object-cover"
-                />
-                <div className="absolute bottom-0 inset-x-0 bg-black/60 backdrop-blur-sm p-3 flex justify-between items-center text-[10px] font-mono text-slate-300">
-                  <span>Pacific Orca pod surfacing under twilight crepuscular rays.</span>
-                  <span>Photo by <a href="https://unsplash.com/@gabrieltovar" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:underline">Gabriel Tovar</a> / Unsplash</span>
+              <div className="my-8 max-w-md mx-auto">
+                <div className="relative aspect-[9/16] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-[#081630]">
+                  <img 
+                    src="/orca-cinematic-dusk.jpg" 
+                    alt="Orcas swimming under dramatic sunset clouds" 
+                    className="w-full h-full object-cover object-center"
+                  />
+                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#051124] via-[#051124]/80 to-transparent p-4 flex flex-col gap-2 text-[10px] font-mono text-slate-300">
+                    <span>Pacific Orca pod surfacing under twilight crepuscular rays.</span>
+                    <span className="self-start">Photo by <a href="https://unsplash.com/@gabrieltovar" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:underline">Gabriel Tovar</a> / Unsplash</span>
+                  </div>
                 </div>
               </div>
 
