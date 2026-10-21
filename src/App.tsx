@@ -215,7 +215,7 @@ function DispatchPage() {
             <button onClick={copyLink} className="text-xs text-black bg-[#CCFF00] hover:bg-[#b8e600] px-4 py-2 rounded-lg font-mono font-bold transition-all">
               {copied ? '✓ Link Kopyalandı' : '🔗 Share this Dispatch'}
             </button>
-            <button onClick={() => navigate('/')} className="text-xs text-[#CCFF00] hover:underline font-mono">← Back to All Dispatches n</button>
+            <button onClick={() => navigate('/')} className="text-xs text-[#CCFF00] hover:underline font-mono">← Back to All Dispatches </button>
           </div>
         </div>
       </header>
