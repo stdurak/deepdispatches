@@ -113,8 +113,6 @@ export default function App() {
   const selectedArticle = DISPATCHES.find(d => d.id === activeArticleId);
   const currentStage = TIMELINE_STAGES[activeStageIndex];
 
-  // FIX: Compute the audio source that corresponds to the current ecotype,
-  // so the button label always matches what should be playing.
   const expectedAudioSrc =
     selectedEcotype === 'resident' ? '/resident-chirp.mp3' : '/transient-click.mp3';
   const isExpectedPlaying = activeAudioSrc === expectedAudioSrc;
@@ -162,11 +160,12 @@ export default function App() {
             muted 
             playsInline 
             ref={(el) => { if (el) el.muted = true; }}
-           className="w-full h-full object-cover opacity-65 scale-105 brightness-125"
+            className="w-full h-full object-cover opacity-65 scale-105 brightness-125"
           >
             <source src="/bubble.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-b from-[#051124]/25 via-[#051124]/50 to-[#051124]"></div>
+        </div>
       )}
 
       {/* FIXED NAVBAR */}
@@ -200,7 +199,6 @@ export default function App() {
       {activeArticleId === 'dossier-002' ? (
         <PosidoniaDossier />
       ) : activeArticleId === 'dossier-003' ? (
-        // FIX: Placeholder view for the "IN DEVELOPMENT" dossier
         <main className="max-w-3xl mx-auto px-6 py-32 relative z-10 text-center space-y-6">
           <span className="text-xs font-mono text-amber-400 tracking-widest uppercase">
             {selectedArticle?.number} · IN DEVELOPMENT
@@ -383,8 +381,6 @@ export default function App() {
                   </p>
                 </div>
 
-                {/* FIX: Button label and animation now driven by expectedAudioSrc,
-                    so they can never desync from the currently selected ecotype. */}
                 <button
                   onClick={() => togglePlayAudio(expectedAudioSrc)}
                   className={`shrink-0 px-6 py-3 rounded-xl border text-xs font-mono flex items-center gap-3 transition-all cursor-pointer ${
@@ -565,7 +561,6 @@ export default function App() {
                     onClick={() => setActiveStageIndex(idx)}
                     className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                       activeStageIndex === idx
-                        // FIX: was "scale-102" (invalid Tailwind class) → arbitrary value
                         ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-bold shadow-lg shadow-[#CCFF00]/10 scale-[1.02]'
                         : 'bg-[#051124]/80 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-white'
                     }`}

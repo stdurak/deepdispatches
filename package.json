@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.4",
+    "react-share": "^6.1.0"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
@@ -24,5 +26,8 @@
     "tailwindcss": "^3.4.19",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true
   }
 }
