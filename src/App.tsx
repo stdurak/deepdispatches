@@ -667,6 +667,7 @@ export default function App() {
               </div>
             </div>
 
+          {/* INSIGHT 3 WITH POD FAMILY PHOTO */}
             <div className="space-y-6 border-t border-slate-800/80 pt-8">
               <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
                 <span className="text-[#CCFF00] font-mono text-sm">03.</span> The Matriarchal Hard-Drive
@@ -690,3 +691,4 @@ export default function App() {
               <p>
                 Why? Because they serve as the living, walking historical archives of the pod. During severe salmon scarcity, pods led by elderly grandmothers have significantly higher survival rates. They remember migration routes and environmental cycles from half a century prior.
               </p>
+            </div>
