@@ -162,12 +162,11 @@ export default function App() {
             muted 
             playsInline 
             ref={(el) => { if (el) el.muted = true; }}
-            className="w-full h-full object-cover opacity-35 scale-105"
+           className="w-full h-full object-cover opacity-65 scale-105 brightness-125"
           >
             <source src="/bubble.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-[#051124]/40 via-[#051124]/60 to-[#051124]"></div>
-        </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#051124]/25 via-[#051124]/50 to-[#051124]"></div>
       )}
 
       {/* FIXED NAVBAR */}
