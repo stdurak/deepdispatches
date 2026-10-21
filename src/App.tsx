@@ -201,7 +201,7 @@ function DispatchPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  if (!article) return <div className="text-center py-20 text-white">Makale bulunamadı. <Link to="/" className="text-[#CCFF00] underline">Ana sayfaya dön</Link></div>;
+  if (!article) return <div className="text-center py-20 text-white">Dispatch not found. <Link to="/" className="text-[#CCFF00] underline">Ana sayfaya dön</Link></div>;
 
   return (
     <>
@@ -213,9 +213,9 @@ function DispatchPage() {
           </Link>
           <div className="flex gap-4">
             <button onClick={copyLink} className="text-xs text-black bg-[#CCFF00] hover:bg-[#b8e600] px-4 py-2 rounded-lg font-mono font-bold transition-all">
-              {copied ? '✓ Link Kopyalandı' : '🔗 Bu Makaleyi Paylaş'}
+              {copied ? '✓ Link Kopyalandı' : '🔗 Share this Dispatch'}
             </button>
-            <button onClick={() => navigate('/')} className="text-xs text-[#CCFF00] hover:underline font-mono">← Geri Dön</button>
+            <button onClick={() => navigate('/')} className="text-xs text-[#CCFF00] hover:underline font-mono">← Back to All Dispatches n</button>
           </div>
         </div>
       </header>
@@ -228,7 +228,7 @@ function DispatchPage() {
             <span className="text-xs font-mono text-amber-400 tracking-widest uppercase">{article.number} · IN DEVELOPMENT</span>
             <h1 className="text-3xl md:text-5xl font-extrabold text-white">{article.title}</h1>
             <p className="text-lg text-slate-400 italic">{article.subtitle}</p>
-            <p className="text-sm text-slate-500">Bu makale henüz yapım aşamasında.</p>
+            <p className="text-sm text-slate-500">This dispatch is currently in development.</p>
           </div>
         )}
       </main>
