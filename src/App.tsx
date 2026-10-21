@@ -45,7 +45,6 @@ const DISPATCHES = [
   }
 ];
 
-// CONTINUOUS MIND TIMELINE DATA
 const TIMELINE_STAGES = [
   {
     id: "epoch-01",
@@ -193,10 +192,8 @@ export default function App() {
 
       {/* DYNAMIC ARTICLE VIEW ROUTING */}
       {activeArticleId === 'dossier-002' ? (
-        /* DOSSIER #002: POSIDONIA CRISIS */
         <PosidoniaDossier />
       ) : activeArticleId === 'dossier-001' ? (
-        /* DOSSIER #001: ORCA CULTURE */
         <main className="py-16 space-y-16 relative z-10">
           
           {/* ARTICLE HEADER */}
@@ -219,21 +216,6 @@ export default function App() {
             </div>
           </div>
 
-<<<<<<< HEAD
-          {/* HERO COVER PHOTO (STRICT 9:16 VERTICAL PORTRAIT FRAME) */}
-          <div className="max-w-md mx-auto px-4">
-            <div className="relative aspect-[9/16] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-[#081630]">
-              <img 
-                src="/orca-cover.jpg" 
-                alt="Southern Resident Orca surfacing in Salish Sea waters" 
-                className="w-full h-full object-cover object-center"
-              />
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#051124] via-[#051124]/80 to-transparent p-5 flex flex-col gap-2">
-                <span className="text-xs font-mono text-slate-300">
-                  Southern Resident Orca surfacing in Salish Sea waters.
-                </span>
-                <span className="text-[10px] font-mono text-slate-400 bg-black/80 px-2 py-1 rounded border border-slate-700 self-start">
-=======
           {/* HERO COVER PHOTO */}
           <div className="max-w-5xl mx-auto px-4 md:px-6">
             <div className="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-[#081630] min-h-[500px] md:min-h-[680px] flex items-center justify-center">
@@ -253,7 +235,6 @@ export default function App() {
                   Southern Resident Orca surfacing in Salish Sea waters.
                 </span>
                 <span className="text-[10px] font-mono text-slate-400 bg-black/80 px-2.5 py-1 rounded border border-slate-700 shrink-0">
->>>>>>> 9d9bc23 (Add Dossier 002: Posidonia Crisis and interactive modules)
                   Photo by <a href="https://unsplash.com/@tomasmalik" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:underline">Tomas Malik</a> / Unsplash
                 </span>
               </div>
@@ -270,7 +251,7 @@ export default function App() {
             </p>
           </div>
 
-          {/* SCROLLYTELLING COMPONENT 1: ACOUSTIC MAPPING & ORCASOUND LIVE TELEMETRY */}
+          {/* SCROLLYTELLING COMPONENT 1 */}
           <section className="max-w-6xl mx-auto px-4 md:px-6 my-12">
             <div className="bg-[#081630]/90 border border-slate-800 rounded-3xl p-6 md:p-10 space-y-6 shadow-2xl backdrop-blur-md">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
@@ -313,7 +294,7 @@ export default function App() {
                 </div>
               </div>
 
-              {/* MAP CONTAINER WITH HOTSPOTS */}
+              {/* MAP */}
               <div className="relative rounded-2xl overflow-hidden border border-slate-800/80 bg-[#051124] group">
                 <img 
                   src="/orca-map.svg" 
@@ -358,7 +339,7 @@ export default function App() {
                 </button>
               </div>
 
-              {/* ACOUSTIC DATA PANEL */}
+              {/* ACOUSTIC PANEL */}
               <div className="bg-[#051124]/90 border border-slate-800 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
@@ -393,7 +374,7 @@ export default function App() {
                 </button>
               </div>
 
-              {/* ORCASOUND LIVE TELEMETRY BANNER */}
+              {/* ORCASOUND */}
               <div className="bg-[#051124] border border-[#CCFF00]/30 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <span className="flex h-3 w-3 relative">
@@ -423,7 +404,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* SCROLLYTELLING COMPONENT 2: THE CONTINUOUS MIND */}
+          {/* SCROLLYTELLING COMPONENT 2 */}
           <section className="max-w-6xl mx-auto px-4 md:px-6 my-16">
             <div className="bg-[#081630]/90 border border-slate-800 rounded-3xl p-6 md:p-10 space-y-8 shadow-2xl backdrop-blur-md relative overflow-hidden">
               <div className="absolute top-0 right-0 w-80 h-80 bg-[#CCFF00]/5 rounded-full blur-3xl pointer-events-none"></div>
@@ -461,7 +442,7 @@ export default function App() {
                 </p>
               </div>
 
-              {/* VISUAL MIND MAP */}
+              {/* TIMELINE VISUAL */}
               <div className="bg-[#051124] border border-slate-800/80 rounded-2xl p-6 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 min-h-[220px]">
                 {paradigmMode === 'reality' ? (
                   <div className="w-full flex flex-col md:flex-row items-center justify-around gap-6">
@@ -546,7 +527,7 @@ export default function App() {
                 )}
               </div>
 
-              {/* TIMELINE NAVIGATOR STEPS */}
+              {/* TIMELINE NAV */}
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-2">
                 {TIMELINE_STAGES.map((stage, idx) => (
                   <button
@@ -564,7 +545,7 @@ export default function App() {
                 ))}
               </div>
 
-              {/* ACTIVE STAGE DISPLAY PANEL */}
+              {/* STAGE DISPLAY */}
               <div className="bg-[#051124] border border-slate-800/90 rounded-2xl p-6 md:p-8 space-y-6 relative">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/60 pb-4">
                   <div>
@@ -709,336 +690,3 @@ export default function App() {
               <p>
                 Why? Because they serve as the living, walking historical archives of the pod. During severe salmon scarcity, pods led by elderly grandmothers have significantly higher survival rates. They remember migration routes and environmental cycles from half a century prior.
               </p>
-            </div>
-
-            <div className="space-y-4 border-t border-slate-800/80 pt-8">
-              <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
-                <span className="text-[#CCFF00] font-mono text-sm">04.</span> Neurological Architecture of Deep Empathy
-              </h2>
-              <p>
-                Neuroanatomical studies reveal that the paralimbic system in an orca&apos;s brain—the region responsible for processing emotions, self-awareness, and social bonding—is significantly more elaborate and interconnected than that of humans.
-              </p>
-              <p>
-                An individual orca does not experience identity in isolation; its sense of self is fundamentally interwoven into the collective consciousness of the pod.
-              </p>
-            </div>
-
-<<<<<<< HEAD
-            {/* INSIGHT 5 WITH CINEMATIC DUSK PHOTO (STRICT 9:16 VERTICAL PORTRAIT FRAME) */}
-=======
->>>>>>> 9d9bc23 (Add Dossier 002: Posidonia Crisis and interactive modules)
-            <div className="space-y-6 border-t border-slate-800/80 pt-8">
-              <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-3">
-                <span className="text-[#CCFF00] font-mono text-sm">05.</span> Dismantling Human Exceptionalism
-              </h2>
-              <p>
-                Recognizing orca culture forces us to redefine what we mean by mind. Intelligence is not an evolutionary ladder with <em>Homo sapiens</em> sitting proudly at the top. It is a vast, multidimensional tree. 
-              </p>
-
-<<<<<<< HEAD
-              <div className="my-8 max-w-md mx-auto">
-                <div className="relative aspect-[9/16] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-[#081630]">
-                  <img 
-                    src="/orca-cinematic-dusk.jpg" 
-                    alt="Orcas swimming under dramatic sunset clouds" 
-                    className="w-full h-full object-cover object-center"
-                  />
-                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#051124] via-[#051124]/80 to-transparent p-4 flex flex-col gap-2 text-[10px] font-mono text-slate-300">
-                    <span>Pacific Orca pod surfacing under twilight crepuscular rays.</span>
-                    <span className="self-start">Photo by <a href="https://unsplash.com/@gabrieltovar" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:underline">Gabriel Tovar</a> / Unsplash</span>
-                  </div>
-=======
-              <div className="my-10 max-w-5xl -mx-4 md:-mx-24 relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-[#081630] min-h-[480px] md:min-h-[620px] flex items-center justify-center">
-                <img 
-                  src="/orca-cinematic-dusk.jpg" 
-                  alt="" 
-                  aria-hidden="true" 
-                  className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-35 scale-110 pointer-events-none"
-                />
-                <img 
-                  src="/orca-cinematic-dusk.jpg" 
-                  alt="Orcas swimming under dramatic sunset clouds" 
-                  className="relative z-10 max-h-[580px] md:max-h-[680px] w-auto max-w-full object-contain mx-auto my-auto shadow-2xl py-4"
-                />
-                <div className="absolute bottom-0 inset-x-0 z-20 bg-gradient-to-t from-[#051124] via-[#051124]/80 to-transparent p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-[10px] font-mono text-slate-300">
-                  <span>Pacific Orca pod surfacing under twilight crepuscular rays.</span>
-                  <span className="shrink-0">Photo by <a href="https://unsplash.com/@gabrieltovar" target="_blank" rel="noopener noreferrer" className="text-[#CCFF00] hover:underline">Gabriel Tovar</a> / Unsplash</span>
->>>>>>> 9d9bc23 (Add Dossier 002: Posidonia Crisis and interactive modules)
-                </div>
-              </div>
-
-              <p className="text-slate-200 font-normal">
-                By honoring marine minds on their own terms—far below our surface noise—we take the first step toward true ecological empathy.
-              </p>
-            </div>
-
-            {/* ACADEMIC REFERENCES */}
-            <div className="border-t border-slate-800 pt-10 mt-12 space-y-4 text-xs font-mono text-slate-400">
-              <h4 className="text-[#CCFF00] uppercase tracking-widest text-[11px] font-bold">
-                // ACADEMIC REFERENCES &amp; METHODOLOGY
-              </h4>
-              <ul className="space-y-3 list-disc list-inside leading-relaxed text-slate-400">
-                <li>
-                  <strong className="text-slate-300">Foote, A. D., et al. (2016).</strong> <em>"Genome-wide signatures of culture-driven divergence in killer whales."</em> Nature Communications, 7, 11693.{" "}
-                  <a 
-                    href="https://doi.org/10.1038/ncomms11693" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-[#CCFF00] hover:underline ml-1 inline-flex items-center gap-0.5"
-                  >
-                    [DOI ↗]
-                  </a>
-                </li>
-                <li>
-                  <strong className="text-slate-300">Brent, L. J., et al. (2015).</strong> <em>"Ecological knowledge runs deep in grandmother killer whales."</em> Current Biology, 25(6), 746-750.{" "}
-                  <a 
-                    href="https://doi.org/10.1016/j.cub.2015.01.030" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-[#CCFF00] hover:underline ml-1 inline-flex items-center gap-0.5"
-                  >
-                    [DOI ↗]
-                  </a>
-                </li>
-                <li>
-                  <strong className="text-slate-300">Rendell, L., &amp; Whitehead, H. (2001).</strong> <em>"Culture in whales and dolphins."</em> Behavioral and Brain Sciences, 24(2), 309-324.{" "}
-                  <a 
-                    href="https://doi.org/10.1017/S0140525X0100396X" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-[#CCFF00] hover:underline ml-1 inline-flex items-center gap-0.5"
-                  >
-                    [DOI ↗]
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-
-        </main>
-      ) : (
-
-      /* HOME FEED VIEW */
-      <main className="max-w-4xl mx-auto px-6 py-12 space-y-24 relative z-10">
-        
-        {/* HERO SECTION */}
-        <section className="text-center space-y-6 pt-12 pb-8 max-w-3xl mx-auto">
-          <div className="inline-block px-3.5 py-1 bg-slate-900/80 backdrop-blur-md border border-slate-700/80 rounded-full text-xs text-[#CCFF00] font-mono tracking-wider uppercase mb-2 shadow-xl">
-            Dispatch #000 · Platform Launch
-          </div>
-          
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-2xl">
-            Far Below The <span className="text-[#CCFF00]">Surface Noise.</span>
-          </h1>
-          
-          <p className="text-lg md:text-xl text-slate-200 font-light leading-relaxed drop-shadow-md max-w-2xl mx-auto">
-            No social algorithms. Timeless, interactive, and deeply researched ecological investigations delivered directly to your inbox.
-          </p>
-
-          {/* BEEHIIV FORM */}
-          <div className="pt-4 max-w-md mx-auto">
-            {submitted ? (
-              <div className="p-4 bg-[#081630]/90 border border-[#CCFF00]/40 rounded-lg text-[#CCFF00] text-sm font-mono backdrop-blur-md">
-                ✓ Subscription request received. Welcome to Deep Dispatches.
-              </div>
-            ) : (
-              <div className="space-y-3">
-                <form 
-                  action="https://app.beehiiv.com/subscribe" 
-                  method="POST" 
-                  target="beehiiv-target"
-                  onSubmit={() => setSubmitted(true)}
-                  className="flex flex-col sm:flex-row gap-3"
-                >
-                  <input type="hidden" name="publication_id" value="pub_2383c5ca-1813-4b13-b35f-6b498cd01829" />
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="Enter your email..."
-                    className="flex-1 px-4 py-3 bg-[#051124]/90 backdrop-blur-md border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#CCFF00] transition-colors shadow-inner"
-                  />
-                  <button
-                    type="submit"
-                    className="px-6 py-3 bg-[#CCFF00] hover:bg-[#b8e600] text-black font-semibold rounded-lg transition-colors cursor-pointer whitespace-nowrap shadow-xl"
-                  >
-                    Subscribe
-                  </button>
-                </form>
-                <iframe name="beehiiv-target" className="hidden" title="beehiiv-form-target"></iframe>
-              </div>
-            )}
-            <p className="text-xs text-slate-400 mt-3 font-medium">No spam. Unsubscribe anytime in one click.</p>
-          </div>
-        </section>
-
-        {/* INVESTIGATION STREAM */}
-        <section className="space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
-            <h2 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
-              // INVESTIGATION STREAM
-            </h2>
-            
-            <div className="flex items-center gap-2 text-xs font-mono">
-              <span className="text-slate-500 mr-1">Sort by:</span>
-              <button
-                onClick={() => setSortBy('latest')}
-                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                  sortBy === 'latest'
-                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                    : 'bg-[#081630] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
-                }`}
-              >
-                Latest
-              </button>
-              <button
-                onClick={() => setSortBy('popular')}
-                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                  sortBy === 'popular'
-                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                    : 'bg-[#081630] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
-                }`}
-              >
-                Most Read
-              </button>
-              <button
-                onClick={() => setSortBy('oldest')}
-                className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
-                  sortBy === 'oldest'
-                    ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold'
-                    : 'bg-[#081630] text-slate-400 border-slate-800 hover:text-white hover:border-slate-700'
-                }`}
-              >
-                Oldest
-              </button>
-            </div>
-          </div>
-
-          <div className="space-y-8">
-            {sortedDispatches.map((dispatch) => (
-              <article 
-                key={dispatch.id}
-                onClick={() => setActiveArticleId(dispatch.id)}
-                className="group bg-[#081630]/50 hover:bg-[#081630] border border-slate-800/80 hover:border-[#CCFF00]/40 rounded-2xl p-8 md:p-10 transition-all duration-300 cursor-pointer relative overflow-hidden shadow-lg backdrop-blur-sm"
-              >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[#CCFF00]/5 rounded-full blur-2xl group-hover:bg-[#CCFF00]/10 transition-colors pointer-events-none"></div>
-
-                <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-[#CCFF00] mb-4">
-                  <div className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00]"></span>
-                    <span>{dispatch.number}</span>
-                    <span className="text-slate-600">·</span>
-                    <span className="text-slate-400">{dispatch.category}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-slate-500">
-                    <span>{dispatch.readTime}</span>
-                    {sortBy === 'popular' && (
-                      <span className="text-[#CCFF00]/80 bg-[#CCFF00]/10 px-2 py-0.5 rounded text-[10px]">
-                        {dispatch.views.toLocaleString()} reads
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-[#CCFF00] transition-colors leading-tight">
-                  {dispatch.title}
-                </h3>
-
-                <p className="text-slate-300 text-sm md:text-base font-light leading-relaxed mb-6">
-                  {dispatch.summary}
-                </p>
-
-                <div className="flex items-center justify-between pt-4 border-t border-slate-800/50">
-                  <span className="text-xs text-slate-500 font-mono">{dispatch.status}</span>
-                  <span className="text-xs font-semibold text-[#CCFF00] group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                    Read Investigation →
-                  </span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* MANIFESTO SECTION */}
-        <section className="border-t border-slate-800/80 pt-16 space-y-10">
-          <div className="max-w-3xl">
-            <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase mb-4">
-              // THE MANIFESTO
-            </h3>
-            <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
-              Welcome to <strong className="text-white font-semibold">Deep Dispatches</strong>, a platform created far below the surface noise. Here, I bridge the gap between Deep Ecology, Marine Mysteries, and the critical worlds of Ecological Finance and Geo-Political Journeys.
-            </p>
-            <p className="text-base text-slate-400 font-light leading-relaxed mt-4">
-              Moving beyond static reporting, I craft visually immersive scrollytelling experiences. Through interactive mapping, dynamic data, and cinematic narratives, I don&apos;t just tell these stories—I give you the depth to explore them. Don&apos;t miss the horizon.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 pt-4 border-t border-slate-800/40">
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">01. Independent</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Pure journalism uninfluenced by advertisers, algorithms, or clickbait metrics.</p>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">02. Immersive</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Interactive scrollytelling, dynamic maps, and data visualizations instead of quick news bites.</p>
-            </div>
-            <div>
-              <h4 className="text-sm font-semibold text-[#CCFF00] tracking-wider uppercase mb-2">03. Timeless</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">Deep investigative dossiers built to hold lasting intellectual and ecological value for years.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* THE INVESTIGATOR SECTION */}
-        <section className="border-t border-slate-800/80 pt-16 space-y-6">
-          <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
-            // THE INVESTIGATOR
-          </h3>
-          
-          <div className="bg-[#081630]/60 border border-slate-800/80 rounded-2xl p-8 md:p-10 relative overflow-hidden flex flex-col md:flex-row gap-8 items-start backdrop-blur-sm">
-            
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#CCFF00]/5 rounded-full blur-3xl pointer-events-none"></div>
-
-            <div className="w-32 h-32 md:w-48 md:h-48 shrink-0 relative rounded-xl overflow-hidden border border-slate-700/50 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 bg-slate-900">
-              <img 
-                src="/profile.jpg" 
-                alt="The Investigator" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#081630] via-transparent to-transparent"></div>
-            </div>
-
-            <div className="space-y-6 flex-1">
-              <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed">
-                When people ask what I do for a living, the answer has changed many times over the years: camera operator, field correspondent, Editor-in-Chief, logistics manager, diving instructor... But deep down, I have always been one thing: <span className="text-[#CCFF00] font-normal">a journalist.</span>
-              </p>
-
-              <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                I spent decades inside major media networks and independent platforms—including <strong className="text-slate-200">CNN, NTV, ATV, Medyascope, and Reportare</strong>—navigating the high-pressure world of newsrooms. But chasing social media algorithms and being a &apos;content creator&apos; left me exhausted. I didn&apos;t want to add to the surface noise anymore; I wanted to explore the depths.
-              </p>
-
-              <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                As a journalist, master diver, and proud father—with dive logs spanning from the <span className="text-slate-300">Red Sea</span> and <span className="text-slate-300">Thailand</span> to <span className="text-slate-300">Malta, Cyprus, the Black Sea, and the Mediterranean</span>—I built <strong className="text-white">Deep Dispatches</strong> to mind my own business. Here, I focus entirely on marine mysteries, climate crises, and deep ecology. No daily clickbait, no corporate agendas. Just high-impact, deeply researched dossiers delivered directly to you.
-              </p>
-
-              <div className="pt-4 flex flex-wrap gap-3 text-xs font-mono text-slate-500">
-                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Journalism &amp; Broadcast</span>
-                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Scuba Diving Instructor</span>
-                <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Deep Ecology</span>
-              </div>
-            </div>
-            
-          </div>
-        </section>
-
-      </main>
-      )}
-
-      {/* FOOTER */}
-      <footer className="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500 relative z-10 bg-[#051124]">
-        <p>© {new Date().getFullYear()} DEEP DISPATCHES. All rights reserved.</p>
-      </footer>
-    </div>
-  );
-}
