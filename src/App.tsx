@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { BrowserRouter, Routes, Route, useParams, useNavigate, Link } from 'react-router-dom';
 import PosidoniaDossier from './components/PosidoniaDossier';
 
@@ -173,6 +173,7 @@ function HomePage() {
                 <iframe name="beehiiv-target" className="hidden" title="beehiiv-form-target"></iframe>
               </div>
             )}
+            <p className="text-xs text-slate-400 mt-3 font-medium">No spam. Unsubscribe anytime in one click.</p>
           </div>
         </section>
 
@@ -221,15 +222,38 @@ function HomePage() {
   );
 }
 
-// --- MAKALE SAYFASI (Dinamik URL) ---
+// --- MAKALE SAYFASI (Dinamik URL ile Paylaşılabilir) ---
 function DispatchPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   
-  const selectedArticle = DISPATCHES.find(d => d.id === id);
+  // Makale içi state'ler (Eski kodundan taşındı)
+  const [selectedEcotype, setSelectedEcotype] = useState<'resident' | 'transient'>('resident');
+  const [activeAudioSrc, setActiveAudioSrc] = useState<string | null>(null);
+  const [activeStageIndex, setActiveStageIndex] = useState(0);
+  const [paradigmMode, setParadigmMode] = useState<'myth' | 'reality'>('reality');
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Paylaşım fonksiyonu
+  const selectedArticle = DISPATCHES.find(d => d.id === id);
+  const currentStage = TIMELINE_STAGES[activeStageIndex];
+
+  const expectedAudioSrc = selectedEcotype === 'resident' ? '/resident-chirp.mp3' : '/transient-click.mp3';
+  const isExpectedPlaying = activeAudioSrc === expectedAudioSrc;
+
+  const togglePlayAudio = (src: string) => {
+    if (activeAudioSrc === src) {
+      if (audioRef.current) audioRef.current.pause();
+      setActiveAudioSrc(null);
+    } else {
+      setActiveAudioSrc(src);
+      if (audioRef.current) {
+        audioRef.current.src = src;
+        audioRef.current.play().catch(err => console.log('Audio prevented:', err));
+      }
+    }
+  };
+
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
@@ -244,52 +268,164 @@ function DispatchPage() {
 
   return (
     <>
+      <audio ref={audioRef} onEnded={() => setActiveAudioSrc(null)} className="hidden" />
+      
       <header className="sticky top-0 z-50 bg-[#051124]/85 backdrop-blur-md border-b border-slate-800/80 px-6 py-4">
         <div className="flex items-center justify-between max-w-6xl mx-auto">
           <Link to="/" className="flex items-center gap-2 cursor-pointer">
             <span className="w-2.5 h-2.5 rounded-full bg-[#CCFF00] animate-pulse"></span>
             <span className="font-bold tracking-widest text-sm text-slate-200">DEEP DISPATCHES</span>
           </Link>
-          <button onClick={() => navigate('/')} className="text-xs text-[#CCFF00] hover:underline font-mono cursor-pointer">
-            ← Back to All Dispatches
-          </button>
+          <div className="flex gap-4">
+            <button onClick={copyLink} className="text-xs text-black bg-[#CCFF00] hover:bg-[#b8e600] px-4 py-2 rounded-lg font-mono font-bold transition-all">
+              {copied ? '✓ Link Kopyalandı' : '🔗 Bu Makaleyi Paylaş'}
+            </button>
+            <button onClick={() => navigate('/')} className="text-xs text-[#CCFF00] hover:underline font-mono cursor-pointer">
+              ← Geri Dön
+            </button>
+          </div>
         </div>
       </header>
 
-      <main className="py-16 relative z-10">
-        <div className="max-w-3xl mx-auto px-6 space-y-4">
-          <div className="flex items-center justify-between">
+      {id === 'dossier-002' ? (
+        <PosidoniaDossier />
+      ) : id === 'dossier-003' ? (
+        <main className="max-w-3xl mx-auto px-6 py-32 relative z-10 text-center space-y-6">
+          <span className="text-xs font-mono text-amber-400 tracking-widest uppercase">{selectedArticle.number} · IN DEVELOPMENT</span>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-white leading-tight">{selectedArticle.title}</h1>
+          <p className="text-lg text-slate-400 font-light italic">{selectedArticle.subtitle}</p>
+          <p className="text-sm text-slate-500 font-light max-w-xl mx-auto pt-4">This dispatch is still in the field. Sign up on the home page to be notified.</p>
+        </main>
+      ) : (
+        <main className="py-16 space-y-16 relative z-10">
+          
+          {/* ARTICLE HEADER */}
+          <div className="max-w-3xl mx-auto px-6 space-y-4">
             <div className="flex items-center gap-3 text-xs font-mono text-[#CCFF00]">
               <span>{selectedArticle.number}</span>
               <span>·</span>
               <span>{selectedArticle.category}</span>
             </div>
-            
-            {/* PAYLAŞ BUTONU */}
-            <button onClick={copyLink} className="px-4 py-2 bg-[#081630] hover:bg-[#CCFF00] hover:text-black text-[#CCFF00] border border-[#CCFF00]/40 rounded-lg text-xs font-mono transition-colors">
-              {copied ? '✓ Link Kopyalandı' : '🔗 Linki Paylaş'}
-            </button>
+            <h1 className="text-3xl md:text-5xl font-extrabold text-white leading-tight">{selectedArticle.title}</h1>
+            <p className="text-lg text-[#CCFF00]/90 font-light italic">{selectedArticle.subtitle}</p>
+            <div className="text-xs text-slate-500 font-mono pt-2 border-b border-slate-800/80 pb-6 flex items-center gap-4">
+              <span>Reading Time: {selectedArticle.readTime}</span>
+              <span>·</span>
+              <span>Status: {selectedArticle.status}</span>
+            </div>
           </div>
-          
-          <h1 className="text-3xl md:text-5xl font-extrabold text-white leading-tight">{selectedArticle.title}</h1>
-          <p className="text-lg text-[#CCFF00]/90 font-light italic">{selectedArticle.subtitle}</p>
-          
-          {id === 'dossier-001' && (
-            <div className="pt-8 text-slate-300">
-              <p>Buraya orca makalesinin içeriği gelecek (yer kaplamaması için kısa kesildi, eski kodundaki aynı içeriği buraya taşıyabilirsin).</p>
-            </div>
-          )}
 
-          {id === 'dossier-002' && <PosidoniaDossier />}
-
-          {id === 'dossier-003' && (
-            <div className="py-20 text-center space-y-4 border-t border-slate-800 mt-8">
-              <h2 className="text-2xl font-bold text-amber-400">IN DEVELOPMENT</h2>
-              <p className="text-slate-400">This dispatch is currently in the field. Sign up on the home page to be notified.</p>
+          {/* HERO COVER PHOTO */}
+          <div className="max-w-5xl mx-auto px-4 md:px-6">
+            <div className="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-[#081630] min-h-[500px] md:min-h-[680px] flex items-center justify-center">
+              <img src="/orca-cover.jpg" alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover blur-3xl opacity-30 scale-110 pointer-events-none" />
+              <img src="/orca-cover.jpg" alt="Southern Resident Orca" className="relative z-10 max-h-[620px] md:max-h-[720px] w-auto max-w-full object-contain mx-auto my-auto shadow-2xl py-4" />
             </div>
-          )}
-        </div>
-      </main>
+          </div>
+
+          {/* INTRO */}
+          <div className="max-w-3xl mx-auto px-6 prose prose-invert text-slate-300 font-light leading-relaxed space-y-6 text-base md:text-lg">
+            <p className="first-letter:text-5xl first-letter:font-bold first-letter:text-[#CCFF00] first-letter:mr-3 first-letter:float-left">
+              For centuries, human philosophy and Western science rested on a comfortable dogma: that culture, language, and abstract thought were exclusive domains of <em>Homo sapiens</em>. Animals had instincts; humans had intellect.
+            </p>
+            <p>
+              However, deep beneath the surface waters of the world&apos;s oceans, marine biologists and neuroscientists are encountering a reality that shatters our anthropocentric pedestal. Orcas (<em>Orcinus orca</em>) do not merely possess high intelligence—they live inside ancient, non-human cultures shaped by dialect, specialized diets, and multi-generational knowledge systems.
+            </p>
+          </div>
+
+          {/* SCROLLYTELLING 1 */}
+          <section className="max-w-6xl mx-auto px-4 md:px-6 my-12">
+            <div className="bg-[#081630]/90 border border-slate-800 rounded-3xl p-6 md:p-10 space-y-6 shadow-2xl backdrop-blur-md">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                <div>
+                  <span className="text-[10px] font-mono text-[#CCFF00] tracking-widest uppercase block mb-1">// SCROLLYTELLING MODULE 01</span>
+                  <h3 className="text-xl font-bold text-white">Acoustic-Spatial Ecotype Mapping</h3>
+                </div>
+                <div className="flex items-center gap-2 bg-[#051124] p-1.5 rounded-xl border border-slate-800 text-xs font-mono">
+                  <button onClick={() => { setSelectedEcotype('resident'); togglePlayAudio('/resident-chirp.mp3'); }} className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${selectedEcotype === 'resident' ? 'bg-[#CCFF00] text-black font-semibold' : 'text-slate-400 hover:text-white'}`}>Resident</button>
+                  <button onClick={() => { setSelectedEcotype('transient'); togglePlayAudio('/transient-click.mp3'); }} className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${selectedEcotype === 'transient' ? 'bg-[#CCFF00] text-black font-semibold' : 'text-slate-400 hover:text-white'}`}>Transient</button>
+                </div>
+              </div>
+              <div className="relative rounded-2xl overflow-hidden border border-slate-800/80 bg-[#051124] group">
+                <img src="/orca-map.svg" alt="Map" className="w-full h-auto object-cover min-h-[350px]" />
+              </div>
+              <div className="bg-[#051124]/90 border border-slate-800 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#CCFF00] animate-pulse"></span>
+                    <span className="text-xs font-mono text-[#CCFF00] uppercase tracking-wider">{selectedEcotype === 'resident' ? 'Southern Resident Ecotype' : "Bigg's Transient Ecotype"}</span>
+                  </div>
+                  <p className="text-sm text-slate-300 font-light leading-relaxed">{selectedEcotype === 'resident' ? 'Resident pods rely heavily on highly complex, vocal dialects to coordinate salmon hunts.' : 'Transient pods hunt marine mammals with acute underwater hearing. They maintain silence for stealth.'}</p>
+                </div>
+                <button onClick={() => togglePlayAudio(expectedAudioSrc)} className={`shrink-0 px-6 py-3 rounded-xl border text-xs font-mono flex items-center gap-3 transition-all cursor-pointer ${isExpectedPlaying ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-bold' : 'bg-[#081630] text-[#CCFF00] border-[#CCFF00]/40 hover:border-[#CCFF00]'}`}>
+                  <span>{isExpectedPlaying ? '▌▌ PAUSE' : '▶ PLAY HYDROPHONE'}</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          {/* SCROLLYTELLING 2 */}
+          <section className="max-w-6xl mx-auto px-4 md:px-6 my-16">
+            <div className="bg-[#081630]/90 border border-slate-800 rounded-3xl p-6 md:p-10 space-y-8 shadow-2xl backdrop-blur-md relative overflow-hidden">
+              <div className="space-y-4 border-b border-slate-800 pb-6">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <span className="text-[10px] font-mono text-[#CCFF00] tracking-widest uppercase">// SCROLLYTELLING MODULE 02</span>
+                  <div className="flex items-center gap-2 bg-[#051124] px-3 py-1 rounded-full border border-slate-800 text-[11px] font-mono">
+                    <button onClick={() => setParadigmMode('reality')} className={`cursor-pointer ${paradigmMode === 'reality' ? 'text-[#CCFF00] font-bold' : 'text-slate-400'}`}>Darwinian Tree</button>
+                    <span className="text-slate-700">|</span>
+                    <button onClick={() => setParadigmMode('myth')} className={`cursor-pointer ${paradigmMode === 'myth' ? 'text-amber-400 font-bold' : 'text-slate-400'}`}>Scala Natura Myth</button>
+                  </div>
+                </div>
+                <h3 className="text-2xl font-extrabold text-white">Deep-Time Cartography of Intelligence</h3>
+                <p className="text-sm text-slate-300 font-light leading-relaxed max-w-2xl">{paradigmMode === 'reality' ? 'Intelligence is not a ladder. It is a continuous evolutionary tree.' : 'The myth of "Scala Natura" viewed life as a linear ladder.'}</p>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-2">
+                {TIMELINE_STAGES.map((stage, idx) => (
+                  <button key={stage.id} onClick={() => setActiveStageIndex(idx)} className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${activeStageIndex === idx ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-bold scale-[1.02]' : 'bg-[#051124]/80 text-slate-400 border-slate-800 hover:text-white'}`}>
+                    <span className="text-[9px] font-mono block opacity-75 mb-1">STEP 0{idx + 1}</span>
+                    <span className="text-xs font-semibold leading-tight line-clamp-2">{stage.title}</span>
+                  </button>
+                ))}
+              </div>
+
+              <div className="bg-[#051124] border border-slate-800/90 rounded-2xl p-6 md:p-8 space-y-6 relative">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/60 pb-4">
+                  <div>
+                    <span className="text-xs font-mono text-[#CCFF00] uppercase tracking-wider block">{currentStage.tag}</span>
+                    <h4 className="text-xl md:text-2xl font-bold text-white mt-1">{currentStage.title}</h4>
+                  </div>
+                </div>
+                <p className="text-base text-slate-300 font-light leading-relaxed">{currentStage.description}</p>
+                <div className="p-4 bg-[#081630] border-l-2 border-[#CCFF00] rounded-r-xl text-xs font-mono text-slate-200">
+                  <span className="text-[#CCFF00] font-bold mr-2">// TAKEAWAY:</span>{currentStage.highlight}
+                </div>
+                <div className="flex items-center justify-between pt-4 border-t border-slate-800/60 text-xs font-mono">
+                  <button onClick={() => setActiveStageIndex(Math.max(0, activeStageIndex - 1))} disabled={activeStageIndex === 0} className="px-4 py-2 rounded-lg border border-slate-800 text-slate-400 disabled:opacity-30 cursor-pointer">← Previous</button>
+                  <span className="text-slate-500">Epoch {activeStageIndex + 1} of {TIMELINE_STAGES.length}</span>
+                  <button onClick={() => setActiveStageIndex(Math.min(TIMELINE_STAGES.length - 1, activeStageIndex + 1))} disabled={activeStageIndex === TIMELINE_STAGES.length - 1} className="px-4 py-2 rounded-lg border border-[#CCFF00]/40 text-[#CCFF00] disabled:opacity-30 cursor-pointer">Next →</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ESSAY & REFERENCES */}
+          <div className="max-w-3xl mx-auto px-6 prose prose-invert text-slate-300 font-light leading-relaxed space-y-12 text-base md:text-lg">
+            <div className="space-y-4">
+              <h2 className="text-xl md:text-2xl font-bold text-white">01. Culture Drives Biological Evolution</h2>
+              <p>In evolutionary biology, the standard model assumes genetic mutations dictate behavioral shifts. In orcas, this paradigm is flipped. Cultural traditions dictate genetics.</p>
+            </div>
+            <div className="border-t border-slate-800 pt-10 mt-12 space-y-4 text-xs font-mono text-slate-400">
+              <h4 className="text-[#CCFF00] uppercase tracking-widest text-[11px] font-bold">// ACADEMIC REFERENCES</h4>
+              <ul className="space-y-3 list-disc list-inside leading-relaxed text-slate-400">
+                <li>Foote, A. D., et al. (2016). Genome-wide signatures of culture-driven divergence in killer whales.</li>
+                <li>Brent, L. J., et al. (2015). Ecological knowledge runs deep in grandmother killer whales.</li>
+              </ul>
+            </div>
+          </div>
+
+        </main>
+      )}
 
       <footer className="border-t border-slate-800/80 py-8 text-center text-xs text-slate-500 relative z-10 bg-[#051124]">
         <p>© {new Date().getFullYear()} DEEP DISPATCHES. All rights reserved.</p>
