@@ -1,12 +1,22 @@
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route, useParams, useNavigate, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { DISPATCHES, DISPATCH_COMPONENTS } from './dispatches';
 
 type SortOption = 'latest' | 'popular' | 'oldest';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 export default function App() {
   return (
     <BrowserRouter>
+    <ScrollToTop />
       <div className="min-h-screen bg-[#051124] text-slate-100 font-sans selection:bg-[#CCFF00] selection:text-black relative overflow-x-hidden">
         <Routes>
           <Route path="/" element={<HomePage />} />
