@@ -1,4 +1,7 @@
+declare const process: any;
+
 export default async function handler(req: any, res: any) {
+  // ... geri kalan kod aynı kalacakexport default async function handler(req: any, res: any) {
   // Sadece POST isteklerine izin ver
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
