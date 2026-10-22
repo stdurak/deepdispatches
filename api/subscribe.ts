@@ -37,9 +37,11 @@ export default async function handler(req: any, res: any) {
 
     const data = await response.json();
 
-    if (!response.ok) {
+        if (!response.ok) {
       console.error('Beehiiv API Hatasi:', data);
-      return res.status(response.status).json({ error: data.message || 'Subscription failed' });
+      // Hatanın tam detayını siteye gönder
+      return res.status(response.status).json({ error: JSON.stringify(data) });
+    }
     }
 
     console.log('Yeni abone basariyla eklendi:', email);
