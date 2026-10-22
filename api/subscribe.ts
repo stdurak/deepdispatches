@@ -1,7 +1,6 @@
 declare const process: any;
 
 export default async function handler(req: any, res: any) {
-  // ... geri kalan kod aynı kalacakexport default async function handler(req: any, res: any) {
   // Sadece POST isteklerine izin ver
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -37,13 +36,13 @@ export default async function handler(req: any, res: any) {
 
     const data = await response.json();
 
-        if (!response.ok) {
+    if (!response.ok) {
       console.error('Beehiiv API Hatasi:', data);
-      // Hatanın tam detayını siteye gönder
+      // Hatanın tam detayını siteye gönder (Alert olarak görebilmek için)
       return res.status(response.status).json({ error: JSON.stringify(data) });
     }
-    }
 
+    // Başarılı
     console.log('Yeni abone basariyla eklendi:', email);
     return res.status(200).json({ success: true, message: 'Successfully subscribed!' });
     
