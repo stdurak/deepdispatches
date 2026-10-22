@@ -1,22 +1,28 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useParams, useNavigate, Link, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion'; // <-- Animasyon kütüphanesi eklendi
 import { DISPATCHES, DISPATCH_COMPONENTS } from './dispatches';
 
 type SortOption = 'latest' | 'popular' | 'oldest';
 
+// Animasyon Varyasyonları (Aşağıdan yukarı süzülme)
+const fadeUpVariant = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
+};
+
 function ScrollToTop() {
   const { pathname } = useLocation();
-  
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-
   return null;
 }
+
 export default function App() {
   return (
     <BrowserRouter>
-    <ScrollToTop />
+      <ScrollToTop />
       <div className="min-h-screen bg-[#051124] text-slate-100 font-sans selection:bg-[#CCFF00] selection:text-black relative overflow-x-hidden">
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -60,7 +66,14 @@ function HomePage() {
       </div>
 
       <main className="max-w-4xl mx-auto px-6 py-12 space-y-24 relative z-10">
-        <section className="text-center space-y-6 pt-12 pb-8 max-w-3xl mx-auto">
+        
+        {/* HERO SECTION (Animasyonlu) */}
+        <motion.section 
+          initial="hidden" 
+          animate="visible" 
+          variants={fadeUpVariant}
+          className="text-center space-y-6 pt-12 pb-8 max-w-3xl mx-auto"
+        >
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight drop-shadow-2xl">
             Far Below The <span className="text-[#CCFF00]">Surface Noise.</span>
           </h1>
@@ -77,24 +90,41 @@ function HomePage() {
               </form>
             )}
           </div>
-        </section>
+        </motion.section>
 
-        {/* INVESTIGATION STREAM */}
+        {/* INVESTIGATION STREAM (Animasyonlu) */}
         <section className="space-y-8">
-          <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
+          <motion.div 
+            initial="hidden" 
+            whileInView="visible" 
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeUpVariant}
+            className="flex items-center justify-between border-b border-slate-800/80 pb-4"
+          >
             <h2 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">// INVESTIGATION STREAM</h2>
             <div className="flex gap-2 text-xs font-mono">
               {['latest', 'popular', 'oldest'].map(option => (
-                <button key={option} onClick={() => setSortBy(option as SortOption)} className={`px-3 py-1.5 rounded-lg border cursor-pointer ${sortBy === option ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold' : 'bg-[#081630] text-slate-400 border-slate-800'}`}>
+                <button key={option} onClick={() => setSortBy(option as SortOption)} className={`px-3 py-1.5 rounded-lg border cursor-pointer transition-colors ${sortBy === option ? 'bg-[#CCFF00] text-black border-[#CCFF00] font-semibold' : 'bg-[#081630] text-slate-400 border-slate-800 hover:border-slate-600'}`}>
                   {option.charAt(0).toUpperCase() + option.slice(1)}
                 </button>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           <div className="space-y-8">
-            {sortedDispatches.map((dispatch) => (
-              <article key={dispatch.id} onClick={() => navigate(`/dispatch/${dispatch.id}`)} className="group bg-[#081630]/50 hover:bg-[#081630] border border-slate-800/80 hover:border-[#CCFF00]/40 rounded-2xl p-8 md:p-10 transition-all cursor-pointer relative overflow-hidden shadow-lg backdrop-blur-sm">
+            {sortedDispatches.map((dispatch, index) => (
+              <motion.article 
+                key={dispatch.id} 
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: index * 0.1 } } // Sırayla gelmesi için gecikme
+                }}
+                onClick={() => navigate(`/dispatch/${dispatch.id}`)} 
+                className="group bg-[#081630]/50 hover:bg-[#081630] border border-slate-800/80 hover:border-[#CCFF00]/40 rounded-2xl p-8 md:p-10 transition-all duration-300 cursor-pointer relative overflow-hidden shadow-lg backdrop-blur-sm hover:-translate-y-1"
+              >
                 <div className="flex flex-wrap items-center justify-between text-xs font-mono text-[#CCFF00] mb-4">
                   <div className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00]"></span>
@@ -104,23 +134,27 @@ function HomePage() {
                   </div>
                   <span>{dispatch.readTime}</span>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-[#CCFF00] leading-tight">{dispatch.title}</h3>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-[#CCFF00] leading-tight transition-colors">{dispatch.title}</h3>
                 <p className="text-slate-300 text-sm md:text-base font-light leading-relaxed mb-6">{dispatch.summary}</p>
                 <div className="flex items-center justify-between pt-4 border-t border-slate-800/50">
                   <span className="text-xs text-slate-500 font-mono">{dispatch.status}</span>
                   <span className="text-xs font-semibold text-[#CCFF00] group-hover:translate-x-1 transition-transform">Read Investigation →</span>
                 </div>
-              </article>
+              </motion.article>
             ))}
           </div>
         </section>
 
-        {/* MANIFESTO SECTION */}
-        <section className="border-t border-slate-800/80 pt-16 space-y-10">
+        {/* MANIFESTO SECTION (Animasyonlu) */}
+        <motion.section 
+          initial="hidden" 
+          whileInView="visible" 
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeUpVariant}
+          className="border-t border-slate-800/80 pt-16 space-y-10"
+        >
           <div className="max-w-3xl">
-            <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase mb-4">
-              // THE MANIFESTO
-            </h3>
+            <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase mb-4">// THE MANIFESTO</h3>
             <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed">
               Welcome to <strong className="text-white font-semibold">Deep Dispatches</strong>, a platform created far below the surface noise. Here, I bridge the gap between Deep Ecology, Marine Mysteries, and the critical worlds of Ecological Finance and Geo-Political Journeys.
             </p>
@@ -143,24 +177,23 @@ function HomePage() {
               <p className="text-xs text-slate-400 leading-relaxed">Deep investigative dossiers built to hold lasting intellectual and ecological value for years.</p>
             </div>
           </div>
-        </section>
+        </motion.section>
 
-        {/* THE INVESTIGATOR SECTION */}
-        <section className="border-t border-slate-800/80 pt-16 space-y-6">
-          <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">
-            // THE INVESTIGATOR
-          </h3>
+        {/* THE INVESTIGATOR SECTION (Animasyonlu) */}
+        <motion.section 
+          initial="hidden" 
+          whileInView="visible" 
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeUpVariant}
+          className="border-t border-slate-800/80 pt-16 space-y-6"
+        >
+          <h3 className="text-xs font-mono text-[#CCFF00] tracking-widest uppercase">// THE INVESTIGATOR</h3>
           
           <div className="bg-[#081630]/60 border border-slate-800/80 rounded-2xl p-8 md:p-10 relative overflow-hidden flex flex-col md:flex-row gap-8 items-start backdrop-blur-sm">
-            
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#CCFF00]/5 rounded-full blur-3xl pointer-events-none"></div>
 
             <div className="w-32 h-32 md:w-48 md:h-48 shrink-0 relative rounded-xl overflow-hidden border border-slate-700/50 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 bg-slate-900">
-              <img 
-                src="/profile.jpg" 
-                alt="The Investigator" 
-                className="w-full h-full object-cover"
-              />
+              <img src="/profile.jpg" alt="The Investigator" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#081630] via-transparent to-transparent"></div>
             </div>
 
@@ -168,24 +201,17 @@ function HomePage() {
               <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed">
                 When people ask what I do for a living, the answer has changed many times over the years: camera operator, field correspondent, Editor-in-Chief, logistics manager, diving instructor... But deep down, I have always been one thing: <span className="text-[#CCFF00] font-normal">a journalist.</span>
               </p>
-
               <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                I spent decades inside major media networks and independent platforms—including <strong className="text-slate-200">CNN, NTV, ATV, Medyascope, and Reportare</strong>—navigating the high-pressure world of newsrooms. But chasing social media algorithms and being a &apos;content creator&apos; left me exhausted. I didn&apos;t want to add to the surface noise anymore; I wanted to explore the depths.
+                I spent decades inside major media networks and independent platforms—including <strong className="text-slate-200">CNN, NTV, ATV, Medyascope, and Reportare</strong>—navigating the high-pressure world of newsrooms. But chasing social media algorithms and being a &apos;content creator&apos; left me exhausted.
               </p>
-
-              <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                As a journalist, master diver, and proud father—with dive logs spanning from the <span className="text-slate-300">Red Sea</span> and <span className="text-slate-300">Thailand</span> to <span className="text-slate-300">Malta, Cyprus, the Black Sea, and the Mediterranean</span>—I built <strong className="text-white">Deep Dispatches</strong> to mind my own business. Here, I focus entirely on marine mysteries, climate crises, and deep ecology. No daily clickbait, no corporate agendas. Just high-impact, deeply researched dossiers delivered directly to you.
-              </p>
-
               <div className="pt-4 flex flex-wrap gap-3 text-xs font-mono text-slate-500">
                 <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Journalism &amp; Broadcast</span>
                 <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Scuba Diving Instructor</span>
                 <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Deep Ecology</span>
               </div>
             </div>
-            
           </div>
-        </section>
+        </motion.section>
 
       </main>
 
@@ -196,7 +222,7 @@ function HomePage() {
   );
 }
 
-// --- MAKALE SAYFASI (Registry Üzerinden Yükler) ---
+// --- MAKALE SAYFASI ---
 function DispatchPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -211,7 +237,7 @@ function DispatchPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  if (!article) return <div className="text-center py-20 text-white">Dispatch not found. <Link to="/" className="text-[#CCFF00] underline">Ana sayfaya dön</Link></div>;
+  if (!article) return <div className="text-center py-20 text-white">Dispatch not found. <Link to="/" className="text-[#CCFF00] underline">Return to Home</Link></div>;
 
   return (
     <>
@@ -223,9 +249,9 @@ function DispatchPage() {
           </Link>
           <div className="flex gap-4">
             <button onClick={copyLink} className="text-xs text-black bg-[#CCFF00] hover:bg-[#b8e600] px-4 py-2 rounded-lg font-mono font-bold transition-all">
-              {copied ? '✓ Link Kopyalandı' : '🔗 Share this Dispatch'}
+              {copied ? '✓ Link Copied' : '🔗 Share this Dispatch'}
             </button>
-            <button onClick={() => navigate('/')} className="text-xs text-[#CCFF00] hover:underline font-mono">← Back to All Dispatches </button>
+            <button onClick={() => navigate('/')} className="text-xs text-[#CCFF00] hover:underline font-mono">← Back to All Dispatches</button>
           </div>
         </div>
       </header>
