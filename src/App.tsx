@@ -5,7 +5,6 @@ import { DISPATCHES, DISPATCH_COMPONENTS } from './dispatches';
 
 type SortOption = 'latest' | 'popular' | 'oldest';
 
-// HATA ÇÖZÜMÜ: fadeUpVariant değişkenine ': Variants' tipi atandı
 const fadeUpVariant: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
@@ -38,6 +37,36 @@ function HomePage() {
   const [submitted, setSubmitted] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>('latest');
   const navigate = useNavigate();
+  
+  // API Bağlantısı için gerekli state'ler
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault(); 
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+        setEmail('');
+      } else {
+        const data = await response.json();
+        alert(data.error || 'Subscription failed. Please try again.');
+      }
+    } catch (error) {
+      alert('Network error. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitted(false), 5000);
+    }
+  };
 
   const sortedDispatches = [...DISPATCHES].sort((a, b) => {
     if (sortBy === 'latest') return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -67,7 +96,7 @@ function HomePage() {
 
       <main className="max-w-4xl mx-auto px-6 py-12 space-y-24 relative z-10">
         
-        {/* HERO SECTION (Animasyonlu) */}
+        {/* HERO SECTION */}
         <motion.section 
           initial="hidden" 
           animate="visible" 
@@ -83,16 +112,29 @@ function HomePage() {
             {submitted ? (
               <div className="p-4 bg-[#081630]/90 border border-[#CCFF00]/40 rounded-lg text-[#CCFF00] text-sm font-mono">✓ Subscription received.</div>
             ) : (
-              <form action="https://app.beehiiv.com/subscribe" method="POST" target="beehiiv-target" onSubmit={() => setSubmitted(true)} className="flex flex-col sm:flex-row gap-3">
-                <input type="hidden" name="publication_id" value="pub_2383c5ca-1813-4b13-b35f-6b498cd01829" />
-                <input type="email" name="email" required placeholder="Enter your email..." className="flex-1 px-4 py-3 bg-[#051124]/90 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-[#CCFF00]" />
-                <button type="submit" className="px-6 py-3 bg-[#CCFF00] hover:bg-[#b8e600] text-black font-semibold rounded-lg cursor-pointer">Subscribe</button>
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
+                <input 
+                  type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required 
+                  placeholder="Enter your email..." 
+                  className="flex-1 px-4 py-3 bg-[#051124]/90 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-[#CCFF00]" 
+                />
+                <button 
+                  type="submit" 
+                  disabled={isSubmitting}
+                  className="px-6 py-3 bg-[#CCFF00] hover:bg-[#b8e600] disabled:opacity-50 text-black font-semibold rounded-lg cursor-pointer whitespace-nowrap transition-colors"
+                >
+                  {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                </button>
               </form>
             )}
+            <p className="text-xs text-slate-400 mt-3 font-medium">No spam. Unsubscribe anytime in one click.</p>
           </div>
         </motion.section>
 
-        {/* INVESTIGATION STREAM (Animasyonlu) */}
+        {/* INVESTIGATION STREAM */}
         <section className="space-y-8">
           <motion.div 
             initial="hidden" 
@@ -145,7 +187,7 @@ function HomePage() {
           </div>
         </section>
 
-        {/* MANIFESTO SECTION (Animasyonlu) */}
+        {/* MANIFESTO SECTION */}
         <motion.section 
           initial="hidden" 
           whileInView="visible" 
@@ -179,7 +221,7 @@ function HomePage() {
           </div>
         </motion.section>
 
-                {/* THE INVESTIGATOR SECTION (Animasyonlu) */}
+        {/* THE INVESTIGATOR SECTION */}
         <motion.section 
           initial="hidden" 
           whileInView="visible" 
@@ -206,7 +248,6 @@ function HomePage() {
                 I spent decades inside major media networks and independent platforms—including <strong className="text-slate-200">CNN, NTV, ATV, Medyascope, and Reportare</strong>—navigating the high-pressure world of newsrooms. But chasing social media algorithms and being a &apos;content creator&apos; left me exhausted. I didn&apos;t want to add to the surface noise anymore; I wanted to explore the depths.
               </p>
 
-              {/* EKSİK OLAN 3. PARAGRAF GERİ EKLENDİ */}
               <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
                 As a journalist, master diver, and proud father—with dive logs spanning from the <span className="text-slate-300">Red Sea</span> and <span className="text-slate-300">Thailand</span> to <span className="text-slate-300">Malta, Cyprus, the Black Sea, and the Mediterranean</span>—I built <strong className="text-white">Deep Dispatches</strong> to mind my own business. Here, I focus entirely on marine mysteries, climate crises, and deep ecology. No daily clickbait, no corporate agendas. Just high-impact, deeply researched dossiers delivered directly to you.
               </p>
