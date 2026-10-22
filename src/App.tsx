@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useParams, useNavigate, Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion'; // <-- Animasyon kütüphanesi eklendi
+import { motion, type Variants } from 'framer-motion';
 import { DISPATCHES, DISPATCH_COMPONENTS } from './dispatches';
 
 type SortOption = 'latest' | 'popular' | 'oldest';
 
-// Animasyon Varyasyonları (Aşağıdan yukarı süzülme)
-const fadeUpVariant = {
+// HATA ÇÖZÜMÜ: fadeUpVariant değişkenine ': Variants' tipi atandı
+const fadeUpVariant: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
 };
@@ -120,7 +120,7 @@ function HomePage() {
                 viewport={{ once: true, margin: "-50px" }}
                 variants={{
                   hidden: { opacity: 0, y: 30 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: index * 0.1 } } // Sırayla gelmesi için gecikme
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: index * 0.1 } }
                 }}
                 onClick={() => navigate(`/dispatch/${dispatch.id}`)} 
                 className="group bg-[#081630]/50 hover:bg-[#081630] border border-slate-800/80 hover:border-[#CCFF00]/40 rounded-2xl p-8 md:p-10 transition-all duration-300 cursor-pointer relative overflow-hidden shadow-lg backdrop-blur-sm hover:-translate-y-1"
