@@ -73,7 +73,11 @@ export default function CephalopodDossier({ article }: { article: any }) {
       <div className="max-w-5xl mx-auto px-4 md:px-6 my-10">
         <div className="bg-[#081630] border border-slate-800 rounded-2xl p-2 md:p-4 shadow-2xl relative overflow-hidden group">
           <div className="absolute inset-0 bg-[#CCFF00]/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-          <img src="/cuttlefish-split.png" alt="Cuttlefish Split Body Maneuver" className="w-full h-auto rounded-xl border border-slate-700/50" />
+          <img 
+            src="/cuttlefish-split.png" 
+            alt="Cuttlefish Split Body Maneuver" 
+            className="w-full h-auto rounded-xl border border-slate-700/50 invert-[0.85] hue-rotate-180 contrast-125 brightness-90 mix-blend-screen opacity-90" 
+          />
           <div className="mt-4 px-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
             <span className="text-[10px] font-mono text-[#CCFF00] uppercase tracking-widest">Fig 01 · The Split-Body Maneuver</span>
             <span className="text-[10px] font-mono text-slate-500">Source: Nature's Encrypted Duality</span>
@@ -95,7 +99,11 @@ export default function CephalopodDossier({ article }: { article: any }) {
       {/* FIGURE 2: VISION COMPARISON */}
       <div className="max-w-5xl mx-auto px-4 md:px-6 my-10">
         <div className="bg-[#081630] border border-slate-800 rounded-2xl p-2 md:p-4 shadow-2xl relative overflow-hidden group">
-          <img src="/cuttlefish-vision.png" alt="Cuttlefish Vision vs Mammal Vision" className="w-full h-auto rounded-xl border border-slate-700/50" />
+          <img 
+            src="/cuttlefish-vision.png" 
+            alt="Cuttlefish Vision vs Mammal Vision" 
+            className="w-full h-auto rounded-xl border border-slate-700/50 invert-[0.85] hue-rotate-180 contrast-125 brightness-90 mix-blend-screen opacity-90" 
+          />
           <div className="mt-4 px-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
             <span className="text-[10px] font-mono text-[#CCFF00] uppercase tracking-widest">Fig 02 · The Secret Channel of Polarized Light</span>
             <span className="text-[10px] font-mono text-slate-500">Source: Sensory Capability &amp; Optical Physics</span>
@@ -114,7 +122,11 @@ export default function CephalopodDossier({ article }: { article: any }) {
       {/* FIGURE 3: SKIN LAYERS */}
       <div className="max-w-4xl mx-auto px-4 md:px-6 my-10">
         <div className="bg-[#081630] border border-slate-800 rounded-2xl p-2 md:p-4 shadow-2xl relative overflow-hidden group">
-          <img src="/cuttlefish-layers.png" alt="Cuttlefish Skin Layers" className="w-full h-auto rounded-xl border border-slate-700/50" />
+          <img 
+            src="/cuttlefish-layers.png" 
+            alt="Cuttlefish Skin Layers" 
+            className="w-full h-auto rounded-xl border border-slate-700/50 invert-[0.85] hue-rotate-180 contrast-125 brightness-90 mix-blend-screen opacity-90" 
+          />
           <div className="mt-4 px-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
             <span className="text-[10px] font-mono text-[#CCFF00] uppercase tracking-widest">Fig 03 · The Dual-Layer Biological Hardware</span>
             <span className="text-[10px] font-mono text-slate-500">Source: Mäthger &amp; Hanlon, Marine Biological Laboratory</span>
@@ -125,7 +137,11 @@ export default function CephalopodDossier({ article }: { article: any }) {
       {/* FIGURE 4: SIGNAL TRANSMISSION */}
       <div className="max-w-4xl mx-auto px-4 md:px-6 my-10">
         <div className="bg-[#081630] border border-slate-800 rounded-2xl p-2 md:p-4 shadow-2xl relative overflow-hidden group">
-          <img src="/cuttlefish-signal.png" alt="Signal Transmission" className="w-full h-auto rounded-xl border border-slate-700/50" />
+          <img 
+            src="/cuttlefish-signal.png" 
+            alt="Signal Transmission" 
+            className="w-full h-auto rounded-xl border border-slate-700/50 invert-[0.85] hue-rotate-180 contrast-125 brightness-90 mix-blend-screen opacity-90" 
+          />
           <div className="mt-4 px-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
             <span className="text-[10px] font-mono text-[#CCFF00] uppercase tracking-widest">Fig 04 · The Vantage Point Optical Hack</span>
             <span className="text-[10px] font-mono text-slate-500">Source: Nakayama et al. (2024)</span>
@@ -151,10 +167,18 @@ export default function CephalopodDossier({ article }: { article: any }) {
       <div className="max-w-5xl mx-auto px-4 md:px-6 my-10">
         <div className="grid md:grid-cols-2 gap-4">
           <div className="bg-[#081630] border border-slate-800 rounded-2xl p-2 shadow-2xl overflow-hidden">
-            <img src="/cuttlefish-submarine.png" alt="Cuttlefish vs Submarine" className="w-full h-full object-cover rounded-xl border border-slate-700/50" />
+            <img 
+              src="/cuttlefish-submarine.png" 
+              alt="Cuttlefish vs Submarine" 
+              className="w-full h-full object-cover rounded-xl border border-slate-700/50 invert-[0.85] hue-rotate-180 contrast-125 brightness-90 mix-blend-screen opacity-90" 
+            />
           </div>
           <div className="bg-[#081630] border border-slate-800 rounded-2xl p-2 shadow-2xl overflow-hidden">
-            <img src="/cuttlefish-metamaterial.png" alt="Naval Metamaterials" className="w-full h-full object-cover rounded-xl border border-slate-700/50" />
+            <img 
+              src="/cuttlefish-metamaterial.png" 
+              alt="Naval Metamaterials" 
+              className="w-full h-full object-cover rounded-xl border border-slate-700/50 invert-[0.85] hue-rotate-180 contrast-125 brightness-90 mix-blend-screen opacity-90" 
+            />
           </div>
         </div>
         <div className="mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
@@ -174,7 +198,11 @@ export default function CephalopodDossier({ article }: { article: any }) {
       {/* FIGURE 6: VENN DIAGRAM */}
       <div className="max-w-3xl mx-auto px-6 mb-16">
         <div className="bg-[#081630] border border-slate-800 rounded-2xl p-4 shadow-2xl relative overflow-hidden flex flex-col justify-center items-center">
-          <img src="/cuttlefish-venn.png" alt="Evolution of Sensory Communication" className="w-full max-w-md h-auto rounded-xl border border-slate-700/50" />
+          <img 
+            src="/cuttlefish-venn.png" 
+            alt="Evolution of Sensory Communication" 
+            className="w-full max-w-md h-auto rounded-xl border border-slate-700/50 invert-[0.85] hue-rotate-180 contrast-125 brightness-90 mix-blend-screen opacity-90" 
+          />
           <div className="mt-4 text-center">
              <span className="text-[10px] font-mono text-slate-500">Source: Evolutionary Sensory Communication Model</span>
           </div>
