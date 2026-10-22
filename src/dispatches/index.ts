@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 import OrcaDossier from './OrcaDossier';
 import PosidoniaDossier from './PosidoniaDossier';
+import LionfishDossier from './LionfishDossier'; // Yeni eklendi
 import CephalopodDossier from './CephalopodDossier';
 
 // 1. META VERİ (Ana sayfa listesi için)
@@ -32,14 +33,14 @@ export const DISPATCHES = [
   {
     id: "dossier-003",
     number: "DOSSIER #003",
-    status: "IN DEVELOPMENT",
-    title: "The Resilient Reefs: Red Sea Marine Sanctuaries",
-    subtitle: "High salinity, thermal extremes, and the coral lineages surviving global marine heatwaves.",
+    status: "FIELD REPORT",
+    title: "The Lessepsian Mirage: How the Suez Canal Weaponized the Mediterranean",
+    subtitle: "In a warming sea, human engineering shattered a 3-million-year-old thermal wall. Now, the Mediterranean is an alien frontier where predators evolve into prey.",
     readTime: "8 min read",
-    category: "Resilience & Oceanography",
-    date: "2026-10-15",
-    views: 8900,
-    summary: "Field dispatches and diving transects exploring why Red Sea corals withstand temperatures that bleach global reefs.",
+    category: "Invasive Species & Maritime Geopolitics",
+    date: "2026-10-23",
+    views: 0,
+    summary: "Thirty years of context collapse into a single truth: the Lionfish is not a monster. It is a victim of the mechanical Trojan Horses we call cargo ships.",
   },
   {
     id: "dossier-004",
@@ -56,8 +57,10 @@ export const DISPATCHES = [
 ];
 
 // 2. BİLEŞEN KAYIT DEFTERİ (Hangi ID hangi bileşeni yükler?)
+// İşte aradığın C maddesi tam olarak burası:
 export const DISPATCH_COMPONENTS: Record<string, ComponentType<{ article: any }>> = {
   'dossier-001': OrcaDossier,
   'dossier-002': PosidoniaDossier,
+  'dossier-003': LionfishDossier, // Kızıldeniz makalesi eklendi
   'dossier-004': CephalopodDossier,
 };
