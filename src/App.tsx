@@ -179,7 +179,7 @@ function HomePage() {
           </div>
         </motion.section>
 
-        {/* THE INVESTIGATOR SECTION (Animasyonlu) */}
+                {/* THE INVESTIGATOR SECTION (Animasyonlu) */}
         <motion.section 
           initial="hidden" 
           whileInView="visible" 
@@ -201,9 +201,16 @@ function HomePage() {
               <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed">
                 When people ask what I do for a living, the answer has changed many times over the years: camera operator, field correspondent, Editor-in-Chief, logistics manager, diving instructor... But deep down, I have always been one thing: <span className="text-[#CCFF00] font-normal">a journalist.</span>
               </p>
+
               <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
-                I spent decades inside major media networks and independent platforms—including <strong className="text-slate-200">CNN, NTV, ATV, Medyascope, and Reportare</strong>—navigating the high-pressure world of newsrooms. But chasing social media algorithms and being a &apos;content creator&apos; left me exhausted.
+                I spent decades inside major media networks and independent platforms—including <strong className="text-slate-200">CNN, NTV, ATV, Medyascope, and Reportare</strong>—navigating the high-pressure world of newsrooms. But chasing social media algorithms and being a &apos;content creator&apos; left me exhausted. I didn&apos;t want to add to the surface noise anymore; I wanted to explore the depths.
               </p>
+
+              {/* EKSİK OLAN 3. PARAGRAF GERİ EKLENDİ */}
+              <p className="text-sm md:text-base text-slate-400 font-light leading-relaxed">
+                As a journalist, master diver, and proud father—with dive logs spanning from the <span className="text-slate-300">Red Sea</span> and <span className="text-slate-300">Thailand</span> to <span className="text-slate-300">Malta, Cyprus, the Black Sea, and the Mediterranean</span>—I built <strong className="text-white">Deep Dispatches</strong> to mind my own business. Here, I focus entirely on marine mysteries, climate crises, and deep ecology. No daily clickbait, no corporate agendas. Just high-impact, deeply researched dossiers delivered directly to you.
+              </p>
+
               <div className="pt-4 flex flex-wrap gap-3 text-xs font-mono text-slate-500">
                 <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Journalism &amp; Broadcast</span>
                 <span className="px-3 py-1 bg-slate-900/80 border border-slate-800 rounded-full">Scuba Diving Instructor</span>
