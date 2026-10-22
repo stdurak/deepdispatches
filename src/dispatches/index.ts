@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 import OrcaDossier from './OrcaDossier';
 import PosidoniaDossier from './PosidoniaDossier';
+import CephalopodDossier from './CephalopodDossier';
 
 // 1. META VERİ (Ana sayfa listesi için)
 export const DISPATCHES = [
@@ -39,6 +40,18 @@ export const DISPATCHES = [
     date: "2026-10-15",
     views: 8900,
     summary: "Field dispatches and diving transects exploring why Red Sea corals withstand temperatures that bleach global reefs.",
+  },
+  {
+    id: "dossier-004",
+    number: "DOSSIER #004",
+    status: "FIELD INVESTIGATION",
+    title: "The Ocean’s Double Agents: Split-Screen Camouflage, Encrypted Polarization, and the Quantum Optics of Cephalopod Courtship",
+    subtitle: "In the photic slaughterhouse of the open sea, broadcasting passion is an invitation to death. The cuttlefish’s solution? Project an encrypted frequency to a lover while displaying cold stone to the executioner.",
+    readTime: "11 min read",
+    category: "Cephalopod Biophotonics & Cognitive Stealth",
+    date: "2026-10-22",
+    views: 0,
+    summary: "Three hundred million years before human telecommunications, cuttlefish engineered a living, biophotonic equivalent using split-screen camouflage and encrypted polarization.",
   }
 ];
 
@@ -46,4 +59,5 @@ export const DISPATCHES = [
 export const DISPATCH_COMPONENTS: Record<string, ComponentType<{ article: any }>> = {
   'dossier-001': OrcaDossier,
   'dossier-002': PosidoniaDossier,
+  'dossier-004': CephalopodDossier,
 };
