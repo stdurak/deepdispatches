@@ -191,65 +191,163 @@ export default function LionfishDossier({ article }: { article: any }) {
   );
 }
 
-// --- İNTERAKTİF SÜVEYŞ HARİTASI BİLEŞENİ ---
+// --- İNTERAKTİF SÜVEYŞ HARİTASI (GELİŞMİŞ VERSİYON) ---
 function SuezMigrationMap() {
   const [year, setYear] = useState(1869);
 
   const getStatus = () => {
-    if (year < 1900) return { title: "The Barrier Holds (1869-1900)", desc: "The Suez Canal opens, but the hypersaline Bitter Lakes create an impassable thermal and salinity barrier. Red Sea species cannot cross.", color: "text-slate-400", barrier: "opacity-100" };
-    if (year < 1970) return { title: "A Cracks in the Wall (1900-1970)", desc: "The canal is deepened. Salinity drops slightly, but the winter cold of the Mediterranean still kills tropical intruders.", color: "text-amber-400", barrier: "opacity-70" };
-    if (year < 2015) return { title: "The Collapse (1970-2015)", desc: "The Aswan High Dam stops cold freshwater flows. The Mediterranean begins to warm rapidly. The thermal wall shatters.", color: "text-orange-500", barrier: "opacity-30" };
-    return { title: "The Alien Frontier (2015-Present)", desc: "The Mediterranean is hotter than ever. Over 1,000 species migrate. Ships carrying ballast water accelerate the biological invasion.", color: "text-[#CCFF00]", barrier: "opacity-0" };
+    if (year < 1900) return { 
+      title: "The Barrier Holds (1869-1900)", 
+      desc: "The Suez Canal opens, but the hypersaline Bitter Lakes create an impassable thermal and salinity barrier. Red Sea species cannot cross.", 
+      color: "text-slate-400", 
+      barrierOpacity: 1 
+    };
+    if (year < 1970) return { 
+      title: "Cracks in the Wall (1900-1970)", 
+      desc: "The canal is deepened. Salinity drops slightly, but the winter cold of the Mediterranean still kills tropical intruders.", 
+      color: "text-amber-400", 
+      barrierOpacity: 0.6 
+    };
+    if (year < 2015) return { 
+      title: "The Collapse (1970-2015)", 
+      desc: "The Aswan High Dam stops cold freshwater flows. The Mediterranean begins to warm rapidly. The thermal wall shatters.", 
+      color: "text-orange-500", 
+      barrierOpacity: 0.2 
+    };
+    return { 
+      title: "The Alien Frontier (2015-Present)", 
+      desc: "The Mediterranean is hotter than ever. Over 1,000 species migrate. Ships carrying ballast water accelerate the biological invasion.", 
+      color: "text-[#CCFF00]", 
+      barrierOpacity: 0 
+    };
   };
 
   const status = getStatus();
+  const progress = ((year - 1869) / (2024 - 1869)) * 100;
 
   return (
-    <div className="space-y-6">
-      <div className="relative w-full h-[300px] md:h-[400px] bg-[#051124] rounded-2xl border border-slate-800 overflow-hidden">
-        <svg viewBox="0 0 800 400" className="w-full h-full">
-          <path d="M0,0 L400,0 L350,200 L0,200 Z" fill="#0a1a35" />
-          <path d="M800,200 L500,200 L450,400 L800,400 Z" fill="#0a1a35" />
-          <text x="150" y="100" fill="#1e293b" fontSize="24" fontWeight="bold" fontFamily="monospace">MEDITERRANEAN SEA</text>
-          <text x="550" y="300" fill="#1e293b" fontSize="24" fontWeight="bold" fontFamily="monospace">RED SEA</text>
-          <path d="M350,200 L450,200" stroke="#334155" strokeWidth="8" strokeDasharray="4 4" />
-          <path d="M350,200 L450,200" stroke="#CCFF00" strokeWidth="2" className="animate-pulse" />
-          <g className={`transition-all duration-1000 ${status.barrier}`}>
-            <circle cx="400" cy="200" r="20" fill="#ef4444" opacity="0.4" className="animate-ping" />
-            <circle cx="400" cy="200" r="10" fill="#ef4444" />
-            <text x="400" y="160" fill="#ef4444" fontSize="10" textAnchor="middle" fontFamily="monospace">BITTER LAKES</text>
+    <div className="space-y-8">
+      {/* HARİTA */}
+      <div className="relative w-full aspect-video bg-gradient-to-br from-[#020813] to-[#051124] rounded-2xl border border-slate-800 overflow-hidden shadow-[inset_0_0_50px_rgba(0,0,0,0.5)]">
+        
+        {/* Arka Plan Izgarası */}
+        <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#CCFF00_1px,transparent_1px),linear-gradient(to_bottom,#CCFF00_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+
+        <svg viewBox="0 0 1000 500" className="w-full h-full relative z-10">
+          
+          {/* Kara Kütleleri (Mısır/Afrika ve Arap Yarımadası) */}
+          <path d="M0,0 L480,0 L450,250 L380,250 L350,500 L0,500 Z" fill="#0a1a35" stroke="#1e293b" strokeWidth="2" />
+          <path d="M1000,0 L520,0 L480,250 L550,250 L650,500 L1000,500 Z" fill="#0a1a35" stroke="#1e293b" strokeWidth="2" />
+
+          {/* Akdeniz ve Kızıldeniz Etiketleri */}
+          <text x="200" y="120" fill="#1e3a5f" fontSize="28" fontWeight="900" fontFamily="monospace" letterSpacing="0.2em" opacity="0.6">MEDITERRANEAN</text>
+          <text x="750" y="400" fill="#1e3a5f" fontSize="28" fontWeight="900" fontFamily="monospace" letterSpacing="0.2em" opacity="0.6">RED SEA</text>
+
+          {/* Süveyş Kanalı Rotası */}
+          <g>
+            {/* Kanalın arka plan çizgisi */}
+            <path d="M430,250 L500,250" stroke="#1e293b" strokeWidth="16" strokeLinecap="round" />
+            {/* Kanalın neon çizgisi */}
+            <path d="M430,250 L500,250" stroke="#CCFF00" strokeWidth="3" strokeLinecap="round" className="animate-pulse shadow-[0_0_10px_#CCFF00]" />
+            <text x="465" y="230" fill="#64748b" fontSize="12" textAnchor="middle" fontFamily="monospace">SUEZ CANAL</text>
           </g>
+
+          {/* Acı Göller (Termal Bariyer) */}
+          <g style={{ opacity: status.barrierOpacity, transition: 'opacity 1s ease' }}>
+            <circle cx="465" cy="250" r="30" fill="#ef4444" opacity="0.2" className="animate-ping" />
+            <circle cx="465" cy="250" r="15" fill="#ef4444" opacity="0.6" className="shadow-[0_0_20px_#ef4444]" />
+            <text x="465" y="285" fill="#ef4444" fontSize="10" textAnchor="middle" fontFamily="monospace" fontWeight="bold">BITTER LAKES</text>
+          </g>
+
+          {/* Kargo Gemisi Animasyonu (1900'den sonra) */}
           {year > 1900 && (
-            <motion.g initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 1 }}>
-               <rect x="360" y="190" width="40" height="10" fill="#94a3b8" rx="2" />
-               <text x="380" y="185" fill="#64748b" fontSize="8" textAnchor="middle" fontFamily="monospace">CARGO</text>
+            <motion.g 
+              initial={{ x: -100, opacity: 0 }} 
+              animate={{ x: 0, opacity: 1 }} 
+              transition={{ duration: 1 }}
+            >
+              {/* Gemi Gövdesi */}
+              <path d="M440,240 L490,240 L500,250 L440,250 Z" fill="#94a3b8" />
+              <rect x="455" y="230" width="20" height="10" fill="#475569" rx="1" />
+              <rect x="475" y="235" width="10" height="5" fill="#475569" rx="1" />
+              <text x="465" y="275" fill="#94a3b8" fontSize="10" textAnchor="middle" fontFamily="monospace" className="animate-pulse">CARGO</text>
             </motion.g>
           )}
+
+          {/* İstilacı Balık Sürüsü (1970'ten sonra Kızıldeniz'den Akdeniz'e) */}
           {year > 1970 && (
-             <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-                <motion.circle cx="450" cy="210" r="3" fill="#CCFF00" animate={{ cx: [450, 350], cy: [210, 190], opacity: [1, 0] }} transition={{ duration: 2, repeat: Infinity, delay: 0.5 }} />
-                <motion.circle cx="460" cy="220" r="3" fill="#CCFF00" animate={{ cx: [460, 360], cy: [220, 210], opacity: [1, 0] }} transition={{ duration: 2.5, repeat: Infinity, delay: 1 }} />
-                <motion.circle cx="440" cy="190" r="3" fill="#CCFF00" animate={{ cx: [440, 340], cy: [190, 180], opacity: [1, 0] }} transition={{ duration: 1.8, repeat: Infinity, delay: 1.5 }} />
-             </motion.g>
+            <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }}>
+              {[...Array(12)].map((_, i) => (
+                <motion.circle 
+                  key={i}
+                  cx={500 + Math.random() * 100} 
+                  cy={250 + (Math.random() - 0.5) * 100} 
+                  r="4" 
+                  fill="#CCFF00" 
+                  className="shadow-[0_0_10px_#CCFF00]"
+                  animate={{ 
+                    cx: [500, 430], 
+                    cy: [250 + (Math.random() - 0.5) * 100, 250 + (Math.random() - 0.5) * 50], 
+                    opacity: [1, 0] 
+                  }} 
+                  transition={{ 
+                    duration: 1.5 + Math.random(), 
+                    repeat: Infinity, 
+                    delay: Math.random() * 2,
+                    ease: "linear"
+                  }} 
+                />
+              ))}
+            </motion.g>
           )}
         </svg>
-        <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md p-4 rounded-xl border border-slate-700 max-w-xs">
-          <h4 className={`text-sm font-bold font-mono tracking-wider ${status.color}`}>{status.title}</h4>
-          <p className="text-xs text-slate-300 mt-2 leading-relaxed">{status.desc}</p>
+
+        {/* Dinamik Bilgi Kutusu (Haritanın üzerinde) */}
+        <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md p-5 rounded-xl border border-slate-700/50 max-w-sm shadow-2xl z-20 pointer-events-none">
+          <div className="flex items-center gap-2 mb-2">
+             <span className={`w-2 h-2 rounded-full ${status.color.replace('text-', 'bg-')} animate-pulse`}></span>
+             <h4 className={`text-xs font-bold font-mono tracking-widest uppercase ${status.color}`}>{status.title}</h4>
+          </div>
+          <p className="text-xs text-slate-300 leading-relaxed font-light">{status.desc}</p>
         </div>
       </div>
 
-      <div className="flex items-center gap-4 pt-4">
-        <span className="text-xs font-mono text-slate-500">1869</span>
-        <input 
-          type="range" 
-          min="1869" 
-          max="2024" 
-          value={year} 
-          onChange={(e) => setYear(parseInt(e.target.value))}
-          className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-[#CCFF00]"
-        />
-        <span className="text-xs font-mono text-[#CCFF00] font-bold">{year}</span>
+      {/* ZAMAN ÇUBUĞU (KONTROL) */}
+      <div className="bg-[#081630] p-6 rounded-2xl border border-slate-800 shadow-xl">
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-xs font-mono text-slate-500">1869</span>
+          <div className="text-center bg-[#051124] border border-slate-700 px-4 py-1.5 rounded-full">
+            <span className="text-sm font-mono text-[#CCFF00] font-bold">{year}</span>
+          </div>
+          <span className="text-xs font-mono text-slate-500">2024</span>
+        </div>
+        
+        {/* Slider */}
+        <div className="relative w-full h-2 bg-slate-800 rounded-full">
+           <div 
+             className="absolute top-0 left-0 h-full bg-gradient-to-r from-amber-500 to-[#CCFF00] rounded-full"
+             style={{ width: `${progress}%` }}
+           ></div>
+           <input 
+             type="range" 
+             min="1869" 
+             max="2024" 
+             value={year} 
+             onChange={(e) => setYear(parseInt(e.target.value))}
+             className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+           />
+           {/* Slider Topuzu (Thumb) */}
+           <div 
+             className="absolute top-1/2 -translate-y-1/2 w-6 h-6 bg-[#CCFF00] border-4 border-[#051124] rounded-full shadow-[0_0_15px_#CCFF00] pointer-events-none transition-transform"
+             style={{ left: `calc(${progress}% - 12px)` }}
+           ></div>
+        </div>
+        
+        <div className="flex justify-between text-[10px] font-mono text-slate-500 mt-4 uppercase tracking-widest">
+          <span>Opening</span>
+          <span>Thermal Collapse</span>
+          <span>Current Era</span>
+        </div>
       </div>
     </div>
   );
