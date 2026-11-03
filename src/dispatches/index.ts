@@ -1,8 +1,9 @@
 import type { ComponentType } from 'react';
 import OrcaDossier from './OrcaDossier';
 import PosidoniaDossier from './PosidoniaDossier';
-import LionfishDossier from './LionfishDossier'; // Yeni eklendi
+import LionfishDossier from './LionfishDossier';
 import CephalopodDossier from './CephalopodDossier';
+import IndoPacificDossier from './IndoPacificDossier'; // Yeni makalemiz
 
 // 1. META VERİ (Ana sayfa listesi için)
 export const DISPATCHES = [
@@ -53,14 +54,27 @@ export const DISPATCHES = [
     date: "2026-10-22",
     views: 0,
     summary: "Three hundred million years before human telecommunications, cuttlefish engineered a living, biophotonic equivalent using split-screen camouflage and encrypted polarization.",
+  },
+  {
+    // DÜZELTİLDİ: Indo-Pacific artık Dossier 005
+    id: "dossier-005",
+    number: "DOSSIER #005",
+    status: "CLIMATE INVESTIGATION",
+    title: "When Oceans Stop Talking: The Surprising Science of the Indo-Pacific Breakup",
+    subtitle: "For 400 years, the Indian and Pacific Oceans maintained a synchronized atmospheric conversation. Now, human emissions are breaking the connection — and destroying our ability to predict the climate.",
+    readTime: "9 min read",
+    category: "Climate Dynamics & Oceanography",
+    date: "2026-11-03",
+    views: 0,
+    summary: "A landmark WHOI study reveals that the long-standing marriage between the Indian and Pacific Oceans is failing due to anthropogenic forcing.",
   }
 ];
 
 // 2. BİLEŞEN KAYIT DEFTERİ (Hangi ID hangi bileşeni yükler?)
-// İşte aradığın C maddesi tam olarak burası:
 export const DISPATCH_COMPONENTS: Record<string, ComponentType<{ article: any }>> = {
   'dossier-001': OrcaDossier,
   'dossier-002': PosidoniaDossier,
-  'dossier-003': LionfishDossier, // Kızıldeniz makalesi eklendi
+  'dossier-003': LionfishDossier,
   'dossier-004': CephalopodDossier,
+  'dossier-005': IndoPacificDossier, // DÜZELTİLDİ
 };
