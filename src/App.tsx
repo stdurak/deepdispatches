@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import { motion, type Variants } from 'framer-motion';
 import { DISPATCHES, DISPATCH_COMPONENTS } from './dispatches';
-
 type SortOption = 'latest' | 'popular' | 'oldest';
 
 const fadeUpVariant: Variants = {

@@ -3,7 +3,8 @@ import OrcaDossier from './OrcaDossier';
 import PosidoniaDossier from './PosidoniaDossier';
 import LionfishDossier from './LionfishDossier';
 import CephalopodDossier from './CephalopodDossier';
-import IndoPacificDossier from './IndoPacificDossier'; // Yeni makalemiz
+import IndoPacificDossier from './IndoPacificDossier';
+import PenguinDossier from './PenguinDossier';
 
 // 1. META VERİ (Ana sayfa listesi için)
 export const DISPATCHES = [
@@ -56,7 +57,6 @@ export const DISPATCHES = [
     summary: "Three hundred million years before human telecommunications, cuttlefish engineered a living, biophotonic equivalent using split-screen camouflage and encrypted polarization.",
   },
   {
-    // DÜZELTİLDİ: Indo-Pacific artık Dossier 005
     id: "dossier-005",
     number: "DOSSIER #005",
     status: "CLIMATE INVESTIGATION",
@@ -67,6 +67,18 @@ export const DISPATCHES = [
     date: "2026-11-03",
     views: 0,
     summary: "A landmark WHOI study reveals that the long-standing marriage between the Indian and Pacific Oceans is failing due to anthropogenic forcing.",
+  },
+  {
+    id: "dossier-006",
+    number: "DOSSIER #006",
+    status: "FIELD TELEMETRY REPORT",
+    title: "Tracked Across the Southern Ocean: How Young Emperor Penguins Head Straight Into Industrial Fishing Zones",
+    subtitle: "Satellite telemetry of 48 juveniles reveals a 1,500-kilometer open-ocean migration highway—and a lethal blindspot in Antarctic marine protection.",
+    readTime: "9 min read",
+    category: "Polar Telemetry & Marine Governance",
+    date: "2026-11-20",
+    views: 0,
+    summary: "When five-month-old emperor penguins leave Antarctic colonies for the first time, they follow an identical 1,500 km northward highway—spending up to 60% of key months inside active industrial fishing zones outside proposed marine reserves.",
   }
 ];
 
@@ -76,5 +88,6 @@ export const DISPATCH_COMPONENTS: Record<string, ComponentType<{ article: any }>
   'dossier-002': PosidoniaDossier,
   'dossier-003': LionfishDossier,
   'dossier-004': CephalopodDossier,
-  'dossier-005': IndoPacificDossier, // DÜZELTİLDİ
+  'dossier-005': IndoPacificDossier,
+  'dossier-006': PenguinDossier,
 };
