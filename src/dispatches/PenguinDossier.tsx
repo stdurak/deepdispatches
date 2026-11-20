@@ -402,13 +402,16 @@ export default function PenguinDossier({ article }: { article?: any }) {
           </h4>
           <ul className="space-y-3 list-disc list-inside leading-relaxed text-slate-400">
             <li>
-              <strong className="text-slate-300">Brisson-Curadeau, É., Zitterbart, D., Le Bohec, C., et al.</strong> <em>Satellite telemetry of juvenile emperor penguins across Snow Hill Island, Jason Peninsula, and Atka Bay (CNRS / Centre Scientifique de Monaco / WHOI).</em>
+              <strong className="text-slate-300">Woods Hole Oceanographic Institution (WHOI), CNRS &amp; Centre Scientifique de Monaco.</strong> <em>Joint Polar Telemetry &amp; Juvenile Emperor Penguin Tracking Program (Weddell Sea Dataset, 2023–2024).</em>
+            </li>
+            <li>
+              <strong className="text-slate-300">Brisson-Curadeau, É., Zitterbart, D., Le Bohec, C., et al.</strong> <em>Satellite telemetry of juvenile emperor penguins across Snow Hill Island, Jason Peninsula, and Atka Bay.</em>
             </li>
             <li>
               <strong className="text-slate-300">Commission for the Conservation of Antarctic Marine Living Resources (CCAMLR).</strong> <em>Weddell Sea Marine Protected Area (WSMPA) Spatial Planning &amp; Krill Fishery Management Data.</em>
             </li>
             <li>
-              <strong className="text-slate-300">IUCN Red List of Threatened Species.</strong> <em>Aptenodytes forsteri (Emperor Penguin) Population Trajectory &amp; Sea-Ice Loss Assessment.</em>
+              <strong className="text-slate-300">IUCN Red List of Threatened Species &amp; WWF-Australia.</strong> <em>Aptenodytes forsteri (Emperor Penguin) Population Trajectory &amp; Southern Ocean Habitat Conservation.</em>
             </li>
           </ul>
         </div>
