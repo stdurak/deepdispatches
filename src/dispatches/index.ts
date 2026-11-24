@@ -1,4 +1,4 @@
-// @ts-expect-error JSX module has no declaration file.
+
 import LessepsianMigrationMap from './LessepsianMigrationMap';
 import type { ComponentType } from 'react';
 import OrcaDossier from './OrcaDossier';
