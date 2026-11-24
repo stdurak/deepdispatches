@@ -1,3 +1,5 @@
+// @ts-expect-error JSX module has no declaration file.
+import LessepsianMigrationMap from './LessepsianMigrationMap';
 import type { ComponentType } from 'react';
 import OrcaDossier from './OrcaDossier';
 import PosidoniaDossier from './PosidoniaDossier';
@@ -79,6 +81,20 @@ export const DISPATCHES = [
     date: "2026-11-20",
     views: 0,
     summary: "When five-month-old emperor penguins leave Antarctic colonies for the first time, they follow an identical 1,500 km northward highway—spending up to 60% of key months inside active industrial fishing zones outside proposed marine reserves.",
+  },
+  // YENİ EKLENEN: TÜM AKDENİZ ATLASI (DOSSIER 007)
+  {
+    id: "dossier-007",
+    number: "DOSSIER #007",
+    status: "INTERACTIVE ATLAS",
+    title: "Mediterranean Sea Levantine Lessepsian Corridor: Lionfish, Pufferfish & Striped Eel Catfish",
+    subtitle: "Interactive corridor and seasonal thermal timeline exploring Indo-Pacific dispersal across the Mediterranean basin.",
+    readTime: "Interactive Map",
+    category: "Lessepsian Biogeography & Coastal Telemetry",
+    date: "2026-11-24",
+    views: 0,
+    summary: "Explore seasonal temperature shifts and northward migration corridors across the Levantine basin, Aegean Sea, and Central Mediterranean.",
+    image: "/mediterranean-lessepsian-cover.jpg"
   }
 ];
 
@@ -90,4 +106,5 @@ export const DISPATCH_COMPONENTS: Record<string, ComponentType<{ article: any }>
   'dossier-004': CephalopodDossier,
   'dossier-005': IndoPacificDossier,
   'dossier-006': PenguinDossier,
+  'dossier-007': LessepsianMigrationMap, // Harita bileşeni buraya bağlandı
 };
