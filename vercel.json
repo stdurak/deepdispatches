@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/dispatch/:id",
-      "destination": "/api/dispatch?id=:id"
+      "source": "/admin/(.*)",
+      "destination": "/admin/$1"
     },
     {
       "source": "/(.*)",
