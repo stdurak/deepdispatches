@@ -17,7 +17,7 @@ export default defineConfig({
   },
   media: {
     tina: {
-      mediaRoot: "",
+      mediaRoot: "uploads",
       publicFolder: "public",
     },
   },
@@ -40,13 +40,13 @@ export default defineConfig({
           {
             type: "string",
             name: "dossierId",
-            label: "ID (örn: dossier-008)",
+            label: "ID (örn: dossier-009)",
             required: true,
           },
           {
             type: "string",
             name: "number",
-            label: "Numara (örn: DOSSIER #008)",
+            label: "Numara (örn: DOSSIER #009)",
             required: true,
           },
           {
@@ -101,6 +101,11 @@ export default defineConfig({
             type: "image",
             name: "image",
             label: "Kapak Görseli",
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Makale İçeriği (Yeni Makaleler İçin)",
           },
         ],
       },

@@ -7,11 +7,10 @@ import IndoPacificDossier from './IndoPacificDossier';
 import PenguinDossier from './PenguinDossier';
 import LessepsianMigrationMap from './LessepsianMigrationMap';
 import BerkeleyOct2026Telemetry from './BerkeleyOct2026Telemetry';
+import StandardDossier from './StandardDossier';
 
-// 1. JSON dosyalarını otomatik olarak içe aktar (TinaCMS uyumlu)
 const modules = import.meta.glob<{ default: any }>('../content/dispatches/*.json', { eager: true });
 
-// 2. JSON'ları okuyup bir diziye dönüştür ve tarihe göre yeniden eskiye sırala
 export const DISPATCHES = Object.entries(modules)
   .map(([path, mod]) => {
     const fileName = path.split('/').pop()?.replace('.json', '') || '';
@@ -22,7 +21,6 @@ export const DISPATCHES = Object.entries(modules)
   })
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-// 3. BİLEŞEN KAYIT DEFTERİ (Hangi ID hangi bileşeni yükler?)
 export const DISPATCH_COMPONENTS: Record<string, ComponentType<{ article: any }>> = {
   'dossier-001': OrcaDossier,
   'dossier-002': PosidoniaDossier,
@@ -33,3 +31,5 @@ export const DISPATCH_COMPONENTS: Record<string, ComponentType<{ article: any }>
   'dossier-007': LessepsianMigrationMap,
   'dossier-008': BerkeleyOct2026Telemetry,
 };
+
+export { StandardDossier };
