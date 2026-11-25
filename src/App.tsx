@@ -32,13 +32,11 @@ export default function App() {
   );
 }
 
-// --- ANA SAYFA ---
 function HomePage() {
   const [submitted, setSubmitted] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>('latest');
   const navigate = useNavigate();
 
-  // API Bağlantısı için gerekli state'ler
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -60,7 +58,7 @@ function HomePage() {
         const data = await response.json();
         alert(data.error || 'Subscription failed. Please try again.');
       }
-    } catch (error) {
+    } catch {
       alert('Network error. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -95,7 +93,6 @@ function HomePage() {
       </div>
 
       <main className="max-w-4xl mx-auto px-6 py-12 space-y-24 relative z-10">
-
         {/* HERO SECTION */}
         <motion.section
           initial="hidden"
@@ -201,3 +198,7 @@ function HomePage() {
               Welcome to <strong className="text-white font-semibold">Deep Dispatches</strong>, a platform created far below the surface noise. Here, I bridge the gap between Deep Ecology, Marine Mysteries, and the critical worlds of Ecological Finance and Geo-Political Journeys.
             </p>
             <p className="text-base text-slate-400 font-light leading-relaxed mt-4">
+              Moving beyond static reporting, I craft visually immersive scrollytelling experiences. Through interactive mapping, dynamic data, and cinematic narratives, I don&apos;t just tell these stories—I give you the depth to explore them. Don&apos;t miss the horizon.
+            </p>
+          </div>
+
