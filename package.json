@@ -21,10 +21,10 @@
     "react-share": "^6.1.0",
     "slate": "^0.147.4",
     "slate-dom": "^0.147.3",
-    "tinacms": "^2.7.0"
+    "tinacms": "^3.15.2"
   },
   "devDependencies": {
-    "@tinacms/cli": "^1.8.0",
+    "@tinacms/cli": "^4.0.5",
     "@types/node": "^24.19.2",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
