@@ -1,5 +1,5 @@
-
 import LessepsianMigrationMap from './LessepsianMigrationMap';
+import BerkeleyOct2026Telemetry from './BerkeleyOct2026Telemetry';
 import type { ComponentType } from 'react';
 import OrcaDossier from './OrcaDossier';
 import PosidoniaDossier from './PosidoniaDossier';
@@ -82,7 +82,6 @@ export const DISPATCHES = [
     views: 0,
     summary: "When five-month-old emperor penguins leave Antarctic colonies for the first time, they follow an identical 1,500 km northward highway—spending up to 60% of key months inside active industrial fishing zones outside proposed marine reserves.",
   },
-  // YENİ EKLENEN: TÜM AKDENİZ ATLASI (DOSSIER 007)
   {
     id: "dossier-007",
     number: "DOSSIER #007",
@@ -94,7 +93,20 @@ export const DISPATCHES = [
     date: "2026-11-24",
     views: 0,
     summary: "Explore seasonal temperature shifts and northward migration corridors across the Levantine basin, Aegean Sea, and Central Mediterranean.",
-    image: "/mediterranean-lessepsian-cover.jpg"
+    image: "/mediterranean-lessepsian-cover.jpg",
+  },
+  {
+    id: "dossier-008",
+    number: "DOSSIER #008",
+    status: "CLIMATE ANALYSIS",
+    title: "October 2026 Was the Warmest Month in 176 Years of Climate Records",
+    subtitle: "Berkeley Earth confirms a new all-time monthly anomaly record at 1.80°C above pre-industrial levels—driven by record ocean warmth and a Super El Niño whose largest global impact is still months away.",
+    readTime: "8 min read",
+    category: "Global Temperature Records & El Niño Dynamics",
+    date: "2026-11-25",
+    views: 0,
+    summary: "October 2026 shattered the monthly temperature anomaly record across 2,122 months of instrumental data. Ocean surfaces led the surge, and forecast models project the current El Niño to peak near 4°C, likely making 2027 even warmer.",
+    image: "/october-2026-heat-record-cover.jpg",
   }
 ];
 
@@ -106,5 +118,6 @@ export const DISPATCH_COMPONENTS: Record<string, ComponentType<{ article: any }>
   'dossier-004': CephalopodDossier,
   'dossier-005': IndoPacificDossier,
   'dossier-006': PenguinDossier,
-  'dossier-007': LessepsianMigrationMap, // Harita bileşeni buraya bağlandı
+  'dossier-007': LessepsianMigrationMap,
+  'dossier-008': BerkeleyOct2026Telemetry,
 };
